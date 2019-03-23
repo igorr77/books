@@ -1,0 +1,29 @@
+spring:
+#  main:
+#    banner-mode: "off"
+#
+  shell:
+    interactive:
+      enabled: false
+datasource:
+  driver-class-name: org.postgresql.Driver
+  #driver-class-name: org.H2.Driver
+  #url: jdbc:h2:mem:localhost;DB_CLOSE_ON_EXIT=FALSE
+  #url: jdbc:h2:mem:db1;MODE=PostgreSQL
+  url: jdbc:postgresql://localhost:5432/otus
+  username:
+  password:
+
+messages:
+  language: "en"
+  country: "GB"
+  bundle: "/messages/app_message"
+#
+testing:
+  totalCountQuestion: 5
+# DB access
+pool:
+  jdbcDriver: org.postgresql.Driver
+  jdbcString: jdbc:postgresql://localhost:5432/otus
+  jdbcUser: postgres
+  jdbcPassword: postgres
