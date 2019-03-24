@@ -1,4 +1,4 @@
-package ru.otus.igorr.books.lesson06.dao.genre;
+package ru.otus.igorr.books.lesson06.dao.author;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,40 +10,44 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.otus.igorr.books.lesson06.domain.Genre;
+import ru.otus.igorr.books.lesson06.domain.Author;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class GenreDaoImpl implements GenreDao {
+public class AuthorDaoImpl implements AuthorDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GenreDaoImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthorDaoImpl.class);
 
-    private final GenreMapper genreMapper;
+    private final AuthorMapper authorMapper;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    @Value("${genre.get}")
+    @Value("${author.get}")
     private String queryGet;
 
-    @Value("${genre.insert}")
+    @Value("${author.insert}")
     private String queryInsert;
 
-    @Value("${genre.update}")
+    @Value("${author.update}")
     private String queryUpdate;
 
-    @Value("${genre.delete}")
+    @Value("${author.delete}")
     private String queryDelete;
 
+    @Value("${author.list}")
+    private String queryList;
+
     @Autowired
-    public GenreDaoImpl(GenreMapper genreMapper,
-                        NamedParameterJdbcTemplate jdbcTemplate) {
-        this.genreMapper = genreMapper;
+    public AuthorDaoImpl(AuthorMapper authorMapper,
+                         NamedParameterJdbcTemplate jdbcTemplate) {
+        this.authorMapper = authorMapper;
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
-    public Optional<Genre> get(int id) {
+    public Optional<Author> get(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
@@ -52,19 +56,22 @@ public class GenreDaoImpl implements GenreDao {
                     jdbcTemplate.queryForObject(
                             queryGet,
                             params,
-                            genreMapper
+                            authorMapper
                     ));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+
     }
 
     @Override
-    public int save(Genre entity) {
+    public int save(Author entity) {
         String query = queryInsert;
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("genre", entity.getGenre().trim());
-        params.addValue("desc", entity.getDescription().trim());
+        params.addValue("firstname", entity.getFirstName().trim());
+        params.addValue("surname", entity.getSurName().trim());
+        params.addValue("lastname", entity.getLastName().trim());
+        params.addValue("country", entity.getCountry().trim());
         if (entity.getId() > 0) {
             query = queryUpdate;
             params.addValue("id", entity.getId());
@@ -75,14 +82,13 @@ public class GenreDaoImpl implements GenreDao {
             jdbcTemplate.update(query, params, keyHolder);
             return (Integer) keyHolder.getKeys().get("id");
         } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
             return 0;
         }
+
     }
 
-
     @Override
-    public int delete(Genre entity) {
+    public int delete(Author entity) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", entity.getId());
 
@@ -92,12 +98,11 @@ public class GenreDaoImpl implements GenreDao {
             LOG.error(e.getMessage(), e);
             return 0;
         }
+
     }
 
     @Override
-    public List<Genre> getList(String condition) {
+    public List<Author> getList(String condition) {
         return null;
     }
-
-
 }

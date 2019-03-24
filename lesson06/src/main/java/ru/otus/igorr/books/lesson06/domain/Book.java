@@ -2,16 +2,18 @@ package ru.otus.igorr.books.lesson06.domain;
 
 public class Book {
     private Long id;
-    private Long authorId;
-    private Long genreId;
+    private Author author;
+    private Genre genre;
     private String title;
     private String isbn;
     private int pages;
     private String description;
 
-    public Book(Long authorId, Long genreId, String title, String isbn, int pages, String description) {
-        this.authorId = authorId;
-        this.genreId = genreId;
+
+    public Book(Long id, Author author, Genre genre, String title, String isbn, int pages, String description) {
+        this.id = id;
+        this.author = author;
+        this.genre = genre;
         this.title = title;
         this.isbn = isbn;
         this.pages = pages;
@@ -26,20 +28,20 @@ public class Book {
         this.id = id;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Long getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Long genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public String getTitle() {

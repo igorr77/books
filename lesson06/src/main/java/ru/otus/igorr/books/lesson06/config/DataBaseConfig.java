@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import javax.sql.DataSource;
 
@@ -30,5 +33,16 @@ public class DataBaseConfig {
         hikariConfig.setMaximumPoolSize(connectionSettings.getJdbcMaxPoolSize());
         hikariConfig.setPoolName("main");
         return new HikariDataSource(hikariConfig);
+    }
+
+    @Bean("dao")
+    public static PropertySourcesPlaceholderConfigurer properties() {
+        PropertySourcesPlaceholderConfigurer pspc
+                = new PropertySourcesPlaceholderConfigurer();
+        Resource[] resources = new ClassPathResource[]
+                {new ClassPathResource("data/dao.properties")};
+        pspc.setLocations(resources);
+        pspc.setIgnoreUnresolvablePlaceholders(true);
+        return pspc;
     }
 }

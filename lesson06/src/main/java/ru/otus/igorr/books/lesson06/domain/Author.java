@@ -1,11 +1,15 @@
 package ru.otus.igorr.books.lesson06.domain;
 
 public class Author {
-    private Long id;
+    private int id;
     private String firstName;
     private String surName;
     private String lastName;
     private String country;
+
+    public Author() {
+
+    }
 
     public Author(String firstName, String surName, String lastName, String country) {
         this.firstName = firstName;
@@ -14,11 +18,11 @@ public class Author {
         this.country = country;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
