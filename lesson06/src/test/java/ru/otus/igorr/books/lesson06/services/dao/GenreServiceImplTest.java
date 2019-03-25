@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson06.domain.Genre;
 import ru.otus.igorr.books.lesson06.exceptions.GenreNotFoundException;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -62,5 +64,11 @@ class GenreServiceImplTest {
     @Test
     void maxTest() {
         int i = service.max();
+    }
+
+    @Test
+    void listTest() {
+        List<Genre> genreList = service.getList("");
+        int i = 0;
     }
 }

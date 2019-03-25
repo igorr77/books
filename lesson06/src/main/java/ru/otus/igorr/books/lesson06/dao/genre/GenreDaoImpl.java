@@ -12,8 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson06.domain.Genre;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class GenreDaoImpl implements GenreDao {
@@ -31,6 +30,9 @@ public class GenreDaoImpl implements GenreDao {
 
     @Value("${genre.update}")
     private String queryUpdate;
+
+    @Value("${genre.list}")
+    private String queryList;
 
     @Value("${genre.delete}")
     private String queryDelete;
@@ -99,7 +101,30 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public List<Genre> getList(String condition) {
-        return null;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        //params.addValue("id", entity.getId());
+
+        try {
+            List<Map<String, Object>> list = jdbcTemplate.queryForList(queryList, params);
+            return convertToList(list);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+
+    private List<Genre> convertToList(List<Map<String, Object>> list) {
+        List<Genre> result = new ArrayList<>();
+
+        list.forEach(m -> {
+            Genre genre = new Genre();
+            genre.setId((int) m.get("id"));
+            genre.setGenre((String) m.get("genre"));
+            genre.setDescription((String) m.get("description"));
+            result.add(genre);
+        });
+
+        return result;
     }
 
     @Override
