@@ -58,4 +58,9 @@ class GenreServiceImplTest {
         assertNotEquals(0, count);
 
     }
+
+    @Test
+    void maxTest() {
+        int i = service.max();
+    }
 }

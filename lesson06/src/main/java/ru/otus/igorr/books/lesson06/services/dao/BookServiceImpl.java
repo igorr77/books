@@ -1,18 +1,21 @@
 package ru.otus.igorr.books.lesson06.services.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.otus.igorr.books.lesson06.dao.books.BooksDao;
+import org.springframework.stereotype.Service;
+import ru.otus.igorr.books.lesson06.dao.books.BookDao;
 import ru.otus.igorr.books.lesson06.domain.Book;
 import ru.otus.igorr.books.lesson06.exceptions.BookNotFoundException;
 
 import java.util.List;
 
-public class BooksServiceImpl implements BooksService {
 
-    private BooksDao dao;
+@Service
+public class BookServiceImpl implements BookService {
+
+    private final BookDao dao;
 
     @Autowired
-    public BooksServiceImpl(BooksDao dao) {
+    public BookServiceImpl(BookDao dao) {
         this.dao = dao;
     }
 
@@ -34,5 +37,10 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public List<Book> getList(String condition) {
         return dao.getList(condition);
+    }
+
+    @Override
+    public int max() {
+        return dao.max();
     }
 }

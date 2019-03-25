@@ -1,18 +1,24 @@
 package ru.otus.igorr.books.lesson06.domain;
 
 public class Book {
-    private Long id;
-    private Author author;
-    private Genre genre;
+    private int id;
+    private int authorId;
+    private String authorName;
+    private int genreId;
+    private String genre;
     private String title;
     private String isbn;
     private int pages;
     private String description;
 
 
-    public Book(Long id, Author author, Genre genre, String title, String isbn, int pages, String description) {
-        this.id = id;
-        this.author = author;
+    public Book() {
+    }
+
+    public Book(int authorId, String authorName, int genreId, String genre, String title, String isbn, int pages, String description) {
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.genreId = genreId;
         this.genre = genre;
         this.title = title;
         this.isbn = isbn;
@@ -20,27 +26,43 @@ public class Book {
         this.description = description;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public Genre getGenre() {
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
+    }
+
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 

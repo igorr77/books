@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private GenreDao dao;
+    private final GenreDao dao;
 
     @Autowired
     public GenreServiceImpl(GenreDao dao) {
@@ -37,5 +37,10 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public List<Genre> getList(String condition) {
         return dao.getList(condition);
+    }
+
+    @Override
+    public int max() {
+        return dao.max();
     }
 }

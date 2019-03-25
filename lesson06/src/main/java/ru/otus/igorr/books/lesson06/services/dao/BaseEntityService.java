@@ -10,4 +10,6 @@ public interface BaseEntityService<T> {
     int delete(T entity);
 
     List<T> getList(String condition);
+
+    int max();
 }

@@ -26,4 +26,9 @@ public interface BaseDao<T> {
      * @return
      */
     List<T> getList(String condition);
+
+    /**
+     * @return
+     */
+    int max();
 }

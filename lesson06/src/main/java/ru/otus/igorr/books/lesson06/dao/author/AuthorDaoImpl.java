@@ -38,6 +38,9 @@ public class AuthorDaoImpl implements AuthorDao {
     @Value("${author.list}")
     private String queryList;
 
+    @Value("${author.max}")
+    private String queryMax;
+
     @Autowired
     public AuthorDaoImpl(AuthorMapper authorMapper,
                          NamedParameterJdbcTemplate jdbcTemplate) {
@@ -82,6 +85,7 @@ public class AuthorDaoImpl implements AuthorDao {
             jdbcTemplate.update(query, params, keyHolder);
             return (Integer) keyHolder.getKeys().get("id");
         } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
             return 0;
         }
 
@@ -105,4 +109,18 @@ public class AuthorDaoImpl implements AuthorDao {
     public List<Author> getList(String condition) {
         return null;
     }
+
+    @Override
+    public int max() {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        try {
+            int r = jdbcTemplate.queryForObject(queryMax, params, Integer.class);
+            return r;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            return 0;
+        }
+
+    }
+
 }

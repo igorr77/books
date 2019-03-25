@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-    private AuthorDao dao;
+    private final AuthorDao dao;
 
     @Autowired
     public AuthorServiceImpl(AuthorDao dao) {
@@ -38,4 +38,8 @@ public class AuthorServiceImpl implements AuthorService {
         return null;
     }
 
+    @Override
+    public int max() {
+        return dao.max();
+    }
 }

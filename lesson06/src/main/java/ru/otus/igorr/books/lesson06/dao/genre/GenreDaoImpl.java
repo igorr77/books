@@ -35,6 +35,9 @@ public class GenreDaoImpl implements GenreDao {
     @Value("${genre.delete}")
     private String queryDelete;
 
+    @Value("${genre.max}")
+    private String queryMax;
+
     @Autowired
     public GenreDaoImpl(GenreMapper genreMapper,
                         NamedParameterJdbcTemplate jdbcTemplate) {
@@ -99,5 +102,16 @@ public class GenreDaoImpl implements GenreDao {
         return null;
     }
 
+    @Override
+    public int max() {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        try {
+            int r = jdbcTemplate.queryForObject(queryMax, params, Integer.class);
+            return r;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            return 0;
+        }
 
+    }
 }

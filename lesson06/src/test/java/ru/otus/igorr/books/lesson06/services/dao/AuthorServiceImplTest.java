@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.otus.igorr.books.lesson06.domain.Author;
 import ru.otus.igorr.books.lesson06.exceptions.AuthorNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AuthorServiceImplTest {
@@ -31,10 +31,27 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void save() {
+    void saveInsertTest() {
+        Author author = new Author("FirstnameTest", "SurnameTest", "LastnameTest", "CC");
+        assertNotEquals(0, service.save(author));
     }
 
     @Test
-    void delete() {
+    void saveUpdateTest() {
+        Author author = new Author("FirstnameUpdateTest", "SurnameUpdateTest", "LastnameUpdateTest", "YY");
+        author.setId(2);
+        assertEquals(2, service.save(author));
+    }
+
+
+    @Test
+    void deleteTest() {
+        Author author = new Author();
+        author.setId(3);
+    }
+
+    @Test
+    void maxTest() {
+        assertNotEquals(0, service.max());
     }
 }
