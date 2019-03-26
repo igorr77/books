@@ -114,10 +114,10 @@ public class BookDaoImpl implements BookDao {
             mapList.forEach(m -> {
                 Book book = new Book();
                 book.setId((int) m.get("id"));
-                book.setAuthorId((int) m.get("id"));
+                book.setAuthorId((int) m.get("authorid"));
                 book.setAuthorName(((String) m.get("authorname")).trim());
-                book.setGenreId((int) m.get("id"));
-                book.setGenre(((String) m.get("genre")).trim());
+                book.setGenreId((int) m.get("genreid"));
+                book.setGenreName(((String) m.get("genrename")).trim());
                 book.setTitle(((String) m.get("title")).trim());
                 book.setPages((int) m.get("pages"));
                 book.setIsbn(((String) m.get("isbn")).trim());

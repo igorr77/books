@@ -6,6 +6,7 @@ import ru.otus.igorr.books.lesson06.domain.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 
 @Component
@@ -17,10 +18,10 @@ public class BookMapper implements RowMapper<Book> {
         book.setAuthorId(rs.getInt("authorid"));
         book.setAuthorName(rs.getString("authorname"));
         book.setGenreId(rs.getInt("genreid"));
-        book.setGenre(rs.getString("genre"));
+        book.setGenreName(rs.getString("genreName"));
         book.setIsbn(rs.getString("isbn"));
         book.setPages(rs.getInt("pages"));
-        book.setDescription(rs.getString("description"));
+        book.setDescription(Optional.ofNullable(rs.getString("description")).orElse("").trim());
         return book;
     }
 }

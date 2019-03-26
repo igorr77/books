@@ -68,7 +68,7 @@ public class GenreDaoImpl implements GenreDao {
     public int save(Genre entity) {
         String query = queryInsert;
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("genre", entity.getGenre().trim());
+        params.addValue("name", entity.getName().trim());
         params.addValue("desc", entity.getDescription().trim());
         if (entity.getId() > 0) {
             query = queryUpdate;
@@ -118,8 +118,8 @@ public class GenreDaoImpl implements GenreDao {
         list.forEach(m -> {
             Genre genre = new Genre();
             genre.setId((int) m.get("id"));
-            genre.setGenre((String) m.get("genre"));
-            genre.setDescription((String) m.get("description"));
+            genre.setName(Optional.ofNullable((String) m.get("name")).orElse("").trim());
+            genre.setDescription(Optional.ofNullable((String) m.get("description")).orElse("").trim());
             result.add(genre);
         });
         return result;

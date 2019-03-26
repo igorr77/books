@@ -22,7 +22,7 @@ ALTER SEQUENCE test.books_data_id_seq OWNER TO postgres;
 CREATE TABLE test.genre_data
 (
        id integer NOT NULL DEFAULT nextval('test.genre_data_id_seq'::regclass),
-       genre character(30) COLLATE pg_catalog."default" NOT NULL,
+       genreName character(30) COLLATE pg_catalog."default" NOT NULL,
        description character(255) COLLATE pg_catalog."default",
        CONSTRAINT genre_pkey PRIMARY KEY (id)
               USING INDEX TABLESPACE index

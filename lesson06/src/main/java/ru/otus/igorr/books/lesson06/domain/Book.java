@@ -5,7 +5,7 @@ public class Book {
     private int authorId;
     private String authorName;
     private int genreId;
-    private String genre;
+    private String genreName;
     private String title;
     private String isbn;
     private int pages;
@@ -15,11 +15,11 @@ public class Book {
     public Book() {
     }
 
-    public Book(int authorId, String authorName, int genreId, String genre, String title, String isbn, int pages, String description) {
+    public Book(int authorId, String authorName, int genreId, String genreName, String title, String isbn, int pages, String description) {
         this.authorId = authorId;
         this.authorName = authorName;
         this.genreId = genreId;
-        this.genre = genre;
+        this.genreName = genreName;
         this.title = title;
         this.isbn = isbn;
         this.pages = pages;
@@ -58,12 +58,12 @@ public class Book {
         this.genreId = genreId;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getGenreName() {
+        return genreName;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
     }
 
     public String getTitle() {
@@ -105,7 +105,7 @@ public class Book {
                 ", authorId=" + authorId +
                 ", authorName='" + authorName + '\'' +
                 ", genreId=" + genreId +
-                ", genre='" + genre + '\'' +
+                ", genreName='" + genreName + '\'' +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", pages=" + pages +

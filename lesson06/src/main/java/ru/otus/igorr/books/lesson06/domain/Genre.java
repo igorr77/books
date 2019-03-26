@@ -2,15 +2,15 @@ package ru.otus.igorr.books.lesson06.domain;
 
 public class Genre {
     int id;
-    String genre;
+    String name;
     String description;
 
     public Genre() {
 
     }
 
-    public Genre(String genre, String description) {
-        this.genre = genre;
+    public Genre(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
@@ -22,12 +22,12 @@ public class Genre {
         this.id = id;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getName() {
+        return name;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setName(String genre) {
+        this.name = genre;
     }
 
     public String getDescription() {
@@ -42,7 +42,7 @@ public class Genre {
     public String toString() {
         return "Genre{" +
                 "id=" + id +
-                ", genre='" + genre + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
