@@ -97,4 +97,19 @@ public class Book {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", authorId=" + authorId +
+                ", authorName='" + authorName + '\'' +
+                ", genreId=" + genreId +
+                ", genre='" + genre + '\'' +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", pages=" + pages +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

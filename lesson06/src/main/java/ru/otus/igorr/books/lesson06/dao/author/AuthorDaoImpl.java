@@ -68,16 +68,16 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public int save(Author entity) {
+    public int save(Author author) {
         String query = queryInsert;
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("firstname", entity.getFirstName().trim());
-        params.addValue("surname", entity.getSurName().trim());
-        params.addValue("lastname", entity.getLastName().trim());
-        params.addValue("country", entity.getCountry().trim());
-        if (entity.getId() > 0) {
+        params.addValue("firstname", author.getFirstName().trim());
+        params.addValue("surname", author.getSurName().trim());
+        params.addValue("lastname", author.getLastName().trim());
+        params.addValue("country", author.getCountry().trim());
+        if (author.getId() > 0) {
             query = queryUpdate;
-            params.addValue("id", entity.getId());
+            params.addValue("id", author.getId());
         }
 
         try {
@@ -92,9 +92,9 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public int delete(Author entity) {
+    public int delete(Author author) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id", entity.getId());
+        params.addValue("id", author.getId());
 
         try {
             return jdbcTemplate.update(queryDelete, params);

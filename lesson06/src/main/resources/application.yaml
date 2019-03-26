@@ -1,21 +1,33 @@
 spring:
-#  main:
-#    banner-mode: "off"
+  main:
+    banner-mode: "off"
+  #
+  shell:
+    interactive:
+      enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+  batch:
+    initialize-schema: always
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/otus
+    username: postgres
+    password: postgres
+    initialization-mode: always
+    platform: postgres
+
 #
-datasource:
-  driver-class-name: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/otus
-  username: postgres
-  password: postgres
-
-
 messages:
   language: "en"
   country: "GB"
   bundle: "/messages/app_message"
-#
-testing:
-  totalCountQuestion: 5
 # DB access
 pool:
   jdbcDriver: org.postgresql.Driver

@@ -23,7 +23,7 @@ public class DataBaseConfig {
         this.connectionSettings = connectionSettings;
     }
 
-    @Bean
+    //@Bean
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(connectionSettings.getJdbcDriver());

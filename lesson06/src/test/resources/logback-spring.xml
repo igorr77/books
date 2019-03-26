@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.otus.igorr.lesson04" level="debug"/>
+    <logger name="ru.otus.igorr" level="debug"/>
 
     <logger name="org.springframework" level="info"/>
 

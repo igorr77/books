@@ -102,7 +102,6 @@ public class GenreDaoImpl implements GenreDao {
     @Override
     public List<Genre> getList(String condition) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        //params.addValue("id", entity.getId());
 
         try {
             List<Map<String, Object>> list = jdbcTemplate.queryForList(queryList, params);
@@ -123,7 +122,6 @@ public class GenreDaoImpl implements GenreDao {
             genre.setDescription((String) m.get("description"));
             result.add(genre);
         });
-
         return result;
     }
 

@@ -27,7 +27,7 @@ class GenreServiceImplTest {
 
     @Test
     void getTest() {
-        assertNotNull(service.get(5));
+        assertNotNull(service.get(1));
     }
 
     @Test
@@ -55,20 +55,21 @@ class GenreServiceImplTest {
     @Test
     void deleteTest() {
         Genre genre = new Genre("Genre Delete", "Description Delete");
-        genre.setId(3);
+        int createId = service.save(genre);
+        genre.setId(createId);
         int count = service.delete(genre);
-        assertNotEquals(0, count);
+        assertEquals(1, count);
 
     }
 
     @Test
     void maxTest() {
-        int i = service.max();
+        assertNotNull(service.max());
     }
 
     @Test
     void listTest() {
         List<Genre> genreList = service.getList("");
-        int i = 0;
+        assertNotEquals(0, genreList.size());
     }
 }

@@ -32,7 +32,7 @@ class AuthorServiceImplTest {
 
     @Test
     void saveInsertTest() {
-        Author author = new Author("FirstnameTest", "SurnameTest", "LastnameTest", "CC");
+        Author author = new Author("FirstnameTest", "SurnameTest", "LastnameTest", "QQ");
         assertNotEquals(0, service.save(author));
     }
 
@@ -46,12 +46,15 @@ class AuthorServiceImplTest {
 
     @Test
     void deleteTest() {
-        Author author = new Author();
-        author.setId(3);
+        Author author = new Author("DeleteTest", "DeleteTest", "DeleteTest", "DD");
+        int createId = service.save(author);
+        author.setId(createId);
+        assertEquals(1, service.delete(author));
+
     }
 
     @Test
     void maxTest() {
-        assertNotEquals(0, service.max());
+        assertNotNull(service.max());
     }
 }

@@ -12,8 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson06.domain.Book;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class BookDaoImpl implements BookDao {
@@ -37,6 +36,9 @@ public class BookDaoImpl implements BookDao {
 
     @Value("${books.max}")
     private String queryMax;
+
+    @Value("${books.list}")
+    private String queryList;
 
     @Autowired
     public BookDaoImpl(BookMapper bookMapper,
@@ -103,7 +105,33 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getList(String condition) {
-        return null;
+        List<Book> listBook = new ArrayList<>();
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        try {
+            List<Map<String, Object>> mapList = jdbcTemplate.queryForList(queryList, params);
+            mapList.forEach(m -> {
+                Book book = new Book();
+                book.setId((int) m.get("id"));
+                book.setAuthorId((int) m.get("id"));
+                book.setAuthorName(((String) m.get("authorname")).trim());
+                book.setGenreId((int) m.get("id"));
+                book.setGenre(((String) m.get("genre")).trim());
+                book.setTitle(((String) m.get("title")).trim());
+                book.setPages((int) m.get("pages"));
+                book.setIsbn(((String) m.get("isbn")).trim());
+                book.setDescription(((String) m.get("description")).trim());
+                listBook.add(book);
+            });
+
+            return listBook;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            return Collections.emptyList();
+        }
+
+
     }
 
     @Override
