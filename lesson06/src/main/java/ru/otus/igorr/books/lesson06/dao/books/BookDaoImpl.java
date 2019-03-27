@@ -3,7 +3,7 @@ package ru.otus.igorr.books.lesson06.dao.books;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,7 +12,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson06.domain.Book;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class BookDaoImpl implements BookDao {
@@ -21,30 +23,15 @@ public class BookDaoImpl implements BookDao {
 
     private final BookMapper bookMapper;
     private final NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Value("${books.get}")
-    private String queryGet;
-
-    @Value("${books.insert}")
-    private String queryInsert;
-
-    @Value("${books.update}")
-    private String queryUpdate;
-
-    @Value("${books.delete}")
-    private String queryDelete;
-
-    @Value("${books.max}")
-    private String queryMax;
-
-    @Value("${books.list}")
-    private String queryList;
+    private final Environment env;
 
     @Autowired
     public BookDaoImpl(BookMapper bookMapper,
-                       NamedParameterJdbcTemplate jdbcTemplate) {
+                       NamedParameterJdbcTemplate jdbcTemplate,
+                       Environment env) {
         this.bookMapper = bookMapper;
         this.jdbcTemplate = jdbcTemplate;
+        this.env = env;
     }
 
     @Override
@@ -55,7 +42,7 @@ public class BookDaoImpl implements BookDao {
         try {
             return Optional.ofNullable(
                     jdbcTemplate.queryForObject(
-                            queryGet,
+                            env.getProperty("queries.books.get"),
                             params,
                             bookMapper
                     ));
@@ -67,7 +54,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public int save(Book book) {
-        String query = queryInsert;
+        String query = env.getProperty("queries.books.insert");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("author_id", book.getAuthorId());
         params.addValue("genre_id", book.getGenreId());
@@ -76,7 +63,7 @@ public class BookDaoImpl implements BookDao {
         params.addValue("pages", book.getPages());
         params.addValue("description", book.getDescription().trim());
         if (book.getId() > 0) {
-            query = queryUpdate;
+            query = env.getProperty("queries.books.update");
             params.addValue("id", book.getId());
         }
 
@@ -96,7 +83,7 @@ public class BookDaoImpl implements BookDao {
         params.addValue("id", entity.getId());
 
         try {
-            return jdbcTemplate.update(queryDelete, params);
+            return jdbcTemplate.update(env.getProperty("queries.books.delete"), params);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;
@@ -105,41 +92,22 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getList(String condition) {
-        List<Book> listBook = new ArrayList<>();
-
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         try {
-            List<Map<String, Object>> mapList = jdbcTemplate.queryForList(queryList, params);
-            mapList.forEach(m -> {
-                Book book = new Book();
-                book.setId((int) m.get("id"));
-                book.setAuthorId((int) m.get("authorid"));
-                book.setAuthorName(((String) m.get("authorname")).trim());
-                book.setGenreId((int) m.get("genreid"));
-                book.setGenreName(((String) m.get("genrename")).trim());
-                book.setTitle(((String) m.get("title")).trim());
-                book.setPages((int) m.get("pages"));
-                book.setIsbn(((String) m.get("isbn")).trim());
-                book.setDescription(((String) m.get("description")).trim());
-                listBook.add(book);
-            });
-
-            return listBook;
+            List<Book> bookList = jdbcTemplate.query(env.getProperty("queries.books.list"), params, bookMapper);
+            return bookList;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return Collections.emptyList();
         }
-
-
     }
 
     @Override
-    public int max() {
+    public int getMaxId() {
         MapSqlParameterSource params = new MapSqlParameterSource();
         try {
-            int r = jdbcTemplate.queryForObject(queryMax, params, Integer.class);
-            return r;
+            return jdbcTemplate.queryForObject(env.getProperty("queries.books.max"), params, Integer.class);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;

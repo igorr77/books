@@ -1,4 +1,4 @@
-package ru.otus.igorr.books.lesson06.services.dao;
+package ru.otus.igorr.books.lesson06.services.genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public int max() {
-        return dao.max();
+    public int getMaxId() {
+        return dao.getMaxId();
     }
 }

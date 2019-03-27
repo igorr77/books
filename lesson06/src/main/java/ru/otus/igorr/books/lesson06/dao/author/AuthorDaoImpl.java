@@ -3,7 +3,7 @@ package ru.otus.igorr.books.lesson06.dao.author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,61 +22,46 @@ public class AuthorDaoImpl implements AuthorDao {
 
     private final AuthorMapper authorMapper;
     private final NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Value("${author.get}")
-    private String queryGet;
-
-    @Value("${author.insert}")
-    private String queryInsert;
-
-    @Value("${author.update}")
-    private String queryUpdate;
-
-    @Value("${author.delete}")
-    private String queryDelete;
-
-    @Value("${author.list}")
-    private String queryList;
-
-    @Value("${author.max}")
-    private String queryMax;
+    private final Environment env;
 
     @Autowired
     public AuthorDaoImpl(AuthorMapper authorMapper,
-                         NamedParameterJdbcTemplate jdbcTemplate) {
+                         NamedParameterJdbcTemplate jdbcTemplate,
+                         Environment env) {
         this.authorMapper = authorMapper;
         this.jdbcTemplate = jdbcTemplate;
+        this.env = env;
     }
 
 
     @Override
     public Optional<Author> get(int id) {
+
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
         try {
             return Optional.ofNullable(
                     jdbcTemplate.queryForObject(
-                            queryGet,
+                            env.getProperty("queries.author.get"),
                             params,
                             authorMapper
                     ));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
-
     }
 
     @Override
     public int save(Author author) {
-        String query = queryInsert;
+        String query = env.getProperty("queries.author.insert");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("firstname", author.getFirstName().trim());
         params.addValue("surname", author.getSurName().trim());
         params.addValue("lastname", author.getLastName().trim());
         params.addValue("country", author.getCountry().trim());
         if (author.getId() > 0) {
-            query = queryUpdate;
+            query = env.getProperty("queries.author.update");
             params.addValue("id", author.getId());
         }
 
@@ -88,7 +73,6 @@ public class AuthorDaoImpl implements AuthorDao {
             LOG.error(e.getMessage(), e);
             return 0;
         }
-
     }
 
     @Override
@@ -97,12 +81,11 @@ public class AuthorDaoImpl implements AuthorDao {
         params.addValue("id", author.getId());
 
         try {
-            return jdbcTemplate.update(queryDelete, params);
+            return jdbcTemplate.update(env.getProperty("queries.author.delete"), params);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;
         }
-
     }
 
     @Override
@@ -111,16 +94,15 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public int max() {
+    public int getMaxId() {
         MapSqlParameterSource params = new MapSqlParameterSource();
         try {
-            int r = jdbcTemplate.queryForObject(queryMax, params, Integer.class);
+            int r = jdbcTemplate.queryForObject(env.getProperty("queries.author.max"), params, Integer.class);
             return r;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;
         }
-
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.otus.igorr.books.lesson06.services.dao;
+package ru.otus.igorr.books.lesson06.services.author;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public int max() {
-        return dao.max();
+    public int ghetMaxId() {
+        return dao.getMaxId();
     }
 }

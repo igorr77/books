@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson06.domain.Author;
 import ru.otus.igorr.books.lesson06.exceptions.AuthorNotFoundException;
+import ru.otus.igorr.books.lesson06.services.author.AuthorService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +56,6 @@ class AuthorServiceImplTest {
 
     @Test
     void maxTest() {
-        assertNotNull(service.max());
+        assertNotNull(service.ghetMaxId());
     }
 }

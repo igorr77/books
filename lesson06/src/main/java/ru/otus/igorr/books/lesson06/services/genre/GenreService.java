@@ -1,24 +1,25 @@
-package ru.otus.igorr.books.lesson06.dao.genre;
+package ru.otus.igorr.books.lesson06.services.genre;
 
 import ru.otus.igorr.books.lesson06.domain.Genre;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface GenreDao {
-    Optional<Genre> get(int id);
+public interface GenreService {
+    /**
+     * @param id
+     * @return
+     */
+    Genre get(int id);
 
     /**
-     * Сохранение сущности
-     *
      * @param genre
-     * @return 0 - ошибка при сохранении, !0 - genreId
+     * @return
      */
     int save(Genre genre);
 
     /**
      * @param genre
-     * @return Колличество удаленных записей
+     * @return
      */
     int delete(Genre genre);
 
@@ -32,4 +33,5 @@ public interface GenreDao {
      * @return
      */
     int getMaxId();
+
 }

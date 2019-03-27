@@ -3,7 +3,7 @@ package ru.otus.igorr.books.lesson06.dao.genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,7 +12,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson06.domain.Genre;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class GenreDaoImpl implements GenreDao {
@@ -21,30 +23,15 @@ public class GenreDaoImpl implements GenreDao {
 
     private final GenreMapper genreMapper;
     private final NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Value("${genre.get}")
-    private String queryGet;
-
-    @Value("${genre.insert}")
-    private String queryInsert;
-
-    @Value("${genre.update}")
-    private String queryUpdate;
-
-    @Value("${genre.list}")
-    private String queryList;
-
-    @Value("${genre.delete}")
-    private String queryDelete;
-
-    @Value("${genre.max}")
-    private String queryMax;
+    private final Environment env;
 
     @Autowired
     public GenreDaoImpl(GenreMapper genreMapper,
-                        NamedParameterJdbcTemplate jdbcTemplate) {
+                        NamedParameterJdbcTemplate jdbcTemplate,
+                        Environment env) {
         this.genreMapper = genreMapper;
         this.jdbcTemplate = jdbcTemplate;
+        this.env = env;
     }
 
     @Override
@@ -55,7 +42,7 @@ public class GenreDaoImpl implements GenreDao {
         try {
             return Optional.ofNullable(
                     jdbcTemplate.queryForObject(
-                            queryGet,
+                            env.getProperty("queries.genre.get"),
                             params,
                             genreMapper
                     ));
@@ -66,12 +53,12 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public int save(Genre entity) {
-        String query = queryInsert;
+        String query = env.getProperty("queries.genre.insert");
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", entity.getName().trim());
         params.addValue("desc", entity.getDescription().trim());
         if (entity.getId() > 0) {
-            query = queryUpdate;
+            query = env.getProperty("queries.genre.update");
             params.addValue("id", entity.getId());
         }
 
@@ -92,7 +79,7 @@ public class GenreDaoImpl implements GenreDao {
         params.addValue("id", entity.getId());
 
         try {
-            return jdbcTemplate.update(queryDelete, params);
+            return jdbcTemplate.update(env.getProperty("queries.genre.delete"), params);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;
@@ -104,37 +91,22 @@ public class GenreDaoImpl implements GenreDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         try {
-            List<Map<String, Object>> list = jdbcTemplate.queryForList(queryList, params);
-            return convertToList(list);
+            List<Genre> list = jdbcTemplate.query(env.getProperty("queries.genre.list"), params, genreMapper);
+            return list;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return Collections.emptyList();
         }
     }
 
-    private List<Genre> convertToList(List<Map<String, Object>> list) {
-        List<Genre> result = new ArrayList<>();
-
-        list.forEach(m -> {
-            Genre genre = new Genre();
-            genre.setId((int) m.get("id"));
-            genre.setName(Optional.ofNullable((String) m.get("name")).orElse("").trim());
-            genre.setDescription(Optional.ofNullable((String) m.get("description")).orElse("").trim());
-            result.add(genre);
-        });
-        return result;
-    }
-
     @Override
-    public int max() {
+    public int getMaxId() {
         MapSqlParameterSource params = new MapSqlParameterSource();
         try {
-            int r = jdbcTemplate.queryForObject(queryMax, params, Integer.class);
-            return r;
+            return jdbcTemplate.queryForObject(env.getProperty("queries.genre.max"), params, Integer.class);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
             return 0;
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package ru.otus.igorr.books.lesson06.services.dao;
+package ru.otus.igorr.books.lesson06.services.book;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int max() {
-        return bookDao.max();
+    public int getMaxId() {
+        return bookDao.getMaxId();
     }
 }

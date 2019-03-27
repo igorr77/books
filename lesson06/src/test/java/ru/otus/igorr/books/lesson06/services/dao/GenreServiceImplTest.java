@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson06.domain.Genre;
 import ru.otus.igorr.books.lesson06.exceptions.GenreNotFoundException;
+import ru.otus.igorr.books.lesson06.services.genre.GenreService;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ class GenreServiceImplTest {
 
     @Test
     void maxTest() {
-        assertNotNull(service.max());
+        assertNotNull(service.getMaxId());
     }
 
     @Test
