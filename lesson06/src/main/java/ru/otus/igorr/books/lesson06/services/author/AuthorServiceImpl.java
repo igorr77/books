@@ -35,11 +35,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> getList(String condition) {
-        return null;
+        return dao.getList(condition);
     }
 
-    @Override
-    public int ghetMaxId() {
+    public int getMaxId() {
         return dao.getMaxId();
     }
 }

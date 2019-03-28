@@ -1,6 +1,7 @@
 spring:
   main:
     banner-mode: "off"
+    allow-bean-definition-overriding: true
 #
   shell:
     interactive:
@@ -51,7 +52,7 @@ queries:
       insert into test.author_data values(:id, :firstname, :surname, :lastname, :country)
       on conflict (id) do update set firstname= :firstname, surname= :surname, lastname= :lastname, country= :country
     delete: delete from test.author_data where id= :id
-    list: select firstname, surname, lastname, country from test.author_data where 1=1
+    list: select id, firstname, surname, lastname, country from test.author_data where 1=1
     max: select coalesce(max(id),0) from test.author_data
   books:
     get: >

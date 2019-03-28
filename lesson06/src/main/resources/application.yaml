@@ -35,3 +35,58 @@ pool:
   jdbcString: jdbc:postgresql://localhost:5432/otus
   jdbcUser: postgres
   jdbcPassword: postgres
+#
+queries:
+  schema: test
+  genre:
+    get: select id, name, description from test.genre_data where id = :id
+    insert: insert into test.genre_data (name, description) values(:name, :desc)
+    update: insert into test.genre_data values(:id, :name, :desc) on conflict (id) do update set name = :name, description = :desc
+    delete: delete from test.genre_data where id = :id
+    list: select id, name, description from test.genre_data where 1=1
+    max: select coalesce(max(id),0) from test.genre_data
+  author:
+    get: select id, firstname, surname, lastname, country from test.author_data where id= :id
+    insert: insert into test.author_data (firstname, surname, lastname, country) values(:firstname, :surname, :lastname, :country)
+    update: >
+      insert into test.author_data values(:id, :firstname, :surname, :lastname, :country)
+      on conflict (id) do update set firstname= :firstname, surname= :surname, lastname= :lastname, country= :country
+    delete: delete from test.author_data where id= :id
+    list: select id, firstname, surname, lastname, country from test.author_data where 1=1
+    max: select coalesce(max(id),0) from test.author_data
+  books:
+    get: >
+      select b.id, b.genre_id  genreid, g.name genrename,
+      b.author_id authorid, a.lastname||' '||coalesce(a.firstname,chr(1))||' '||coalesce(surname, chr(1)) authorname,
+        b.title, b.isbn, b.pages, b.description
+        from test.books_data b
+        join test.genre_data g on g.id = b.genre_id
+        join test.author_data a on a.id = b.author_id
+        where 1=1
+        and b.id = :id
+    insert: >
+      insert into test.books_data (author_id, genre_id, title, isbn, pages, description)
+      values (:author_id, :genre_id, :title, :isbn, :pages, :description)
+    update: >
+      insert into test.books_data values(:id, :author_id, :genre_id, :title, :isbn, :pages, :description)
+        on conflict(id) do update
+        set author_id = :author_id,
+        genre_id = :genre_id,
+        title = :title,
+        isbn = :isbn,
+        pages = :pages,
+        description = :description
+    delete: delete from test.books_data where id = :id
+    list: >
+      select b.id,
+        b.genre_id  genreid, g.name genreName,
+        b.author_id authorid, a.lastname||' '||coalesce(a.firstname,chr(1))||' '||coalesce(surname, chr(1)) authorname,
+        b.title,
+        b.isbn,
+        b.pages,
+        b.description
+        from test.books_data b
+        join test.genre_data g on g.id = b.genre_id
+        join test.author_data a on a.id = b.author_id
+        where 1=1
+    max: select coalesce(max(id),0) id from test.books_data

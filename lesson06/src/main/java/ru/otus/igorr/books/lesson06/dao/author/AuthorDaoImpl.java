@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson06.domain.Author;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,7 +91,15 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public List<Author> getList(String condition) {
-        return null;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        try {
+            List<Author> list = jdbcTemplate.query(env.getProperty("queries.author.list"), params, authorMapper);
+            return list;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            return Collections.emptyList();
+        }
     }
 
     @Override

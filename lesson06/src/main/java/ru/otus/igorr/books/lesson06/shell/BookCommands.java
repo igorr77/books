@@ -5,9 +5,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.igorr.books.lesson06.domain.Book;
-import ru.otus.igorr.books.lesson06.services.author.AuthorService;
 import ru.otus.igorr.books.lesson06.services.book.BookService;
-import ru.otus.igorr.books.lesson06.services.genre.GenreService;
 
 import java.util.List;
 
@@ -15,14 +13,10 @@ import java.util.List;
 public class BookCommands {
 
 
-    private final GenreService genreService;
-    private final AuthorService authorService;
     private final BookService bookService;
 
     @Autowired
-    public BookCommands(GenreService genreService, AuthorService authorService, BookService bookService) {
-        this.genreService = genreService;
-        this.authorService = authorService;
+    public BookCommands(BookService bookService) {
         this.bookService = bookService;
     }
 

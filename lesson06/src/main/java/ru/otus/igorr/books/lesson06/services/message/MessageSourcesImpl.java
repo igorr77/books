@@ -3,6 +3,7 @@ package ru.otus.igorr.books.lesson06.services.message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
@@ -23,7 +24,7 @@ public class MessageSourcesImpl implements MessageSources {
     private MessagesProps props;
 
     @Autowired
-    public MessageSourcesImpl(final MessageSource[] messageSources,
+    public MessageSourcesImpl(final @Qualifier("mSource") MessageSource[] messageSources,
                               final MessagesProps props
     ) {
         this.messageSources = messageSources;

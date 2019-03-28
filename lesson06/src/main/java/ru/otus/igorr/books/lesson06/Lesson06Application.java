@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import ru.otus.igorr.books.lesson06.config.MessagesProps;
 
 @SpringBootApplication
@@ -18,15 +16,6 @@ public class Lesson06Application {
 
     public static void main(String[] args){
         SpringApplication.run(Lesson06Application.class);
-    }
-
-    @Bean
-    public org.springframework.context.MessageSource messageSource(MessagesProps props) {
-        ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-        ms.setBasename(props.getBundle());
-        ms.setDefaultEncoding("UTF-8");
-        LOG.debug("===> {}", props.getBundle());
-        return ms;
     }
 
 }

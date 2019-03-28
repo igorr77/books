@@ -5,8 +5,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.igorr.books.lesson06.domain.Genre;
-import ru.otus.igorr.books.lesson06.services.author.AuthorService;
-import ru.otus.igorr.books.lesson06.services.book.BookService;
 import ru.otus.igorr.books.lesson06.services.genre.GenreService;
 
 import java.util.List;
@@ -16,14 +14,10 @@ public class GenreCommands {
 
 
     private final GenreService genreService;
-    private final AuthorService authorService;
-    private final BookService bookService;
 
     @Autowired
-    public GenreCommands(GenreService genreService, AuthorService authorService, BookService bookService) {
+    public GenreCommands(GenreService genreService) {
         this.genreService = genreService;
-        this.authorService = authorService;
-        this.bookService = bookService;
     }
 
     /* Genre */
