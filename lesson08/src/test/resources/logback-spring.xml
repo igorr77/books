@@ -7,13 +7,16 @@
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%-30.30logger{16}) : %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="ru.otus.igorr" level="debug"/>
-
     <logger name="org.springframework" level="info"/>
+    <logger name="org.springframework.dao" level="debug"/>
+    <logger name="org.jline" level="debug"/>
+
+    <logger name="ru.otus.igorr.books" level="debug"/>
+
 
     <root level="info">
         <appender-ref ref="console"/>

@@ -6,6 +6,7 @@ import ru.otus.igorr.books.lesson08.domain.genre.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 
 @Repository
@@ -21,12 +22,22 @@ public class GenreRepositoryImpl implements GenreRepository {
     }
 
     @Override
-    public int save(Genre genre) {
+    public void save(Genre genre) {
         if (genre.getId() == 0) {
             em.persist(genre);
         } else {
             em.merge(genre);
         }
-        return 0;
+    }
+
+    @Override
+    public List<Genre> getList() {
+        List<Genre> result = em.createQuery("select e from Genre e").getResultList();
+        return result;
+    }
+
+    @Override
+    public void delete(Genre genre) {
+        em.remove(em.contains(genre) ? genre : em.merge(genre));
     }
 }

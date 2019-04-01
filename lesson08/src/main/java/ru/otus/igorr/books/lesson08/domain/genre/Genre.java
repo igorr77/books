@@ -42,4 +42,12 @@ public class Genre {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Genre genre = (Genre) obj;
+        return id == genre.getId()
+                && name.equals(genre.getName())
+                && description.equals(genre.getDescription());
+    }
 }

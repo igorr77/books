@@ -1,9 +1,6 @@
 package ru.otus.igorr.books.lesson08.domain.book;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Note {
@@ -13,6 +10,10 @@ public class Note {
 
     @Column(name = "Note")
     private String note;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book owner;
 
     public int getId() {
         return id;
@@ -28,5 +29,13 @@ public class Note {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Book getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Book owner) {
+        this.owner = owner;
     }
 }

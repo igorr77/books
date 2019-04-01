@@ -24,7 +24,7 @@ public class Book {
     @Column(name = "Description")
     private String description;
 
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
     private List<Note> note;
 
     public int getId() {
