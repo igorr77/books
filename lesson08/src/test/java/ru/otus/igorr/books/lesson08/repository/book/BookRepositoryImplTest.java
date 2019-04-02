@@ -16,13 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class BookRepositoryImplTest {
 
-    Book expectedBook;
+    private Book expectedBook;
 
     @Autowired
     BookRepository repository;
 
     @BeforeEach
     void setUp() {
+        // TODO: 02.04.19 рабочий вариант
         Author author = new Author();
         AuthorName authorName = new AuthorName();
         authorName.setFirstName("FirstName");
