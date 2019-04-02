@@ -18,7 +18,7 @@ public class Book {
     @OneToOne
     private Genre genre;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<Author> author;
 
     @Column(name = "Description")
