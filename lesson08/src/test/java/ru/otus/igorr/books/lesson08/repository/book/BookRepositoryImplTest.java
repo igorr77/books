@@ -31,8 +31,6 @@ class BookRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        // TODO: 02.04.19 Добавление авторов и комментарии
-
         prepareAuthor();
         prepareGenre();
 

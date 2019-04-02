@@ -12,11 +12,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-//@SpringBootTest
 @DataJpaTest
+@EnableAutoConfiguration
 @ContextConfiguration(classes = {GenreRepositoryImpl.class})
+@EntityScan(basePackageClasses = Genre.class)
 class GenreRepositoryImplTest {
-
 
     private Genre expectedGenre;
 
