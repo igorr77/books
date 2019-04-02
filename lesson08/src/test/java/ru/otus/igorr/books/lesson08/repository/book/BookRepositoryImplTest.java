@@ -23,7 +23,7 @@ class BookRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        // TODO: 02.04.19 рабочий вариант
+        // TODO: 02.04.19 Добавление авторов и комментарии
         Author author = new Author();
         AuthorName authorName = new AuthorName();
         authorName.setFirstName("FirstName");
