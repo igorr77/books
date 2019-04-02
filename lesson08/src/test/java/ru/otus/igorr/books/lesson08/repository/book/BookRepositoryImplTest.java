@@ -7,69 +7,98 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson08.domain.author.Author;
 import ru.otus.igorr.books.lesson08.domain.author.AuthorName;
 import ru.otus.igorr.books.lesson08.domain.book.Book;
+import ru.otus.igorr.books.lesson08.domain.book.Note;
+import ru.otus.igorr.books.lesson08.domain.genre.Genre;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BookRepositoryImplTest {
 
     private Book expectedBook;
+    private List<Author> authorList;
+    private Genre genre;
 
     @Autowired
-    BookRepository repository;
+    BookRepository bookRepository;
+
+    @Autowired
+    NoteRepository noteRepository;
 
     @BeforeEach
     void setUp() {
         // TODO: 02.04.19 Добавление авторов и комментарии
-        Author author = new Author();
-        AuthorName authorName = new AuthorName();
-        authorName.setFirstName("FirstName");
-        authorName.setSurName("SurName");
-        authorName.setLastName("LastName");
-        author.setName(authorName);
-        List<Author> authorList = new ArrayList<>();
-        authorList.add(author);
+
+        prepareAuthor();
+        prepareGenre();
 
         expectedBook = new Book();
         expectedBook.setTitle("Title");
         expectedBook.setAuthor(authorList);
+        expectedBook.setGenre(genre);
         expectedBook.setDescription("Description");
-        repository.save(expectedBook);
+        bookRepository.save(expectedBook);
     }
 
     @Test
     void getById() {
-        Book actualBook = repository.getById(1);
+        Book actualBook = bookRepository.getById(1);
         int breakPoint = 0;
         assertEquals(1, actualBook.getId());
     }
 
     @Test
     void saveTest() {
-
-        /*
-        List<Note> noteList = new ArrayList<>();
-
-        Book book = new Book();
-        book.setTitle("Title");
-        book.setNote(noteList);
-         */
-
-
+        // setUp()
     }
 
     @Test
     void getList() {
+        // TODO: 02.04.2019  
     }
 
     @Test
     void delete() {
+        // TODO: 02.04.2019  
     }
 
     @Test
-    void addNote() {
+    void addNoteTest() {
+        Note note = new Note();
+        note.setNote("Note");
+        note.setOwner(expectedBook);
+        noteRepository.add(note);
+
+        Book actualBook = bookRepository.getById(expectedBook.getId());
+
+        int breakPoint = 0;
+
+        assertAll( () -> assertEquals(expectedBook.getId(), actualBook.getId()),
+                   () -> assertNotNull(actualBook.getNote())
+                );
     }
+
+    private void prepareAuthor(){
+        AuthorName authorName = new AuthorName();
+        authorName.setFirstName("FirstName");
+        authorName.setSurName("SurName");
+        authorName.setLastName("LastName");
+
+        Author author = new Author();
+        author.setName(authorName);
+
+        authorList = new ArrayList<>();
+        authorList.add(author);
+    }
+
+    private void prepareGenre(){
+        genre = new Genre();
+        genre.setName("Genre Name");
+        genre.setDescription("Genre Description");
+    }
+
 }

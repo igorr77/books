@@ -7,13 +7,14 @@ import ru.otus.igorr.books.lesson08.domain.book.Note;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.util.List;
 
 @Repository
 @Transactional
 public class BookRepositoryImpl implements BookRepository {
 
-    @PersistenceContext
+    @PersistenceContext//(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override

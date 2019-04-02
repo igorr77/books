@@ -9,22 +9,23 @@ import java.util.List;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "Title")
     private String title;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderColumn(name = "name")
     private Genre genre;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Author> author;
 
     @Column(name = "Description")
     private String description;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Note> note;
 
     public int getId() {

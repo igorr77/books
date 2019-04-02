@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Note {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
     @Column(name = "Note")
