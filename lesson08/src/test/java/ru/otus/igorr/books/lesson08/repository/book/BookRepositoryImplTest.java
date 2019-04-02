@@ -11,7 +11,6 @@ import ru.otus.igorr.books.lesson08.domain.book.Note;
 import ru.otus.igorr.books.lesson08.domain.genre.Genre;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,12 +55,19 @@ class BookRepositoryImplTest {
 
     @Test
     void getList() {
-        // TODO: 02.04.2019  
+        List<Book> list = bookRepository.getList();
+        assertAll(() -> assertEquals(1, list.size()),
+                () -> assertEquals(expectedBook, list.get(0)));
+
     }
 
     @Test
     void delete() {
-        // TODO: 02.04.2019  
+        Book delBook = new Book();
+        delBook.setId(1);
+        bookRepository.delete(delBook);
+        Book actualBook = bookRepository.getById(1);
+        assertNull(actualBook);
     }
 
     @Test
@@ -75,12 +81,12 @@ class BookRepositoryImplTest {
 
         int breakPoint = 0;
 
-        assertAll( () -> assertEquals(expectedBook.getId(), actualBook.getId()),
-                   () -> assertNotNull(actualBook.getNote())
-                );
+        assertAll(() -> assertEquals(expectedBook.getId(), actualBook.getId()),
+                () -> assertNotNull(actualBook.getNote())
+        );
     }
 
-    private void prepareAuthor(){
+    private void prepareAuthor() {
         AuthorName authorName = new AuthorName();
         authorName.setFirstName("FirstName");
         authorName.setSurName("SurName");
@@ -93,7 +99,7 @@ class BookRepositoryImplTest {
         authorList.add(author);
     }
 
-    private void prepareGenre(){
+    private void prepareGenre() {
         genre = new Genre();
         genre.setName("Genre Name");
         genre.setDescription("Genre Description");

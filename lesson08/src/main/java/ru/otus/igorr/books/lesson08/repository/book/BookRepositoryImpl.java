@@ -7,7 +7,6 @@ import ru.otus.igorr.books.lesson08.domain.book.Note;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.util.List;
 
 @Repository
@@ -33,14 +32,14 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<Book> getList() {
-        return null;
+        List<Book> result = em.createQuery("select e from Book e").getResultList();
+        return result;
     }
 
     @Override
     public void delete(Book book) {
-
+        em.remove(em.contains(book) ? book : em.merge(book));
     }
-
     @Override
     public void addNote(Book book, Note note) {
 

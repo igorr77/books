@@ -75,4 +75,36 @@ public class Book {
     public void setNote(List<Note> note) {
         this.note = note;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!Book.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final Book other = (Book) obj;
+
+        /* Минимум */
+
+        if (this.id != other.getId()) {
+            return false;
+        }
+        if (this.genre == null && other.getGenre() != null) {
+            return false;
+        }
+
+        if (!this.genre.equals(other.getGenre())) {
+            return false;
+        }
+        if (!this.title.equals(other.getTitle())) {
+            return false;
+        }
+
+        return true;
+    }
 }

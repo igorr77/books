@@ -1,11 +1,7 @@
 package ru.otus.igorr.books.lesson08.domain.genre;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Genre {
@@ -46,9 +42,27 @@ public class Genre {
 
     @Override
     public boolean equals(Object obj) {
-        Genre genre = (Genre) obj;
-        return id == genre.getId()
-                && name.equals(genre.getName())
-                && description.equals(genre.getDescription());
+
+        if (obj == null) {
+            return false;
+        }
+        if (!Genre.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final Genre other = (Genre) obj;
+
+        /* Минимум */
+
+        if (this.id != other.getId()) {
+            return false;
+        }
+        if (!this.name.equals(other.getName())) {
+            return false;
+        }
+        if (!this.description.equals(other.getDescription())) {
+            return false;
+        }
+        return true;
     }
 }
