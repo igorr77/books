@@ -2,10 +2,8 @@ package ru.otus.igorr.books.lesson08.repository.book;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.igorr.books.lesson08.domain.author.Author;
 import ru.otus.igorr.books.lesson08.domain.book.Book;
 import ru.otus.igorr.books.lesson08.domain.book.Note;
-import ru.otus.igorr.books.lesson08.domain.genre.Genre;
 import ru.otus.igorr.books.lesson08.dto.BookDto;
 import ru.otus.igorr.books.lesson08.dto.BookDtoConverter;
 
@@ -33,22 +31,21 @@ public class BookRepositoryImpl implements BookRepository {
         } else {
             em.merge(book);
         }
-        int breakPoint = 0;
         return book.getId();
     }
 
     @Override
     public List<Book> getList() {
-        List<Book> result = em.createQuery("select e from Book e").getResultList();
-        return result;
+        return em.createQuery("select e from Book e").getResultList();
     }
 
     @Override
     public void delete(Book book) {
         em.remove(em.contains(book) ? book : em.merge(book));
     }
-    @Override
-    public void addNote(Book book, Note note) {
 
+    @Override
+    public void addNote(Note note) {
+        em.persist(note);
     }
 }

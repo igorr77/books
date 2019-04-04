@@ -19,9 +19,10 @@ public class Lesson08Application {
     private static final Logger LOG = LoggerFactory.getLogger(Lesson08Application.class);
 
     public static void main(String[] args) throws SQLException {
-        //SpringApplication.run(Lesson08Application.class);
+        LOG.info("Start app");
         ApplicationContext context = SpringApplication.run(Lesson08Application.class);
         Console.main(args);
+        LOG.info("Stop app");
     }
 
 }

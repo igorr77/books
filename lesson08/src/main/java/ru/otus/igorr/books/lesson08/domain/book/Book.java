@@ -41,6 +41,10 @@ public class Book {
             return false;
         }
 
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+
         if (!Book.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
@@ -56,44 +60,15 @@ public class Book {
             return false;
         }
 
-        if (!this.genre.equals(other.getGenre())) {
+        if (this.genre != null && !this.genre.equals(other.getGenre())) {
             return false;
         }
-        if (!this.title.equals(other.getTitle())) {
-            return false;
-        }
-        return true;
+
+        return this.title.equals(other.getTitle());
     }
 
-
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-
-        if (!Book.class.isAssignableFrom(obj.getClass())) {
-            return false;
-        }
-
-        final Book other = (Book) obj;
-
-        /* Минимум */
-
-        if (this.id != other.getId()) {
-            return false;
-        }
-        if (this.genre == null && other.getGenre() != null) {
-            return false;
-        }
-
-        if (!this.genre.equals(other.getGenre())) {
-            return false;
-        }
-        if (!this.title.equals(other.getTitle())) {
-            return false;
-        }
-
-        return true;
+    public int hashCode() {
+        return super.hashCode();
     }
 }

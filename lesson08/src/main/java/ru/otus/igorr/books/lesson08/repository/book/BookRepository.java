@@ -15,5 +15,5 @@ public interface BookRepository {
 
     void delete(Book book);
 
-    void addNote(Book book, Note note);
+    void addNote(Note note);
 }
