@@ -69,6 +69,14 @@
             <scope>compile</scope>
         </dependency-->
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+
         <!-- DB access -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -142,6 +150,7 @@
             <artifactId>opencsv</artifactId>
             <version>4.5</version>
         </dependency>
+
 
 
     </dependencies>

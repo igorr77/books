@@ -1,85 +1,47 @@
 package ru.otus.igorr.books.lesson08.domain.book;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.otus.igorr.books.lesson08.domain.author.Author;
 import ru.otus.igorr.books.lesson08.domain.genre.Genre;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "book_id")
     private int id;
 
-    @Column(name = "Title")
+    @Column(name = "title")
     private String title;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "book_author_ref")
+    private List<Author> authorList;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OrderColumn(name = "name")
     private Genre genre;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<Author> author;
 
     @Column(name = "Description")
     private String description;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<Note> note;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
-    public List<Author> getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(List<Author> author) {
-        this.author = author;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Note> getNote() {
-        return note;
-    }
-
-    public void setNote(List<Note> note) {
-        this.note = note;
-    }
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private List<Note> noteList;
 
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
+            return false;
+        }
+
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
 
@@ -98,13 +60,15 @@ public class Book {
             return false;
         }
 
-        if (!this.genre.equals(other.getGenre())) {
-            return false;
-        }
-        if (!this.title.equals(other.getTitle())) {
+        if (this.genre != null && !this.genre.equals(other.getGenre())) {
             return false;
         }
 
-        return true;
+        return this.title.equals(other.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
