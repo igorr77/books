@@ -15,18 +15,18 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository repository;
-    private final DtoConverter<Book, BookDto> converter;
+    private final DtoConverter<Book, BookDto> bookConverter;
 
     @Autowired
     public BookServiceImpl(BookRepository repository,
                            @Qualifier("bookConverter") DtoConverter converter) {
         this.repository = repository;
-        this.converter = converter;
+        this.bookConverter = converter;
     }
 
     @Override
     public void add(BookDto dto) {
-        Book book = repository.save(converter.fill(dto));
+        Book book = repository.save(bookConverter.fill(dto));
         int breakPoint = 0;
     }
 
@@ -36,9 +36,12 @@ public class BookServiceImpl implements BookService {
         List<Book> bookList = repository.findAll();
 
         List<BookDto> dtoList = new ArrayList<>();
-        bookList.forEach(e -> dtoList.add(((BookDtoConverter) converter).convert(e)));
+        bookList.forEach(e -> dtoList.add(((BookDtoConverter) bookConverter).convert(e)));
 
         return dtoList;
     }
 
+    @Override
+    public void addNote(NoteDto dto) {
+    }
 }
