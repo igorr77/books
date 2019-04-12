@@ -13,8 +13,8 @@ import java.util.List;
 public class BookDto {
     private long id;
     private String title;
-    private List<Author> authorList;
-    private Genre genre;
+    private List<AuthorDto> authorDtoList;
+    private GenreDto genreDto;
     private String description;
-    private List<Note> noteList;
+    private List<NoteDto> noteDtoList;
 }
