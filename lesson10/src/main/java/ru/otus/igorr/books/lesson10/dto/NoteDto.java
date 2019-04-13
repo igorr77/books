@@ -9,4 +9,13 @@ public class NoteDto {
     private long id;
     private long bookId;
     private String note;
+
+    @Override
+    public String toString() {
+        return "NoteDto{" +
+                "id=" + id +
+                ", bookId=" + bookId +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }

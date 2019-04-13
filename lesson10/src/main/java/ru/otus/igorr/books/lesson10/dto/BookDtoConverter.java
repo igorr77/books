@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
+
 @Service("bookConverter")
 public class BookDtoConverter implements DtoConverter<Book, BookDto> {
 
@@ -52,29 +54,33 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     BookDto entity2dto(Book book) {
         BookDto dto = new BookDto();
 
+        // TODO: 13.04.19
+
         if (book != null) {
-            List<Author> authorList = Optional.ofNullable(book.getAuthorList()).orElse(Collections.emptyList());
-            List<AuthorDto> authorDtoList = new ArrayList<>();
+
+            List<Author> authorList = new ArrayList<>();
+            authorList.addAll(Optional.of(book.getAuthors()).orElse(Collections.emptySet()));
+            List<AuthorDto> authorDtoList = authorConverter.convertList(authorList);
 
             Genre genre = book.getGenre();
 
-            List<Note> noteList = book.getNoteList();
-            List<NoteDto> noteDtoList = new ArrayList<>();
-            noteList.forEach(note -> noteDtoList.add(noteConverter.convert(note)));
+            List<Note> noteList = new ArrayList<>();
+            noteList.addAll(Optional.ofNullable(book.getNotes()).orElse(Collections.emptySet()));
+            List<NoteDto> noteDtoList = noteConverter.convertList(noteList);
 
             dto.setId(book.getId());
             dto.setTitle(book.getTitle());
-            dto.setAuthorDtoList(authorDtoList);
+            dto.setAuthorList(authorDtoList);
             dto.setGenreDto(genreConverter.convert(genre));
             dto.setDescription(book.getDescription());
-            dto.setNoteDtoList(noteDtoList);
+            dto.setNoteList(noteDtoList);
         } else {
-            dto.setId(-1L);
+            dto.setId(NOT_FOUND_ENTITY_ID);
         }
         return dto;
     }
 
-    Book dto2entity(BookDto dto){
+    Book dto2entity(BookDto dto) {
         Book book = new Book();
 
         // TODO: 12.04.2019

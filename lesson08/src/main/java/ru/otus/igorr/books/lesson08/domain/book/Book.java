@@ -31,7 +31,7 @@ public class Book {
     @Column(name = "Description")
     private String description;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<Note> noteList;
 
 

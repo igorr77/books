@@ -24,7 +24,7 @@ public class BookCommands {
     // TODO: 26.03.19 Books
     /* Books*/
     @ShellMethod(key = "bookInsert", value = "Add Book object")
-    public void bookInsert(@ShellOption(value = "--authorId", defaultValue = "1") int authorId,
+    public void bookInsert(@ShellOption(value = "--id", defaultValue = "1") int authorId,
                            @ShellOption(value = "--genreId", defaultValue = "1") int genreId,
                            @ShellOption(value = "--title", defaultValue = "Title") String title,
                            @ShellOption(value = "--isbn", defaultValue = "1234567890123") String isbn,

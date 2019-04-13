@@ -102,7 +102,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", authorId=" + authorId +
+                ", id=" + authorId +
                 ", authorName='" + authorName + '\'' +
                 ", genreId=" + genreId +
                 ", genreName='" + genreName + '\'' +

@@ -1,6 +1,5 @@
 package ru.otus.igorr.books.lesson10.service.genre;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,12 +12,13 @@ import ru.otus.igorr.books.lesson10.repository.genre.GenreRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
+
 
 @Service
 public class GenreServiceImpl implements GenreService {
 
     private static final Genre EMPTY_GENRE = new Genre();
-    private static final long ENTITY_NOT_FOUND = -1L;
     private final GenreRepository repository;
     private final DtoConverter<Genre, GenreDto> converter;
 
@@ -28,7 +28,7 @@ public class GenreServiceImpl implements GenreService {
         this.repository = repository;
         this.converter = converter;
 
-        EMPTY_GENRE.setId(ENTITY_NOT_FOUND);
+        EMPTY_GENRE.setId(NOT_FOUND_ENTITY_ID);
     }
 
 

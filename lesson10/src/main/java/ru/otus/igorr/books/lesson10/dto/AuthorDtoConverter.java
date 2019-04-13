@@ -11,11 +11,12 @@ import ru.otus.igorr.books.lesson10.domain.author.AuthorName;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
+
 @Service("authorConverter")
 public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
     private final static Logger LOG = LoggerFactory.getLogger(AuthorDtoConverter.class);
-    private static final long EMPTY_ID = -1L;
 
     private final GenreDtoConverter genreConverter;
 
@@ -60,7 +61,7 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
             dto.setGenreList(genreConverter.convertList(author.getGenre()));
         } catch (NullPointerException npe) {
             LOG.warn("!!!", npe);
-            dto.setId(EMPTY_ID);
+            dto.setId(NOT_FOUND_ENTITY_ID);
         }
         return dto;
 

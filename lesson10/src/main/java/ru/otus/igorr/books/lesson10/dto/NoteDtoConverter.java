@@ -3,7 +3,6 @@ package ru.otus.igorr.books.lesson10.dto;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson10.domain.book.Book;
 import ru.otus.igorr.books.lesson10.domain.book.Note;
-import ru.otus.igorr.books.lesson10.domain.genre.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,8 @@ public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {
 
     private NoteDto entity2dto(Note note) {
         final NoteDto dto = new NoteDto();
-        dto.setId(note.getId());
-        dto.setBookId(note.getOwner().getId());
+        dto.setId(note.getNoteId());
+        dto.setBookId(note.getBook().getId());
         dto.setNote(note.getNote());
         return dto;
     }
@@ -49,9 +48,9 @@ public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {
         Book book = new Book();
         book.setId(dto.getBookId());
 
-        note.setId(dto.getId());
+        note.setNoteId(dto.getId());
         note.setNote(dto.getNote());
-        note.setOwner(book);
+        note.setBook(book);
 
         return note;
     }

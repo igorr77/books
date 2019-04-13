@@ -7,39 +7,34 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson10.domain.book.Book;
+import ru.otus.igorr.books.lesson10.domain.book.Note;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
-//public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface NoteRepository extends JpaRepository<Note, Long> {
 
     @Override
-    Optional<Book> findById(Long aLong);
-
-    @Override
-    <S extends Book> S save(S s);
-
-    @Override
-    <S extends Book> S saveAndFlush(S s);
+    <S extends Note> S saveAndFlush(S s);
 
     @Override
     void flush();
 
     @Override
-    void delete(Book book);
+    Optional<Note> findById(Long aLong);
+
+    @Query("select n from Note n where n.book = :book")
+    Set<Note> findByBook(@Param("book") Book book);
 
     @Override
-    List<Book> findAll();
+    Page<Note> findAll(Pageable pageable);
 
     @Override
-    Page<Book> findAll(Pageable pageable);
+    void deleteById(Long aLong);
 
-    @Query("select b from Book b where b.title = :title")
-    Book findByTitle(@Param("title") String title);
-
-
+    @Override
+    void delete(Note note);
 
 
 }

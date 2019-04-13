@@ -10,14 +10,15 @@ import javax.persistence.*;
 @Setter
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long noteId;
 
     @Column(name = "Note")
     private String note;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book owner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BOOK_ID", nullable = false)
+    private Book book;
 
 }

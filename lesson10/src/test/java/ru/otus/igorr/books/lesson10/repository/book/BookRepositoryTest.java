@@ -2,24 +2,25 @@ package ru.otus.igorr.books.lesson10.repository.book;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import ru.otus.igorr.books.lesson10.domain.author.Author;
-import ru.otus.igorr.books.lesson10.domain.author.AuthorName;
 import ru.otus.igorr.books.lesson10.domain.book.Book;
-import ru.otus.igorr.books.lesson10.domain.genre.Genre;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.otus.igorr.books.lesson10.domain.book.Note;
+import ru.otus.igorr.books.lesson10.utils.PrepareDataHelper;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
 
 @DataJpaTest
 class BookRepositoryTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BookRepositoryTest.class);
 
     private static final Book EMPTY_BOOK = new Book();
     private static final long FIND_ID = 1L;
@@ -28,10 +29,13 @@ class BookRepositoryTest {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    NoteRepository noteRepository;
+
 
     @BeforeEach
     void setUp() {
-        EMPTY_BOOK.setId(-1L);
+        EMPTY_BOOK.setId(NOT_FOUND_ENTITY_ID);
     }
 
     @Test
@@ -53,7 +57,7 @@ class BookRepositoryTest {
 
         assertAll(
                 () -> assertEquals(DELETE_ID, actualBook.getId()),
-                () -> assertEquals(EMPTY_BOOK.getId(), deletedBook.getId())
+                () -> assertEquals(NOT_FOUND_ENTITY_ID, deletedBook.getId())
         );
 
     }
@@ -66,65 +70,44 @@ class BookRepositoryTest {
 
     @Test
     void addNoteTest() {
-        Book book = prepareBook();
-        //Book saveBook = bookRepository.save(book);
+        Book book = PrepareDataHelper.prepareBook();
 
-        Page<Book> page = bookRepository.findAll(PageRequest.of(1, 4, new Sort(Sort.Direction.ASC, "id")));
+        Book saveBook = bookRepository.saveAndFlush(book);
 
-        int breakPoint = 0;
+        Page<Book> bookPage = bookRepository.findAll(PageRequest.of(0, 20, new Sort(Sort.Direction.ASC, "id")));
+
+
+        Note note = PrepareDataHelper.prepareNote(0);
+        note.setBook(saveBook);
+
+        LOG.debug("-------- add Note -------------");
+
+        noteRepository.saveAndFlush(note);
+
+        LOG.debug("--------- flush ------------");
+
+        bookRepository.flush();
+
+        LOG.debug("--------- find book ------------");
+
+        //List<Note> noteList = new ArrayList<>();
+        //noteList.add(note);
+        //saveBook.setNoteList(noteList);
+
+        Book qqq = bookRepository.findById(saveBook.getId()).orElse(new Book());
+
+
+        LOG.debug("-------- notePage -------------");
+
+        Page<Note> notePage = noteRepository.findAll(PageRequest.of(0, 20, new Sort(Sort.Direction.ASC, "noteId")));
+
+
+        LOG.debug("---------- book Page -----------");
+
+        bookPage = bookRepository.findAll(PageRequest.of(0, 20, new Sort(Sort.Direction.ASC, "id")));
+
+        int breakPoint = 1;
     }
 
-    private Book prepareBook() {
-        Book book = new Book();
-        List<Author> authorList = prepareAuthorList(3);
-
-
-        book.setTitle("Book.Title.AddNote");
-        book.setAuthorList(authorList);
-        book.setGenre(prepareGenre(1));
-        book.setDescription("Book.Description");
-
-        return book;
-    }
-
-    private Genre prepareGenre(int n) {
-        Genre genre = new Genre();
-        genre.setId(n);
-        genre.setName("Book.Genre: " + n);
-        genre.setDescription("Book.Description: " + n);
-        return genre;
-    }
-
-    private List<Author> prepareAuthorList(int count) {
-        List<Author> list = new ArrayList<>();
-        for (int i = 1; i <= count; i++) {
-            list.add(prepareAuthor(i));
-        }
-        return list;
-    }
-
-    private Author prepareAuthor(int i) {
-        Author author = new Author();
-        author.setId(i);
-        author.setName(prepareAuthorName(i));
-        author.setGenre(prepareGenreList(2));
-        return author;
-    }
-
-    private List<Genre> prepareGenreList(int count) {
-        List<Genre> list = new ArrayList<>();
-        for(int i = 1; i<= count; i++){
-            list.add(prepareGenre(i));
-        }
-        return list;
-    }
-
-    private AuthorName prepareAuthorName(int i) {
-        AuthorName authorName = new AuthorName();
-        authorName.setFirstName("Firstname" + i);
-        authorName.setLastName("Lastname" + i);
-        authorName.setSurName("Surname" + i);
-        return authorName;
-    }
 
 }

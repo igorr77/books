@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "Name")
