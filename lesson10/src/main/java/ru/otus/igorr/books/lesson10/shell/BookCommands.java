@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.igorr.books.lesson10.domain.author.Author;
 import ru.otus.igorr.books.lesson10.domain.genre.Genre;
+import ru.otus.igorr.books.lesson10.dto.AuthorDto;
 import ru.otus.igorr.books.lesson10.dto.BookDto;
 import ru.otus.igorr.books.lesson10.service.book.BookService;
 import ru.otus.igorr.books.lesson10.service.genre.GenreService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ShellComponent
@@ -26,9 +29,17 @@ public class BookCommands {
 
     @ShellMethod(key = "bookAdd", value = "Add book entity")
     public void genreInsert(@ShellOption("--title") String title,
-                            @ShellOption("--desc") String description,
-                            @ShellOption("--genreId") long genreId) {
+                            @ShellOption("--authorId") long authorId,
+                            @ShellOption("--genreId") long genreId,
+                            @ShellOption("--desc") String description
+
+    ) {
         BookDto dto = new BookDto();
+        List<AuthorDto> authorList = new ArrayList();
+        AuthorDto author = new AuthorDto();
+
+        dto.setTitle(title);
+        dto.setAuthorList(authorList);
         dto.setTitle(title);
 
 
@@ -41,7 +52,7 @@ public class BookCommands {
     }
 
 
-    @ShellMethod(key = "bookList", value = "Show genre list")
+    @ShellMethod(key = "bookList", value = "Show book list")
     public void bookList() {
 
         List<BookDto> list = bookService.getList();

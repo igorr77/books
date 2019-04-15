@@ -40,21 +40,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getById(long id) {
-        BookDto bookDto = new BookDto();
-
         Book book = bookRepository.findById(id).orElse(new Book());
         Set<Note> notes = noteRepository.findByBook(book);
         book.setNotes(notes);
-
-        bookDto = bookConverter.convert(book);
-
-        return bookDto;
+        return bookConverter.convert(book);
     }
 
     @Override
-    public void add(BookDto dto) {
-        Book book = bookRepository.save(bookConverter.fill(dto));
-        int breakPoint = 0;
+    public long add(BookDto dto) {
+        Book book = bookConverter.fill(dto);
+        Book saveBook = bookRepository.saveAndFlush(book);
+        return saveBook.getId();
     }
 
     @Override

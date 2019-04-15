@@ -7,10 +7,7 @@ import ru.otus.igorr.books.lesson10.domain.book.Book;
 import ru.otus.igorr.books.lesson10.domain.book.Note;
 import ru.otus.igorr.books.lesson10.domain.genre.Genre;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
 
@@ -54,15 +51,13 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     BookDto entity2dto(Book book) {
         BookDto dto = new BookDto();
 
-        // TODO: 13.04.19
-
         if (book != null) {
 
             List<Author> authorList = new ArrayList<>();
             authorList.addAll(Optional.of(book.getAuthors()).orElse(Collections.emptySet()));
             List<AuthorDto> authorDtoList = authorConverter.convertList(authorList);
 
-            Genre genre = book.getGenre();
+            Genre genre = Optional.ofNullable(book.getGenre()).orElse(Genre.empty());
 
             List<Note> noteList = new ArrayList<>();
             noteList.addAll(Optional.ofNullable(book.getNotes()).orElse(Collections.emptySet()));
@@ -83,7 +78,15 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     Book dto2entity(BookDto dto) {
         Book book = new Book();
 
-        // TODO: 12.04.2019
+        book.setTitle(dto.getTitle());
+        Set<Author> authors = new HashSet<>();
+        dto.getAuthorList().forEach(authorDto ->
+                authors.add(authorConverter.fill(authorDto))
+        );
+        book.setAuthors(authors);
+        book.setGenre(genreConverter.fill(dto.getGenreDto()));
+
+        book.setDescription(dto.getDescription());
 
         return book;
     }

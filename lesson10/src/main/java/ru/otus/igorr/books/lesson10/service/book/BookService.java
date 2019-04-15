@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BookService {
     BookDto getById(long id);
-    void add(BookDto dto);
+    long add(BookDto dto);
     List<BookDto> getList();
 
     NoteDto addNote(NoteDto dto);

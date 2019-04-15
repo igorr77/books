@@ -9,7 +9,9 @@ import ru.otus.igorr.books.lesson10.domain.author.Author;
 import ru.otus.igorr.books.lesson10.domain.author.AuthorName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
 
@@ -77,7 +79,7 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
         author.setId(dto.getId());
         author.setName(authorName);
-        author.setGenre(genreConverter.fillList(dto.getGenreList()));
+        author.setGenre(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
 
         return author;
     }
