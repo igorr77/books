@@ -13,6 +13,7 @@ public class AuthorDto {
     private String lastName;
     private String surName;
     private List<GenreDto> genreList;
+    private List<BookDto> bookList;
 
 
     @Override

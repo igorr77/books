@@ -1,6 +1,8 @@
 package ru.otus.igorr.books.lesson10.dto;
 
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson10.domain.author.Author;
 import ru.otus.igorr.books.lesson10.domain.book.Book;
@@ -19,7 +21,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     private final DtoConverter<Note, NoteDto> noteConverter;
 
     @Autowired
-    public BookDtoConverter(DtoConverter<Author, AuthorDto> authorConverter,
+    public BookDtoConverter(@Lazy DtoConverter<Author, AuthorDto> authorConverter,
                             DtoConverter<Genre, GenreDto> genreConverter,
                             DtoConverter<Note, NoteDto> noteConverter) {
         this.authorConverter = authorConverter;
@@ -40,7 +42,9 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
 
     @Override
     public List<BookDto> convertList(List<Book> list) {
-        return null;
+        List<BookDto> dtoList = new ArrayList<>();
+        list.forEach(book -> dtoList.add(entity2dto(book)));
+        return dtoList;
     }
 
     @Override
@@ -60,7 +64,12 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
             Genre genre = Optional.ofNullable(book.getGenre()).orElse(Genre.empty());
 
             List<Note> noteList = new ArrayList<>();
-            noteList.addAll(Optional.ofNullable(book.getNotes()).orElse(Collections.emptySet()));
+            try {
+                noteList.addAll(Optional.ofNullable(book.getNotes()).orElse(Collections.emptySet()));
+            } catch (LazyInitializationException e) {
+                noteList.addAll(Collections.emptySet());
+            }
+
             List<NoteDto> noteDtoList = noteConverter.convertList(noteList);
 
             dto.setId(book.getId());

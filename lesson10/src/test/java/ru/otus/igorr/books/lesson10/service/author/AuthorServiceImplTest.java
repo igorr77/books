@@ -28,9 +28,14 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void getListTest() {
-        List<AuthorDto> authorList = authorService.getList();
+    void getListWithoutBooksTest() {
+        List<AuthorDto> authorList = authorService.getListWithoutBooks();
+        int breakPoint = 0;
+    }
 
+    @Test
+    void getListWithBooksTest() {
+        List<AuthorDto> authorList = authorService.getListWithBooks();
         int breakPoint = 0;
     }
 }

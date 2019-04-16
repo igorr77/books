@@ -10,5 +10,6 @@ public interface AuthorService {
     AuthorDto getById(long id);
     List<AuthorDto> getByBook(BookDto book);
 
-    List<AuthorDto> getList();
+    List<AuthorDto> getListWithoutBooks();
+    List<AuthorDto> getListWithBooks();
 }

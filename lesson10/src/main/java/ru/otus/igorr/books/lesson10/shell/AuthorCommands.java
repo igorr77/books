@@ -49,7 +49,7 @@ public class AuthorCommands {
 
     @ShellMethod(key = "authorList", value = "Ahow author list")
     public void authorList() {
-        List<AuthorDto> authorList = authorService.getList();
+        List<AuthorDto> authorList = authorService.getListWithBooks();
         authorList.forEach(System.out::println);
     }
 

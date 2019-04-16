@@ -1,12 +1,16 @@
 package ru.otus.igorr.books.lesson10.dto;
 
+import org.hibernate.LazyInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson10.domain.author.Author;
 import ru.otus.igorr.books.lesson10.domain.author.AuthorName;
+import ru.otus.igorr.books.lesson10.domain.book.Book;
+import ru.otus.igorr.books.lesson10.domain.genre.Genre;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,11 +24,15 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
     private final static Logger LOG = LoggerFactory.getLogger(AuthorDtoConverter.class);
 
-    private final GenreDtoConverter genreConverter;
+    private final DtoConverter<Genre, GenreDto> genreConverter;
+    private final DtoConverter<Book, BookDto> bookConverter;
 
     @Autowired
-    public AuthorDtoConverter(@Qualifier("genreConverter") DtoConverter converter) {
-        this.genreConverter = (GenreDtoConverter) converter;
+    public AuthorDtoConverter(DtoConverter<Genre, GenreDto> genreConverter,
+                              DtoConverter<Book, BookDto> bookConverter
+    ) {
+        this.genreConverter = (GenreDtoConverter) genreConverter;
+        this.bookConverter = (BookDtoConverter) bookConverter;
     }
 
     @Override
@@ -61,6 +69,15 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
             dto.setLastName(author.getName().getLastName());
             dto.setSurName(author.getName().getSurName());
             dto.setGenreList(genreConverter.convertList(author.getGenre()));
+            List<Book> bookList = new ArrayList<>();
+            if (author.getBooks() != null) {
+                try {
+                    bookList.addAll(author.getBooks());
+                } catch (LazyInitializationException e) {
+                    bookList.addAll(Collections.emptySet());
+                }
+            }
+            dto.setBookList(bookConverter.convertList(bookList));
         } catch (NullPointerException npe) {
             LOG.warn("!!!", npe);
             dto.setId(NOT_FOUND_ENTITY_ID);
