@@ -13,12 +13,12 @@
 
 
     <groupId>ru.otus.igorr.books</groupId>
-    <artifactId>lesson10</artifactId>
+    <artifactId>lesson12</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <description>
-        Билиотеку на Spring Data JPA
-        Реализовать весь функционал работы с БД в приложении книг с использованием spring-data-jpa репозиториев.
+        После данного занятия слушатели смогу разрабатывать DAO, хранящие данные в нереляционных БД с помощью других
+        Spring Data проектов.
     </description>
 
 

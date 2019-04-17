@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: ru.otus.igorr.books.lesson12.dto.AuthorDtoConverterTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 15.869 s <<< FAILURE! - in ru.otus.igorr.books.lesson12.dto.AuthorDtoConverterTest
+convertTest  Time elapsed: 0.013 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddedMongoServer' defined in class path resource [org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [de.flapdoodle.embed.mongo.MongodExecutable]: Factory method 'embeddedMongoServer' threw exception; nested exception is de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [de.flapdoodle.embed.mongo.MongodExecutable]: Factory method 'embeddedMongoServer' threw exception; nested exception is de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: java.io.IOException: Could not open inputStream for https://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-3.5.5.zip
+Caused by: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+fillTest  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddedMongoServer' defined in class path resource [org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [de.flapdoodle.embed.mongo.MongodExecutable]: Factory method 'embeddedMongoServer' threw exception; nested exception is de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [de.flapdoodle.embed.mongo.MongodExecutable]: Factory method 'embeddedMongoServer' threw exception; nested exception is de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: de.flapdoodle.embed.process.exceptions.DistributionException: prepare executable
+Caused by: java.io.IOException: Could not open inputStream for https://downloads.mongodb.org/win32/mongodb-win32-x86_64-2008plus-3.5.5.zip
+Caused by: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+

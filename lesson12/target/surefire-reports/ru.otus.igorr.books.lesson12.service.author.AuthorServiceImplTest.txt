@@ -1,0 +1,72 @@
+-------------------------------------------------------------------------------
+Test set: ru.otus.igorr.books.lesson12.service.author.AuthorServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 15.375 s <<< FAILURE! - in ru.otus.igorr.books.lesson12.service.author.AuthorServiceImplTest
+getById  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoTemplate' defined in class path resource [ru/otus/igorr/books/lesson12/config/MongoConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoDbFactory' defined in class path resource [ru/otus/igorr/books/lesson12/config/MongoConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.MongoDbFactory]: Factory method 'mongoDbFactory' threw exception; nested exception is java.lang.IllegalArgumentException: Database name must not be empty!
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.core.MongoTemplate]: Factory method 'mongoTemplate' threw exception; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoDbFactory' defined in class path resource [ru/otus/igorr/books/lesson12/config/MongoConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.MongoDbFactory]: Factory method 'mongoDbFactory' threw exception; nested exception is java.lang.IllegalArgumentException: Database name must not be empty!
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'mongoDbFactory' defined in class path resource [ru/otus/igorr/books/lesson12/config/MongoConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.MongoDbFactory]: Factory method 'mongoDbFactory' threw exception; nested exception is java.lang.IllegalArgumentException: Database name must not be empty!
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.mongodb.MongoDbFactory]: Factory method 'mongoDbFactory' threw exception; nested exception is java.lang.IllegalArgumentException: Database name must not be empty!
+Caused by: java.lang.IllegalArgumentException: Database name must not be empty!
+
+add  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Initialization of bean failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.h2.jdbc.JdbcSQLException: 
+Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+
+getByBook  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Initialization of bean failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.h2.jdbc.JdbcSQLException: 
+Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+
+getListWithoutBooksTest  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Initialization of bean failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.h2.jdbc.JdbcSQLException: 
+Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+
+getListWithBooksTest  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Initialization of bean failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of class path resource [testdata.sql]: insert into genre(id, name, description) values(1, 'genre.1','genre.1.description'); nested exception is org.h2.jdbc.JdbcSQLException: Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+Caused by: org.h2.jdbc.JdbcSQLException: 
+Нарушение уникального индекса или первичного ключа: "PRIMARY KEY ON PUBLIC.GENRE(ID)"
+Unique index or primary key violation: "PRIMARY KEY ON PUBLIC.GENRE(ID)"; SQL statement:
+insert into genre(id, name, description) values(1, 'genre.1','genre.1.description') [23505-197]
+
