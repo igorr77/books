@@ -8,5 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 public class MongoDbProps {
+    private String host;
     private String dbname;
+    private String username;
+    private String password;
 }

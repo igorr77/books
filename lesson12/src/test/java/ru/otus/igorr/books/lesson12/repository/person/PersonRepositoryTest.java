@@ -7,7 +7,7 @@ import ru.otus.igorr.books.lesson12.domain.person.Person;
 
 import java.util.List;
 
-//@SpringBootTest
+@SpringBootTest
 class PersonRepositoryTest {
 
 
@@ -17,7 +17,9 @@ class PersonRepositoryTest {
     @Test
     void findAllTest(){
 
-        //List<Person> personList = repository.findAll();
+        List<Person> personList = repository.findAll();
+
+        Person person = repository.findByThePersonsFirstName("")
 
         int breakPoint = 0;
 

@@ -8,7 +8,13 @@ spring:
       enabled: false
   data:
     mongodb:
+      authentication-database: admin
+      #username: igorr
+      #password: 9FnEH8OfZR6VKKio
       database: testdb
+      host: localhost
+      port: 27017
+      #uri: mongodb+srv://igorr:9FnEH8OfZR6VKKio@cluster0-x1evu.gcp.mongodb.net
 
   h2:
     console:
@@ -38,6 +44,12 @@ messages:
   country: "GB"
   bundle: "/messages/app_message"
 # DB access
+mongodb:
+  host: "mongodb+srv://%s:%s@cluster0-x1evu.gcp.mongodb.net/%s"
+  dbname: testdb
+  username: igorr
+  password: DfczGegrby123
+
 pool:
   jdbcDriver: org.postgresql.Driver
   jdbcString: jdbc:postgresql://localhost:5432/otus

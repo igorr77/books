@@ -1,14 +1,11 @@
 package ru.otus.igorr.books.lesson12.config;
 
 import com.mongodb.MongoClient;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@Configuration
-@EnableMongoRepositories(basePackages = "ru.otus.igorr.books.lesson12.repository")
-@EnableConfigurationProperties({MongoDbProps.class})
+//@Configuration
+//@EnableMongoRepositories(basePackages = "ru.otus.igorr.books.lesson12.repository")
+//@EnableConfigurationProperties({MongoDbProps.class})
 public class MongoConfig extends AbstractMongoConfiguration {
 
     private MongoDbProps props;
@@ -19,7 +16,13 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        return new MongoClient("127.0.0.1", 27017);
+        //return new MongoClient(props.getHost(), 27017);
+        //String host = "mongodb+srv://igorr:DfczGegrby123@cluster0-x1evu.gcp.mongodb.net/testdb";
+        //String.format(props.getHost(), props.getUsername(), props.getPassword(), props.getDbname());
+        String host = "mongodb+srv://igorr:9FnEH8OfZR6VKKio@cluster0-x1evu.gcp.mongodb.net:27017";
+        //String host = "cluster0-x1evu.gcp.mongodb.net/testdb";
+        //return new MongoClient(host, 21017);
+        return new MongoClient(host);
     }
 
     @Override
