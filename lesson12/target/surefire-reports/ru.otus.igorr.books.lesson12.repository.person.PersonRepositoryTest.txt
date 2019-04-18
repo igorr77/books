@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: ru.otus.igorr.books.lesson12.repository.person.PersonRepositoryTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in ru.otus.igorr.books.lesson12.repository.person.PersonRepositoryTest
