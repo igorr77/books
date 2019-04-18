@@ -23,9 +23,13 @@ public class Genre {
     @Column(name = "Description")
     private String description;
 
+    private static Genre instance;
+
     public static final Genre empty(){
-        Genre instance = new Genre();
-        instance.setId(NOT_FOUND_ENTITY_ID);
+        if (instance == null) {
+            instance = new Genre();
+            instance.setId(NOT_FOUND_ENTITY_ID);
+        }
         return instance;
     }
 
