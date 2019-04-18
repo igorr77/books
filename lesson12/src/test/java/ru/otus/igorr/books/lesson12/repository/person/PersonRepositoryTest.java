@@ -19,7 +19,7 @@ class PersonRepositoryTest {
 
         List<Person> personList = repository.findAll();
 
-        Person person = repository.findByThePersonsFirstName("")
+        List<Person> personList1 = repository.findByThePersonsFirstName("Firstname1");
 
         int breakPoint = 0;
 
