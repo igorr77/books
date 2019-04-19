@@ -16,6 +16,7 @@ spring:
       port: 27017
       #uri: mongodb+srv://igorr:9FnEH8OfZR6VKKio@cluster0-x1evu.gcp.mongodb.net
 
+
   h2:
     console:
       enabled: true
@@ -31,11 +32,12 @@ spring:
   batch:
     initialize-schema: always
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    data: testdata.sql
+  #driver-class-name: org.h2.Driver
+  #url: jdbc:h2:mem:testdb
+  #username: sa
+  #password:
+  #data: testdata.sql
+  #driver-class-name: mongodb.jdbc.MongoDriver
 
 
 #

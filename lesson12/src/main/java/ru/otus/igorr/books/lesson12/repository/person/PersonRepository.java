@@ -11,7 +11,7 @@ import java.util.List;
 public interface PersonRepository extends MongoRepository<Person, String> {
 
 
-    @Query("{firstname: ?0}")
-    List<Person> findByThePersonsFirstName(String firstname);
+    @Query("{name: ?0}")
+    List<Person> findByThePersonsName(String firstname);
 
 }
