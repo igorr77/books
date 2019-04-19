@@ -13,25 +13,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-//@ExtendWith(SpringExtension.class)
-//@EnableAutoConfiguration
-//@ContextConfiguration(classes = {AuthorDtoConverter.class})
-/*
-@ComponentScan(
-        excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = BookCommands.class),
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = GenreCommands.class)
-        },
-        basePackages = {"ru.otus.igorr.books.lesson10"})
-
- */
-
-//@ComponentScan(basePackages = {"ru.otus.igorr.books.lesson10"})
-//@SpringBootTest
 class NoteDtoConverterTest {
 
-    private static final long OWNER_ID = 111L;
-    private static final long NOTE_ID = 222L;
+    private static final String OWNER_ID = "111L";
+    private static final String NOTE_ID = "222L";
 
     //@Autowired
     private DtoConverter<Note, NoteDto> converter = new NoteDtoConverter();
@@ -43,7 +28,7 @@ class NoteDtoConverterTest {
 
         assertAll(
                 () -> assertNotNull(dto),
-                () -> assertEquals(note.getNoteId(), dto.getId()),
+                () -> assertEquals(note.getId(), dto.getId()),
                 () -> assertEquals(note.getBook().getId(), dto.getBookId()),
                 () -> assertTrue(note.getNote().equals(dto.getNote()))
         );
@@ -76,7 +61,7 @@ class NoteDtoConverterTest {
         book.setId(OWNER_ID + n);
 
         Note note = new Note();
-        note.setNoteId(NOTE_ID + n);
+        note.setId(NOTE_ID + n);
         note.setNote("Note");
         note.setBook(book);
         return note;

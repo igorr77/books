@@ -2,46 +2,51 @@ package ru.otus.igorr.books.lesson12.domain.book;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-@Entity
-@Table(name = "book")
+@Document(collection = "Book")
 @Getter
 @Setter
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    private String id;
 
-    @Column(name = "title")
+    @Field("title")
     private String title;
 
     // У книги много авторов, у автора много книг,
     // но не настолько много, чтобы использовать LAZY
+    /*
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Author.class)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "BOOK_ID", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID")
     )
-    private Set<Author> authors = new HashSet<>();
+    */
+    @DBRef
+    private List<Author> authors;
 
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    //@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @DBRef
     private Genre genre;
 
-    @Column(name = "Description")
+    //@Column(name = "Description")
+    @Field("description")
     private String description;
 
     // Одна книга - много комментов,
     // а раз много, то LAZY
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
-    private Set<Note> notes;
+    //@OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
+    @DBRef
+    private List<Note> notes;
 
     @Override
     public boolean equals(Object obj) {

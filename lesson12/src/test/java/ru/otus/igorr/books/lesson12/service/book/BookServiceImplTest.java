@@ -20,7 +20,7 @@ class BookServiceImplTest {
 
     @Test
     void getByIdTest() {
-        BookDto dto = bookService.getById(1L);
+        BookDto dto = bookService.getById("1L");
     }
 
     @Test
@@ -30,12 +30,12 @@ class BookServiceImplTest {
         List<GenreDto> genreList = new ArrayList<>();
         GenreDto genre = new GenreDto();
         genreList.add(genre);
-        genre.setId(1L);
+        genre.setId("1L");
 
         List<AuthorDto> authorList = new ArrayList<>();
         AuthorDto author = new AuthorDto();
         authorList.add(author);
-        author.setId(1L);
+        author.setId("1L");
 
 
         book.setTitle("Book.Title: test service add");
@@ -43,7 +43,7 @@ class BookServiceImplTest {
         book.setGenreDto(genre);
         book.setDescription("Book.Description: test service add");
 
-        long id = bookService.add(book);
+        String id = bookService.add(book);
 
         BookDto saveBook = bookService.getById(id);
 
@@ -57,8 +57,8 @@ class BookServiceImplTest {
     @Test
     void addNoteTest() {
 
-        NoteDto noteDto = PrepareDataHelper.prepareNoteDto(0);
-        noteDto.setBookId(2L);
+        NoteDto noteDto = PrepareDataHelper.prepareNoteDto("0");
+        noteDto.setBookId("2L");
 
         NoteDto saveNoteDto = bookService.addNote(noteDto);
 

@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NoteDto {
-    private long id;
-    private long bookId;
+    private String id;
+    private String bookId;
     private String note;
 
     @Override

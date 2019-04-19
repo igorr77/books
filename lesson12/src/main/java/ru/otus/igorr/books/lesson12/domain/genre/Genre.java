@@ -1,26 +1,32 @@
 package ru.otus.igorr.books.lesson12.domain.genre;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_DOCUMENT_ID;
 
-import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_ENTITY_ID;
-
-@Entity
+@Document(collection = "Genre")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @Column(name = "Name")
+    @Field("name")
+    @Indexed
     private String name;
 
-    @Column(name = "Description")
+    @Field("description")
     private String description;
 
     private static Genre instance;
@@ -28,10 +34,11 @@ public class Genre {
     public static final Genre empty(){
         if (instance == null) {
             instance = new Genre();
-            instance.setId(NOT_FOUND_ENTITY_ID);
+            instance.setId(NOT_FOUND_DOCUMENT_ID);
         }
         return instance;
     }
+
 
     @Override
     public boolean equals(Object obj) {

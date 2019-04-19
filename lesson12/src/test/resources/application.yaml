@@ -1,3 +1,4 @@
+# spring properties
 spring:
   main:
     banner-mode: "off"
@@ -10,37 +11,13 @@ spring:
     mongodb:
       authentication-database: admin
       #username: igorr
-      #password: 9FnEH8OfZR6VKKio
+      #password:
       database: testdb
       host: localhost
       port: 27017
-      #uri: mongodb+srv://igorr:9FnEH8OfZR6VKKio@cluster0-x1evu.gcp.mongodb.net
+      #uri: mongodb+srv://igorr:password123@cluster0-x1evu.gcp.mongodb.net
 
-
-  h2:
-    console:
-      enabled: true
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    generate-ddl: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-  batch:
-    initialize-schema: always
-  datasource:
-  #driver-class-name: org.h2.Driver
-  #url: jdbc:h2:mem:testdb
-  #username: sa
-  #password:
-  #data: testdata.sql
-  #driver-class-name: mongodb.jdbc.MongoDriver
-
-
-#
+# app properties
 messages:
   language: "en"
   country: "GB"
@@ -50,10 +27,5 @@ mongodb:
   host: "mongodb+srv://%s:%s@cluster0-x1evu.gcp.mongodb.net/%s"
   dbname: testdb
   username: igorr
-  password: DfczGegrby123
+  password: password123
 
-pool:
-  jdbcDriver: org.postgresql.Driver
-  jdbcString: jdbc:postgresql://localhost:5432/otus
-  jdbcUser: postgres
-  jdbcPassword: postgres

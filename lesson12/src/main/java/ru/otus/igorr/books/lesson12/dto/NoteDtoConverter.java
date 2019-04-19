@@ -36,7 +36,7 @@ public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {
 
     private NoteDto entity2dto(Note note) {
         final NoteDto dto = new NoteDto();
-        dto.setId(note.getNoteId());
+        dto.setId(note.getId());
         dto.setBookId(note.getBook().getId());
         dto.setNote(note.getNote());
         return dto;
@@ -48,7 +48,7 @@ public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {
         Book book = new Book();
         book.setId(dto.getBookId());
 
-        note.setNoteId(dto.getId());
+        note.setId(dto.getId());
         note.setNote(dto.getNote());
         note.setBook(book);
 

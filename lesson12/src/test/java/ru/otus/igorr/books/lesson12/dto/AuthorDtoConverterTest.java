@@ -26,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ComponentScan(basePackages = {"ru.otus.igorr.books.lesson10"})
 class AuthorDtoConverterTest {
 
-    private final long ENTITY_2_DTO_OBJECT_ID = 1L;
-    private final long ENTITY_2_DTO_SUBOBJECT_ID = 11L;
-    private final long DTO_2_ENTITY_OBJECT_ID = 2L;
-    private final long DTO_2_ENTITY_SUBOBJECT_ID = 21L;
+    private final String ENTITY_2_DTO_OBJECT_ID = "1L";
+    private final String ENTITY_2_DTO_SUBOBJECT_ID = "11L";
+    private final String DTO_2_ENTITY_OBJECT_ID = "2L";
+    private final String DTO_2_ENTITY_SUBOBJECT_ID = "21L";
 
     @Autowired
     @Qualifier("authorConverter")
@@ -57,7 +57,7 @@ class AuthorDtoConverterTest {
 
         assertAll(
                 () -> assertEquals(DTO_2_ENTITY_OBJECT_ID, author.getId()),
-                () -> assertEquals(DTO_2_ENTITY_SUBOBJECT_ID, author.getGenre().get(0).getId())
+                () -> assertEquals(DTO_2_ENTITY_SUBOBJECT_ID, author.getGenres().get(0).getId())
         );
     }
 
@@ -77,7 +77,7 @@ class AuthorDtoConverterTest {
         Author author = new Author();
         author.setId(ENTITY_2_DTO_OBJECT_ID);
         author.setName(authorName);
-        author.setGenre(genreList);
+        author.setGenres(genreList);
         return author;
     }
 

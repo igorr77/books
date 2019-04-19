@@ -1,17 +1,10 @@
 package ru.otus.igorr.books.lesson12.repository.author;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
-
-import java.util.Set;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends MongoRepository<Author, String>, AuthorRepositoryCustom {
 
-    @Query("select a from Author a where a.books = :book")
-    Set<Author> findByBook(@Param("book") Book book);
 }

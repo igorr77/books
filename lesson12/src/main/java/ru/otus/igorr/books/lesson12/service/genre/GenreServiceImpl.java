@@ -18,7 +18,6 @@ import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_ENTITY_ID;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private static final Genre EMPTY_GENRE = new Genre();
     private final GenreRepository repository;
     private final DtoConverter<Genre, GenreDto> converter;
 
@@ -27,20 +26,18 @@ public class GenreServiceImpl implements GenreService {
                             @Qualifier("genreConverter") DtoConverter converter) {
         this.repository = repository;
         this.converter = converter;
-
-        EMPTY_GENRE.setId(NOT_FOUND_ENTITY_ID);
     }
 
 
     @Override
-    public GenreDto getById(long id) {
-        return converter.convert(repository.findById(id).orElse(EMPTY_GENRE));
+    public GenreDto getById(String id) {
+        return converter.convert(repository.findById(id).orElse(Genre.empty()));
     }
 
     @Override
-    public void add(GenreDto dto) {
+    public String add(GenreDto dto) {
         Genre genre = repository.save(converter.fill(dto));
-        int breakPoint = 0;
+        return genre.getId();
     }
 
     @Override
@@ -54,4 +51,8 @@ public class GenreServiceImpl implements GenreService {
         return dtoList;
     }
 
+    @Override
+    public List<GenreDto> getListByName(String mask) {
+        return null;
+    }
 }

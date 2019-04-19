@@ -1,6 +1,7 @@
 package ru.otus.igorr.books.lesson12.repository.genre;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -9,43 +10,27 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
+import ru.otus.igorr.books.lesson12.repository.abstracts.AbstractRepositoryTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_ENTITY_ID;
 
 
-//@DataJpaTest
-@DataMongoTest
-@EnableAutoConfiguration
-//@ContextConfiguration(classes = {GenreRepository.class})
-//@EntityScan(basePackageClasses = Genre.class)
-class GenreRepositoryTest {
+@DisplayName("Test GenreRepository")
+class GenreRepositoryTest extends AbstractRepositoryTest {
 
-    private static final long DELETED_ID = 999L;
-    private Genre expectedGenre;
-    private Genre empyGenre;
+    private static final String DELETED_ID = "999L";
 
     @Autowired
     GenreRepository repository;
 
-
-    @Autowired
-    MongoTemplate mongoTemplate;
-
-
-    @BeforeEach
-    void setUp() {
-        mongoTemplate.save(prepareGenre(1L));
-        mongoTemplate.save(prepareGenre(2L));
-        mongoTemplate.save(prepareGenre(3L));
-        mongoTemplate.save(prepareGenre(DELETED_ID));
-    }
-
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void findByIdTest(int param) {
-        Genre genre = repository.findById(Long.valueOf(param)).orElse(Genre.empty());
+    @ValueSource(strings = {"1", "2", "3"})
+    //@DisplayName("ttttttttttttttttttttttttttt")
+    void findByIdTest(String param) {
+        Genre genre = repository.findById(param).orElse(Genre.empty());
         assertEquals(param, genre.getId());
     }
 
@@ -56,7 +41,7 @@ class GenreRepositoryTest {
 
         assertEquals(DELETED_ID, repository.findById(DELETED_ID).orElse(Genre.empty()).getId());
         repository.delete(delGenre);
-        assertEquals(-1L, repository.findById(DELETED_ID).orElse(Genre.empty()).getId());
+        assertEquals(NOT_FOUND_ENTITY_ID, repository.findById(DELETED_ID).orElse(Genre.empty()).getId());
 
         int breakPoint = 0;
     }
@@ -89,11 +74,11 @@ class GenreRepositoryTest {
     }
 
 
-    private Genre prepareGenre(long id) {
+    private Genre prepareGenre(String id) {
         Genre genre = new Genre();
         genre.setId(id);
-        genre.setName("Genre.Name.Test");
-        genre.setDescription("Genre.Description.Test");
+        genre.setName("Genre.Name.Test." + id);
+        genre.setDescription("Genre.Description.Test." + id);
         return genre;
     }
 

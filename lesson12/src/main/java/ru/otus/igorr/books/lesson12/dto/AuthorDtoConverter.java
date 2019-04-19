@@ -1,11 +1,8 @@
 package ru.otus.igorr.books.lesson12.dto;
 
-import org.hibernate.LazyInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
 import ru.otus.igorr.books.lesson12.domain.author.AuthorName;
@@ -67,19 +64,20 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
             dto.setFirstName(author.getName().getFirstName());
             dto.setLastName(author.getName().getLastName());
             dto.setSurName(author.getName().getSurName());
-            dto.setGenreList(genreConverter.convertList(author.getGenre()));
+            dto.setGenreList(genreConverter.convertList(author.getGenres()));
             List<Book> bookList = new ArrayList<>();
-            if (author.getBooks() != null) {
-                try {
-                    bookList.addAll(author.getBooks());
-                } catch (LazyInitializationException e) {
-                    bookList.addAll(Collections.emptySet());
-                }
-            }
+            // TODO: 19.04.2019
+//            if (author.getBooks() != null) {
+//                try {
+//                    bookList.addAll(author.getBooks());
+//                } catch (LazyInitializationException e) {
+//                    bookList.addAll(Collections.emptySet());
+//                }
+//            }
             dto.setBookList(bookConverter.convertList(bookList));
         } catch (NullPointerException npe) {
             LOG.warn("!!!", npe);
-            dto.setId(Constant.NOT_FOUND_ENTITY_ID);
+            dto.setId(Constant.NOT_FOUND_DOCUMENT_ID);
         }
         return dto;
 
@@ -95,7 +93,7 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
         author.setId(dto.getId());
         author.setName(authorName);
-        author.setGenre(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
+        author.setGenres(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
 
         return author;
     }

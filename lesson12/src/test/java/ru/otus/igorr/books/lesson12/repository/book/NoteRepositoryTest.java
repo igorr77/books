@@ -1,45 +1,20 @@
 package ru.otus.igorr.books.lesson12.repository.book;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
-import ru.otus.igorr.books.lesson12.domain.book.Note;
-import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
+import ru.otus.igorr.books.lesson12.repository.abstracts.AbstractRepositoryTest;
 
-import java.util.Set;
-
-
-@DataJpaTest
-class NoteRepositoryTest {
+@DisplayName("NoteRepositoryTest")
+class NoteRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
     NoteRepository noteRepository;
 
-
     @Test
-    void findByIdTest() {
-        Note note = noteRepository.findById(1L).orElse(new Note());
-        int breakPoint = 0;
-    }
+    @DisplayName("getByIdTest")
+    void getByIdTest(){
 
-    @Test
-    void findByBookTest() {
-        Book book = new Book();
-        book.setId(1L);
-
-        Set<Note> notes = noteRepository.findByBook(book);
-        int breakPoint = 0;
-    }
-
-    @Test
-    void findAllPageTest() {
-        Page<Note> page = noteRepository.findAll(PageRequest.of(0, 20, new Sort(Sort.Direction.ASC, "noteId")));
-        //Page<Note> page = noteRepository.findAll(PageRequest.of(0, 20));
-        int breakPoint = 0;
     }
 
 }

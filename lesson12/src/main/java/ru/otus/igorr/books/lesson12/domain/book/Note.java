@@ -2,23 +2,22 @@ package ru.otus.igorr.books.lesson12.domain.book;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
-
-@Entity
+@Document(collection = "Note")
 @Getter
 @Setter
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long noteId;
+    private String id;
 
-    @Column(name = "Note")
+    @Field("note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOOK_ID", nullable = false)
+    @DBRef
     private Book book;
 
 }

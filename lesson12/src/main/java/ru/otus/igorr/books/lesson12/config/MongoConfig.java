@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 //@EnableConfigurationProperties({MongoDbProps.class})
 public class MongoConfig extends AbstractMongoConfiguration {
 
-    private MongoDbProps props;
+    private MongoProps props;
 
-    public MongoConfig(MongoDbProps props) {
+    public MongoConfig(MongoProps props) {
         this.props = props;
     }
 
@@ -27,7 +27,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return props.getDbname();
+        return props.getDatabase();
     }
 
 
