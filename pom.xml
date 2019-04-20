@@ -120,14 +120,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- openCSV -->
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>4.5</version>
-        </dependency>
-
-
         <!-- Spring -->
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>

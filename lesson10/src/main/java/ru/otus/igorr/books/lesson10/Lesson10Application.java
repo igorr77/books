@@ -20,6 +20,8 @@ public class Lesson10Application {
 
     public static void main(String[] args) throws SQLException {
         LOG.info("Start app");
+        System.setProperty("org.jline.terminal.dumb", "true");
+        System.setProperty("jansi.passthrough", "true");
         ApplicationContext context = SpringApplication.run(Lesson10Application.class);
         Console.main(args);
         LOG.info("Stop app");

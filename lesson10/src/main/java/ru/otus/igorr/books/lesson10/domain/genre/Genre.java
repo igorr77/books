@@ -6,13 +6,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.Collections;
+
+import static ru.otus.igorr.books.lesson10.utils.Constant.NOT_FOUND_ENTITY_ID;
+
 @Entity
 @Getter
 @Setter
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "Name")
@@ -20,6 +24,12 @@ public class Genre {
 
     @Column(name = "Description")
     private String description;
+
+    public static final Genre empty(){
+        Genre instance = new Genre();
+        instance.setId(NOT_FOUND_ENTITY_ID);
+        return instance;
+    }
 
     @Override
     public boolean equals(Object obj) {

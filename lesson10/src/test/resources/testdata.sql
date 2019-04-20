@@ -16,26 +16,35 @@ insert into author_genre(author_id, genre_id) values(3,2);
 insert into author_genre(author_id, genre_id) values(3,3);
 -- books
 insert into book(id, title, genre_id, description) values(1, 'Book.1.Title', 1, 'Book.1.Description');
-insert into book_author_ref (book_id, author_list_id) values(1,1);
+insert into book_author (book_id, author_id)
+values (1, 1);
 insert into note (id, book_id, note) values(1, 1, 'Book.1.Note.1');
 insert into note (id, book_id, note) values(2, 1, 'Book.1.Note.2');
 insert into note (id, book_id, note) values(3, 1, 'Book.1.Note.3');
 --
 insert into book(id, title, genre_id, description) values(2, 'Book.2.Title', 2, 'Book.2.Description');
-insert into book_author_ref (book_id, author_list_id) values(2,1);
-insert into book_author_ref (book_id, author_list_id) values(2,2);
+insert into book_author (book_id, author_id)
+values (2, 1);
+insert into book_author (book_id, author_id)
+values (2, 2);
 --
 insert into book(id, title, genre_id, description) values(3, 'Book.3.Title', 2, 'Book.3.Description');
-insert into book_author_ref (book_id, author_list_id) values(3,1);
-insert into book_author_ref (book_id, author_list_id) values(3,2);
+insert into book_author (book_id, author_id)
+values (3, 1);
+insert into book_author (book_id, author_id)
+values (3, 2);
 --
 insert into book(id, title, genre_id, description) values(4, 'Book.3.Title', 3, 'Book.3.Description');
-insert into book_author_ref (book_id, author_list_id) values(4,1);
-insert into book_author_ref (book_id, author_list_id) values(4,2);
+insert into book_author (book_id, author_id)
+values (4, 1);
+insert into book_author (book_id, author_id)
+values (4, 2);
 -- for delete
 insert into book(id, title, genre_id, description) values(999, 'Book.3.Title', 3, 'Book.3.Description');
-insert into book_author_ref (book_id, author_list_id) values(999,1);
-insert into book_author_ref (book_id, author_list_id) values(999,2);
+insert into book_author (book_id, author_id)
+values (999, 1);
+insert into book_author (book_id, author_id)
+values (999, 2);
 insert into note (id, book_id, note) values(1001, 999, 'Book.999.Note.1');
 insert into note (id, book_id, note) values(1002, 999, 'Book.999.Note.2');
 insert into note (id, book_id, note) values(1003, 999, 'Book.999.Note.3');

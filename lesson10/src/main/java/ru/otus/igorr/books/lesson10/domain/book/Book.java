@@ -6,34 +6,42 @@ import ru.otus.igorr.books.lesson10.domain.author.Author;
 import ru.otus.igorr.books.lesson10.domain.genre.Genre;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "book")
 @Getter
 @Setter
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "book_author_ref")
-    private List<Author> authorList;
+    // У книги много авторов, у автора много книг,
+    // но не настолько много, чтобы использовать LAZY
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Author.class)
+    @JoinTable(name = "book_author",
+            joinColumns = @JoinColumn(name = "BOOK_ID", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID")
+    )
+    private Set<Author> authors = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OrderColumn(name = "name")
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Genre genre;
 
     @Column(name = "Description")
     private String description;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<Note> noteList;
-
+    // Одна книга - много комментов,
+    // а раз много, то LAZY
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
+    private Set<Note> notes;
 
     @Override
     public boolean equals(Object obj) {

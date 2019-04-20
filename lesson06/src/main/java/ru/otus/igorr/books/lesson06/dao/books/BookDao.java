@@ -12,7 +12,7 @@ public interface BookDao {
      * Сохранение сущности
      *
      * @param book
-     * @return 0 - ошибка при сохранении, !0 - bookId
+     * @return 0 - ошибка при сохранении, !0 - id
      */
     int save(Book book);
 
