@@ -1,9 +1,0 @@
-ru\otus\igorr\books\lesson12\utils\PrepareDataHelper.class
-ru\otus\igorr\books\lesson12\repository\book\BookRepositoryTest.class
-ru\otus\igorr\books\lesson12\dto\AuthorDtoConverterTest.class
-ru\otus\igorr\books\lesson12\repository\genre\GenreRepositoryTest.class
-ru\otus\igorr\books\lesson12\dto\NoteDtoConverterTest.class
-ru\otus\igorr\books\lesson12\service\author\AuthorServiceImplTest.class
-ru\otus\igorr\books\lesson12\repository\person\PersonRepositoryTest.class
-ru\otus\igorr\books\lesson12\repository\book\NoteRepositoryTest.class
-ru\otus\igorr\books\lesson12\service\book\BookServiceImplTest.class
