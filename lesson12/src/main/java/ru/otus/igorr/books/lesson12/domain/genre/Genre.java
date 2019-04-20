@@ -65,4 +65,13 @@ public class Genre {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

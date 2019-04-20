@@ -9,10 +9,7 @@ import ru.otus.igorr.books.lesson12.dto.GenreDto;
 import ru.otus.igorr.books.lesson12.dto.GenreDtoConverter;
 import ru.otus.igorr.books.lesson12.repository.genre.GenreRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_ENTITY_ID;
 
 
 @Service
@@ -41,18 +38,24 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    public void delete(String id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void delete(GenreDto dto) {
+        repository.delete(converter.fill(dto));
+    }
+
+
+    @Override
     public List<GenreDto> getList() {
-
-        List<Genre> genreList = repository.findAll();
-
-        List<GenreDto> dtoList = new ArrayList<>();
-        genreList.forEach(e -> dtoList.add(((GenreDtoConverter) converter).convert(e)));
-
-        return dtoList;
+        return ((GenreDtoConverter) converter).convertList(repository.findAll());
     }
 
     @Override
     public List<GenreDto> getListByName(String mask) {
-        return null;
+        List<Genre> genreList = repository.findByNameLike(mask);
+        return ((GenreDtoConverter) converter).convertList(genreList);
     }
 }

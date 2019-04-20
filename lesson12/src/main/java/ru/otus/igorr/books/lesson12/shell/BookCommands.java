@@ -2,15 +2,8 @@ package ru.otus.igorr.books.lesson12.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
-import ru.otus.igorr.books.lesson12.dto.AuthorDto;
-import ru.otus.igorr.books.lesson12.dto.BookDto;
 import ru.otus.igorr.books.lesson12.service.book.BookService;
 import ru.otus.igorr.books.lesson12.service.genre.GenreService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @ShellComponent
 public class BookCommands {
@@ -25,39 +18,6 @@ public class BookCommands {
         this.genreService = genreService;
     }
 
-    @ShellMethod(key = "bookAdd", value = "Add book entity")
-    public void genreInsert(@ShellOption("--title") String title,
-                            @ShellOption("--authorId") long authorId,
-                            @ShellOption("--genreId") long genreId,
-                            @ShellOption("--desc") String description
 
-    ) {
-        BookDto dto = new BookDto();
-        List<AuthorDto> authorList = new ArrayList();
-        AuthorDto author = new AuthorDto();
-
-        dto.setTitle(title);
-        dto.setAuthorList(authorList);
-        dto.setTitle(title);
-
-
-        //Genre genre = genreService.getById(genreId);
-        //dto.setGenre(genre);
-
-
-        dto.setDescription(description);
-        bookService.add(dto);
-    }
-
-
-    @ShellMethod(key = "bookList", value = "Show book list")
-    public void bookList() {
-
-        List<BookDto> list = bookService.getList();
-
-        int breakPoint = 0;
-
-        list.forEach(System.out::println);
-    }
-
+    // TODO: 20.04.19  
 }

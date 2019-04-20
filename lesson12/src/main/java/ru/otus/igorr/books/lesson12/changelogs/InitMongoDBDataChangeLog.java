@@ -26,10 +26,11 @@ public class InitMongoDBDataChangeLog {
 
     @ChangeSet(order = "001", id = "initGenres", author = "other", runAlways = true)
     public void initGenres(MongoTemplate template){
-        genre1 = template.save(new Genre("1", "Init.Genre.Name.1", "Init.Genre.Description.1"));
-        genre2 = template.save(new Genre("2", "Init.Genre.Name.2", "Init.Genre.Description.2"));
-        genre3 = template.save(new Genre("3", "Init.Genre.Name.3", "Init.Genre.Description.3"));
-        genre999 = template.save(new Genre("3", "Init.Genre.Name.3", "Init.Genre.Description.3"));
+        genre1 = template.save(new Genre("1", "Get.Genre.Name.1", "Init.Genre.Description.1"));
+        genre2 = template.save(new Genre("2", "Get.Genre.Name.2", "Init.Genre.Description.2"));
+        genre3 = template.save(new Genre("3", "Get.Genre.Name.3", "Init.Genre.Description.3"));
+        template.save(new Genre("888L", "Del.Genre.Name.888L", "Init.Genre.Description.888L"));
+        genre999 = template.save(new Genre("999L", "Del.Genre.Name.999L", "Init.Genre.Description.999L"));
         template.save(new Genre(null, "Init.Genre.Name.*", "Init.Genre.Description.*"));
     }
 
