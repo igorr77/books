@@ -1,8 +1,11 @@
 # Idea
-/.idea
+.idea
 *.iml
+*.iws
+*.ipr
+#
 vcs.xml
-/target
+/target/
 
 # Ubuntu
 *pid*
