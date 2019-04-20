@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class AuthorDto {
-    private long id;
+    private String id;
     private String firstName;
     private String lastName;
     private String surName;

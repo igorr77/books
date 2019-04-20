@@ -35,12 +35,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public long add(AuthorDto dto) {
-        return authorRepository.saveAndFlush(((AuthorDtoConverter) converter).fill(dto)).getId();
+    public Author add(AuthorDto dto) {
+        return authorRepository.save(((AuthorDtoConverter) converter).fill(dto));
     }
 
     @Override
-    public AuthorDto getById(long id) {
+    public AuthorDto getById(String id) {
         return null;
     }
 
@@ -56,13 +56,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorDto> getListWithBooks() {
+
         List<Author> authorList = authorRepository.findAll();
+        /*
+
         authorList.forEach(author -> {
             Set<Book> books = new HashSet<>();
             books.addAll(bookRepository.findByAuthorNative(author.getId()));
             author.setBooks(books);
 
         });
+        */
         return converter.convertList(authorList);
+
     }
 }

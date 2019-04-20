@@ -15,6 +15,8 @@ import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @Service
@@ -39,17 +41,19 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public BookDto getById(long id) {
+    public BookDto getById(String id) {
         Book book = bookRepository.findById(id).orElse(new Book());
-        Set<Note> notes = noteRepository.findByBook(book);
+        List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
+        List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
+                .collect(Collectors.toList());
         book.setNotes(notes);
         return bookConverter.convert(book);
     }
 
     @Override
-    public long add(BookDto dto) {
+    public String add(BookDto dto) {
         Book book = bookConverter.fill(dto);
-        Book saveBook = bookRepository.saveAndFlush(book);
+        Book saveBook = bookRepository.save(book);
         return saveBook.getId();
     }
 
@@ -59,7 +63,11 @@ public class BookServiceImpl implements BookService {
         List<Book> bookList = bookRepository.findAll();
 
         bookList.forEach(book -> {
-            Set<Note> notes = noteRepository.findByBook(book);
+
+            List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
+            List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
+                    .collect(Collectors.toList());
+
             book.setNotes(notes);
         });
 
@@ -71,7 +79,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public NoteDto addNote(NoteDto dto) {
-        Note note = noteRepository.saveAndFlush(noteConverter.fill(dto));
+        Note note = noteRepository.save(noteConverter.fill(dto));
         return noteConverter.convert(note);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class BookDto {
-    private long id;
+    private String id;
     private String title;
     private List<AuthorDto> authorList;
     private GenreDto genreDto;

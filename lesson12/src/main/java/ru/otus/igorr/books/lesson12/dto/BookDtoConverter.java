@@ -1,6 +1,5 @@
 package ru.otus.igorr.books.lesson12.dto;
 
-import org.hibernate.LazyInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -57,17 +56,21 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
         if (book != null) {
 
             List<Author> authorList = new ArrayList<>();
-            authorList.addAll(Optional.of(book.getAuthors()).orElse(Collections.emptySet()));
+            authorList.addAll(Optional.of(book.getAuthors()).orElse(Collections.emptyList()));
             List<AuthorDto> authorDtoList = authorConverter.convertList(authorList);
 
             Genre genre = Optional.ofNullable(book.getGenre()).orElse(Genre.empty());
 
             List<Note> noteList = new ArrayList<>();
+            // TODO: 19.04.2019
+            /*
             try {
                 noteList.addAll(Optional.ofNullable(book.getNotes()).orElse(Collections.emptySet()));
             } catch (LazyInitializationException e) {
                 noteList.addAll(Collections.emptySet());
             }
+            */
+
 
             List<NoteDto> noteDtoList = noteConverter.convertList(noteList);
 
@@ -78,7 +81,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
             dto.setDescription(book.getDescription());
             dto.setNoteList(noteDtoList);
         } else {
-            dto.setId(Constant.NOT_FOUND_ENTITY_ID);
+            dto.setId(Constant.NOT_FOUND_DOCUMENT_ID);
         }
         return dto;
     }
@@ -87,7 +90,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
         Book book = new Book();
 
         book.setTitle(dto.getTitle());
-        Set<Author> authors = new HashSet<>();
+        List<Author> authors = new ArrayList<>();
         dto.getAuthorList().forEach(authorDto ->
                 authors.add(authorConverter.fill(authorDto))
         );

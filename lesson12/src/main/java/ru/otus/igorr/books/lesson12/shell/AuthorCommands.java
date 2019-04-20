@@ -26,15 +26,13 @@ public class AuthorCommands {
     @ShellMethod(key = "authorAdd", value = "Add author entity")
     public void authorInsert(@ShellOption("--firstname") String firstName,
                              @ShellOption("--lastname") String lastName,
-                             @ShellOption("--surname") String surName,
-                             @ShellOption("--genreId") long genreId
+                             @ShellOption("--surname") String surName
 
 
     ) {
         AuthorDto author = new AuthorDto();
         List<GenreDto> genreList = new ArrayList<>();
         GenreDto genre = new GenreDto();
-        genre.setId(genreId);
 
         author.setFirstName(firstName);
         author.setLastName(lastName);

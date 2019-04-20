@@ -20,13 +20,13 @@ public class PrepareDataHelper {
 
         book.setTitle("Book.Title.AddNote");
         //book.setAuthorList(authorList);
-        book.setGenre(prepareGenre(1));
+        book.setGenre(prepareGenre("1"));
         book.setDescription("Book.Description");
 
         return book;
     }
 
-    public static Genre prepareGenre(int n) {
+    public static Genre prepareGenre(String n) {
         Genre genre = new Genre();
         genre.setId(n);
         genre.setName("Book.Genre: " + n);
@@ -37,28 +37,28 @@ public class PrepareDataHelper {
     public static List<Author> prepareAuthorList(int count) {
         List<Author> list = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
-            list.add(prepareAuthor(i));
+            list.add(prepareAuthor(String.valueOf(i)));
         }
         return list;
     }
 
-    public static Author prepareAuthor(int i) {
+    public static Author prepareAuthor(String i) {
         Author author = new Author();
         author.setId(i);
         author.setName(prepareAuthorName(i));
-        author.setGenre(prepareGenreList(2));
+        author.setGenres(prepareGenreList(2));
         return author;
     }
 
     public static List<Genre> prepareGenreList(int count) {
         List<Genre> list = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
-            list.add(prepareGenre(i));
+            list.add(prepareGenre(String.valueOf(i)));
         }
         return list;
     }
 
-    public static AuthorName prepareAuthorName(int i) {
+    public static AuthorName prepareAuthorName(String i) {
         AuthorName authorName = new AuthorName();
         authorName.setFirstName("Firstname" + i);
         authorName.setLastName("Lastname" + i);
@@ -72,7 +72,7 @@ public class PrepareDataHelper {
         return note;
     }
 
-    public static NoteDto prepareNoteDto(int n) {
+    public static NoteDto prepareNoteDto(String n) {
         NoteDto dto = new NoteDto();
         dto.setId(n);
         dto.setNote("Note.PrepareDataHelper: " + n);
