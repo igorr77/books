@@ -15,7 +15,7 @@ public class InitMongoDBDataChangeLog {
     private Genre genre1;
     private Genre genre2;
     private Genre genre3;
-    private Genre genre999;
+    private Genre genreForDelete;
     private Author author1;
     private Author author2;
 
@@ -30,14 +30,17 @@ public class InitMongoDBDataChangeLog {
         genre2 = template.save(new Genre("2", "Get.Genre.Name.2", "Init.Genre.Description.2"));
         genre3 = template.save(new Genre("3", "Get.Genre.Name.3", "Init.Genre.Description.3"));
         template.save(new Genre("888L", "Del.Genre.Name.888L", "Init.Genre.Description.888L"));
-        genre999 = template.save(new Genre("999L", "Del.Genre.Name.999L", "Init.Genre.Description.999L"));
+        genreForDelete = template.save(new Genre("999L", "Del.Genre.Name.999L", "Init.Genre.Description.999L"));
         template.save(new Genre(null, "Init.Genre.Name.*", "Init.Genre.Description.*"));
     }
 
     @ChangeSet(order = "002", id = "initAuthors", author = "other", runAlways = true)
     public void initAuthors(MongoTemplate template){
         val authorName = new AuthorName("Init:Firstname","Surname","Lastname");
-        author1 = template.save(new Author(authorName, genre1, genre2, genre3, genre999));
+        author1 = template.save(new Author("A1", authorName, genre1, genre2, genre3));
+        author2 = template.save(new Author("A2", authorName, genre1, genre2));
+        template.save(new Author("ADEL1", authorName, genre1, genre2, genre3, genreForDelete));
+        template.save(new Author("ADEL2", authorName, genre1, genre2, genre3));
     }
 
     @ChangeSet(order = "003", id = "initBooks", author = "other", runAlways = true)

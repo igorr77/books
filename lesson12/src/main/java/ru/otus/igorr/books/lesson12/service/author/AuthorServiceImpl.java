@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-    private final DtoConverter converter;
+    private final DtoConverter<Author, AuthorDto> converter;
 
     @Autowired
     public AuthorServiceImpl(AuthorRepository authorRepository,
@@ -35,39 +35,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author add(AuthorDto dto) {
-        return authorRepository.save(((AuthorDtoConverter) converter).fill(dto));
-    }
-
-    @Override
     public AuthorDto getById(String id) {
-        return null;
+        return converter.convert(authorRepository.findById(id).orElse(Author.empty()));
     }
 
     @Override
-    public List<AuthorDto> getByBook(BookDto book) {
-        return null;
-    }
-
-    @Override
-    public List<AuthorDto> getListWithoutBooks() {
-        return converter.convertList(authorRepository.findAll());
-    }
-
-    @Override
-    public List<AuthorDto> getListWithBooks() {
-
-        List<Author> authorList = authorRepository.findAll();
-        /*
-
-        authorList.forEach(author -> {
-            Set<Book> books = new HashSet<>();
-            books.addAll(bookRepository.findByAuthorNative(author.getId()));
-            author.setBooks(books);
-
-        });
-        */
-        return converter.convertList(authorList);
-
+    public String add(AuthorDto dto) {
+        return authorRepository.save(converter.fill(dto)).getId();
     }
 }

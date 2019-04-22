@@ -95,6 +95,8 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
         author.setName(authorName);
         author.setGenres(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
 
+        //author.setBooks(bookConverter.fillList(Optional.ofNullable(dto.getBookList()).orElse(Collections.emptyList())));
+
         return author;
     }
 

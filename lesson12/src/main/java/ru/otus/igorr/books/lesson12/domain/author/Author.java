@@ -14,6 +14,8 @@ import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 import java.util.Arrays;
 import java.util.List;
 
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_DOCUMENT_ID;
+
 @Document(collection = "Author")
 @Getter
 @Setter
@@ -26,7 +28,19 @@ public class Author {
     @Field("name")
     private AuthorName name;
 
-    public Author(AuthorName name, Genre... genres) {
+    private static Author instance;
+
+    public static Author empty() {
+        if (instance == null) {
+            instance = new Author();
+            instance.setId(NOT_FOUND_DOCUMENT_ID);
+        }
+        return instance;
+    }
+
+
+    public Author(String id, AuthorName name, Genre... genres) {
+        this.id = id;
         this.name = name;
         this.genres = Arrays.asList(genres);
     }
@@ -39,8 +53,8 @@ public class Author {
     )
     private Set<Book> books = new HashSet<>();
     */
-    @DBRef
-    private List<Book> books;
+    //@DBRef
+    //private List<Book> books;
 
     /*
     @ManyToMany(fetch = FetchType.EAGER)
@@ -48,5 +62,6 @@ public class Author {
     */
     @DBRef
     private List<Genre> genres;
+
 
 }
