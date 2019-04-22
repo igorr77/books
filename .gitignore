@@ -1,8 +1,10 @@
 # Idea
-/.idea
+.idea
 *.iml
+*.iws
+*.ipr
+#
 vcs.xml
-/target
 
 # Ubuntu
 *pid*
@@ -11,6 +13,7 @@ vcs.xml
 
 
 # Compiled class file
+/target/
 *.class
 
 # Log file
@@ -19,9 +22,6 @@ logFile*.*
 
 # BlueJ files
 *.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
