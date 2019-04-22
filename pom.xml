@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.otus.igorr.books</groupId>
-    <artifactId>storage</artifactId>
+    <groupId>ru.otus.igorr</groupId>
+    <artifactId>books</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -18,8 +18,8 @@
         <module>lesson06</module>
         <module>lesson07</module>
         <module>lesson08</module>
-        <module>lesson09</module>
         <module>lesson10</module>
+        <module>lesson12</module>
     </modules>
 
     <properties>
@@ -119,6 +119,14 @@
             <version>2.0.0-beta.5</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- openCSV -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.5</version>
+        </dependency>
+
 
         <!-- Spring -->
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
