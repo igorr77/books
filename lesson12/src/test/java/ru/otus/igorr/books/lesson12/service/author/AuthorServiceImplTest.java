@@ -37,7 +37,7 @@ class AuthorServiceImplTest {
     void addTest() {
         AuthorDto authorForSave = prepareAuthor();
 
-        authorForSave.getGenreList().forEach( genreDto -> genreService.add(genreDto));
+        //authorForSave.getGenreList().forEach( genreDto -> genreService.add(genreDto));
 
         String saveId = authorService.add(authorForSave);
 
