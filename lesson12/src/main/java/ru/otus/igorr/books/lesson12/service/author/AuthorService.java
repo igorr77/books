@@ -9,4 +9,8 @@ import java.util.List;
 public interface AuthorService {
     AuthorDto getById(String id);
     String add(AuthorDto dto);
+
+    List<AuthorDto> getListAll();
+
+    List<AuthorDto> getListByName(String mask);
 }

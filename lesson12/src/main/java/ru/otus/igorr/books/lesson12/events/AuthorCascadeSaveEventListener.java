@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
 import ru.otus.igorr.books.lesson12.repository.genre.GenreRepository;
 
+import java.util.Objects;
+
 @Component
 public class AuthorCascadeSaveEventListener extends AbstractMongoEventListener<Author> {
 
@@ -26,7 +28,7 @@ public class AuthorCascadeSaveEventListener extends AbstractMongoEventListener<A
         if(author.getGenres() != null) {
             // TODO: 23.04.2019 Предполагается, что если genreId is not null, то сохранять не нужно, пока сохраняем все
             author.getGenres().stream()
-                    //.filter(e -> Objects.isNull(e.getId()))
+                    .filter(e -> Objects.isNull(e.getId()))
                     .forEach(genreRepository::save);
         }
     }

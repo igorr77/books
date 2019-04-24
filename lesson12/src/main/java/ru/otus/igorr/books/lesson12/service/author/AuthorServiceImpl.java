@@ -43,4 +43,15 @@ public class AuthorServiceImpl implements AuthorService {
     public String add(AuthorDto dto) {
         return authorRepository.save(converter.fill(dto)).getId();
     }
+
+    @Override
+    public List<AuthorDto> getListAll() {
+        return converter.convertList(authorRepository.findAll());
+    }
+
+    @Override
+    public List<AuthorDto> getListByName(String mask) {
+        List<Author> genreList = authorRepository.findByNameLike(mask);
+        return converter.convertList(genreList);
+    }
 }

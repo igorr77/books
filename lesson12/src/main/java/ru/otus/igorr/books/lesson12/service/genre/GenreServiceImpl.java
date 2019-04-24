@@ -50,12 +50,12 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreDto> getList() {
-        return ((GenreDtoConverter) converter).convertList(repository.findAll());
+        return converter.convertList(repository.findAll());
     }
 
     @Override
     public List<GenreDto> getListByName(String mask) {
         List<Genre> genreList = repository.findByNameLike(mask);
-        return ((GenreDtoConverter) converter).convertList(genreList);
+        return converter.convertList(genreList);
     }
 }
