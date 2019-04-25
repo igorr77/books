@@ -13,4 +13,6 @@ public interface AuthorService {
     List<AuthorDto> getListAll();
 
     List<AuthorDto> getListByName(String mask);
+
+    void delete(String id);
 }

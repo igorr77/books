@@ -30,12 +30,12 @@ public class BookCascadeSaveEventListener extends AbstractMongoEventListener<Boo
         Book book = event.getSource();
         if (book.getAuthors() != null) {
             book.getAuthors().stream()
-                    //.filter(e-> Objects.isNull(e.getId()))
+                    .filter(e-> Objects.isNull(e.getId()))
                     .forEach(authorRepository::save);
         }
-
-        if (book.getGenre() != null) {
+        if(book.getGenre() != null && Objects.isNull(book.getGenre().getId())) {
             genreRepository.save(book.getGenre());
         }
+
     }
 }

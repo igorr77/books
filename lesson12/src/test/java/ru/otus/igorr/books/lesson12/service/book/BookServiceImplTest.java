@@ -40,7 +40,7 @@ class BookServiceImplTest {
 
         book.setTitle("Book.Title: test service add");
         book.setAuthorList(authorList);
-        book.setGenreDto(genre);
+        book.setGenre(genre);
         book.setDescription("Book.Description: test service add");
 
         String id = bookService.add(book);

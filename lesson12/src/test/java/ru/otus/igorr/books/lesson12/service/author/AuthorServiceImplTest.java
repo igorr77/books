@@ -5,19 +5,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.otus.igorr.books.lesson12.domain.author.Author;
-import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 import ru.otus.igorr.books.lesson12.dto.AuthorDto;
 import ru.otus.igorr.books.lesson12.dto.BookDto;
 import ru.otus.igorr.books.lesson12.dto.GenreDto;
-import ru.otus.igorr.books.lesson12.service.author.AuthorService;
 import ru.otus.igorr.books.lesson12.service.genre.GenreService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,7 +30,7 @@ class AuthorServiceImplTest {
     void addTest() {
         AuthorDto authorForSave = prepareAuthor();
 
-        //authorForSave.getGenreList().forEach( genreDto -> genreService.add(genreDto));
+        //authorForSave.getGenreList().forEach( genre -> genreService.add(genre));
 
         String saveId = authorService.add(authorForSave);
 
@@ -91,7 +84,7 @@ class AuthorServiceImplTest {
         BookDto dto = new BookDto();
         dto.setId("BOOKID" + i);
         dto.setTitle("Title");
-        dto.setGenreDto(prepareGenre(i));
+        dto.setGenre(prepareGenre(i));
         dto.setDescription("Book.Description" + i);
         return dto;
     }

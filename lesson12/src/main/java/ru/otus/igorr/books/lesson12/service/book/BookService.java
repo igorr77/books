@@ -11,4 +11,6 @@ public interface BookService {
     List<BookDto> getList();
 
     NoteDto addNote(NoteDto dto);
+
+    void delete(String id);
 }

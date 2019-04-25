@@ -12,9 +12,7 @@ import ru.otus.igorr.books.lesson12.dto.NoteDto;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -64,7 +62,10 @@ public class BookServiceImpl implements BookService {
 
         bookList.forEach(book -> {
 
-            List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
+            List<String> noteIds = Optional.ofNullable(book.getNotes()).orElse(Collections.emptyList())
+                    .stream()
+                    .map(n -> n.getId())
+                    .collect(Collectors.toList());
             List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
                     .collect(Collectors.toList());
 
@@ -81,5 +82,10 @@ public class BookServiceImpl implements BookService {
     public NoteDto addNote(NoteDto dto) {
         Note note = noteRepository.save(noteConverter.fill(dto));
         return noteConverter.convert(note);
+    }
+
+    @Override
+    public void delete(String id) {
+        bookRepository.deleteById(id);
     }
 }

@@ -86,7 +86,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
             dto.setId(book.getId());
             dto.setTitle(book.getTitle());
             dto.setAuthorList(authorDtoList);
-            dto.setGenreDto(genreConverter.convert(genre));
+            dto.setGenre(genreConverter.convert(genre));
             dto.setDescription(book.getDescription());
             dto.setNoteList(noteDtoList);
         } else {
@@ -105,7 +105,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
                 .collect(Collectors.toList());
 
         book.setAuthors(authors);
-        book.setGenre(genreConverter.fill(dto.getGenreDto()));
+        book.setGenre(genreConverter.fill(dto.getGenre()));
 
         book.setDescription(dto.getDescription());
 

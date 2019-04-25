@@ -26,7 +26,6 @@ public class AuthorCascadeSaveEventListener extends AbstractMongoEventListener<A
 
         Author author = event.getSource();
         if(author.getGenres() != null) {
-            // TODO: 23.04.2019 Предполагается, что если genreId is not null, то сохранять не нужно, пока сохраняем все
             author.getGenres().stream()
                     .filter(e -> Objects.isNull(e.getId()))
                     .forEach(genreRepository::save);

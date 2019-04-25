@@ -47,10 +47,10 @@ public class AuthorCommands {
     public String authorAdd(@ShellOption("--firstName") String firstName,
                             @ShellOption("--lastName") String lastName,
                             @ShellOption("--surtName") String surName,
-                            @ShellOption("--genresIds") String... ids
+                            @ShellOption("--genresId") String genreId
     ) {
 
-        List<String> genreIds = Arrays.asList(ids);
+        List<String> genreIds = Arrays.asList(genreId);
         List<GenreDto> genreList = genreIds.stream()
                 .map(id -> {
                     return new GenreDto(id, null, null);
@@ -66,6 +66,19 @@ public class AuthorCommands {
         System.out.println();
         return OFFSET + list.stream().map(a -> a.toString()).collect(Collectors.joining("\n"));
     }
+
+    @ShellMethod(key = "authorDel", value = "Delete author")
+    public String authorDel(@ShellOption("--authorId") String id) {
+
+        authorService.delete(id);
+
+
+        List<AuthorDto> list = authorService.getListAll();
+
+        System.out.println();
+        return OFFSET + list.stream().map(a -> a.toString()).collect(Collectors.joining("\n"));
+    }
+
 
 
     // TODO: 20.04.19

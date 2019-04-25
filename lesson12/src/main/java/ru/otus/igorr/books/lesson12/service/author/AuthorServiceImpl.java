@@ -54,4 +54,9 @@ public class AuthorServiceImpl implements AuthorService {
         List<Author> genreList = authorRepository.findByNameLike(mask);
         return converter.convertList(genreList);
     }
+
+    @Override
+    public void delete(String id) {
+        authorRepository.deleteById(id);
+    }
 }
