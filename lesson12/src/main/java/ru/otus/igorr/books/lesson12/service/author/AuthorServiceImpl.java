@@ -4,17 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.dto.AuthorDto;
-import ru.otus.igorr.books.lesson12.dto.AuthorDtoConverter;
-import ru.otus.igorr.books.lesson12.dto.BookDto;
 import ru.otus.igorr.books.lesson12.dto.DtoConverter;
+import ru.otus.igorr.books.lesson12.execptions.DeleteReferenceRecordException;
 import ru.otus.igorr.books.lesson12.repository.author.AuthorRepository;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -57,6 +53,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void delete(String id) {
+        if(bookRepository.findByAuthorId(id).size() != 0){
+            throw new DeleteReferenceRecordException(id);
+        }
         authorRepository.deleteById(id);
     }
 }

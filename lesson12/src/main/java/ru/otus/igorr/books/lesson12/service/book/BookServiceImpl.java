@@ -39,13 +39,8 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public BookDto getById(String id) {
-        Book book = bookRepository.findById(id).orElse(new Book());
-        List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
-        List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
-                .collect(Collectors.toList());
-        book.setNotes(notes);
-        return bookConverter.convert(book);
+    public BookDto get(String id) {
+        return bookConverter.convert(bookRepository.findById(id).orElse(Book.empty()));
     }
 
     @Override
@@ -60,22 +55,28 @@ public class BookServiceImpl implements BookService {
 
         List<Book> bookList = bookRepository.findAll();
 
-        bookList.forEach(book -> {
-
-            List<String> noteIds = Optional.ofNullable(book.getNotes()).orElse(Collections.emptyList())
-                    .stream()
-                    .map(n -> n.getId())
-                    .collect(Collectors.toList());
-            List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
-                    .collect(Collectors.toList());
-
-            book.setNotes(notes);
-        });
-
         List<BookDto> dtoList = new ArrayList<>();
-        bookList.forEach(e -> dtoList.add(((BookDtoConverter) bookConverter).convert(e)));
+        bookList.forEach(e -> dtoList.add(bookConverter.convert(e)));
 
         return dtoList;
+    }
+
+    @Override
+    public void delete(String id) {
+        List<Note> noteList = noteRepository.findByBookId(id);
+        bookRepository.deleteById(id);
+    }
+
+    /* Note */
+
+    @Override
+    public NoteDto getNote(String noteId) {
+        return noteConverter.convert(noteRepository.findById(noteId).orElse(Note.empty()));
+    }
+
+    @Override
+    public List<NoteDto> getNoteList(String bookId) {
+        return noteConverter.convertList(noteRepository.findByBookId(bookId));
     }
 
     @Override
@@ -85,7 +86,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(String id) {
-        bookRepository.deleteById(id);
+    public void deleteNote(String noteId) {
+        noteRepository.deleteById(noteId);
     }
+
+
+
 }

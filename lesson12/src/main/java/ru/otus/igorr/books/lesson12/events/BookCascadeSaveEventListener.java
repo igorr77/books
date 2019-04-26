@@ -1,12 +1,16 @@
 package ru.otus.igorr.books.lesson12.events;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+import org.springframework.data.mongodb.core.mapping.event.AfterDeleteEvent;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
+import org.springframework.data.mongodb.core.mapping.event.BeforeDeleteEvent;
 import org.springframework.stereotype.Component;
 import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.repository.author.AuthorRepository;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
+import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
 import ru.otus.igorr.books.lesson12.repository.genre.GenreRepository;
 
 import java.util.Objects;
@@ -16,11 +20,15 @@ public class BookCascadeSaveEventListener extends AbstractMongoEventListener<Boo
 
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
+    private final NoteRepository noteRepository;
 
     @Autowired
-    public BookCascadeSaveEventListener(AuthorRepository authorRepository, GenreRepository genreRepository) {
+    public BookCascadeSaveEventListener(AuthorRepository authorRepository,
+                                        GenreRepository genreRepository,
+                                        NoteRepository noteRepository) {
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
+        this.noteRepository = noteRepository;
     }
 
     @Override
@@ -30,12 +38,21 @@ public class BookCascadeSaveEventListener extends AbstractMongoEventListener<Boo
         Book book = event.getSource();
         if (book.getAuthors() != null) {
             book.getAuthors().stream()
-                    .filter(e-> Objects.isNull(e.getId()))
+                    .filter(e -> Objects.isNull(e.getId()))
                     .forEach(authorRepository::save);
         }
-        if(book.getGenre() != null && Objects.isNull(book.getGenre().getId())) {
+        if (book.getGenre() != null && Objects.isNull(book.getGenre().getId())) {
             genreRepository.save(book.getGenre());
         }
 
+    }
+
+    @Override
+    public void onAfterDelete(AfterDeleteEvent<Book> event) {
+        super.onAfterDelete(event);
+
+        Document book = event.getSource();
+        String id = book.get("_id").toString();
+        noteRepository.deleteByBookId(id);
     }
 }

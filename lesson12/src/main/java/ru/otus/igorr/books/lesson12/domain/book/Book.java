@@ -13,6 +13,8 @@ import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 
 import java.util.List;
 
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_DOCUMENT_ID;
+
 @Document(collection = "Book")
 @Getter
 @Setter
@@ -34,8 +36,16 @@ public class Book {
     @Field("description")
     private String description;
 
-    @DBRef
-    private List<Note> notes;
+
+    private static Book emptyInstance;
+
+    public static Book empty(){
+        if(emptyInstance == null){
+            emptyInstance = new Book();
+            emptyInstance.setId(NOT_FOUND_DOCUMENT_ID);
+        }
+        return emptyInstance;
+    }
 
     @Override
     public boolean equals(Object obj) {

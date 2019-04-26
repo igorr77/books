@@ -19,4 +19,11 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
         query.addCriteria(Criteria.where("name.firstName").regex(regex));
         return mongoTemplate.find(query, Author.class);
     }
+
+    @Override
+    public List<Author> findByGenreId(String genreId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("genre.$id").is(genreId));
+        return mongoTemplate.find(query, Author.class);
+    }
 }

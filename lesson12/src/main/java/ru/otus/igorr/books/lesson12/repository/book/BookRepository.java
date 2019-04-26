@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.igorr.books.lesson12.domain.book.Book;
 
 @Repository
-public interface BookRepository extends MongoRepository<Book, String> {
+public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
 }
 
 

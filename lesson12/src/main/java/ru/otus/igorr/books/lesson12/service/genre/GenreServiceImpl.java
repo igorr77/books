@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 import ru.otus.igorr.books.lesson12.dto.DtoConverter;
 import ru.otus.igorr.books.lesson12.dto.GenreDto;
-import ru.otus.igorr.books.lesson12.dto.GenreDtoConverter;
+import ru.otus.igorr.books.lesson12.execptions.DeleteReferenceRecordException;
+import ru.otus.igorr.books.lesson12.repository.author.AuthorRepository;
+import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 import ru.otus.igorr.books.lesson12.repository.genre.GenreRepository;
 
 import java.util.List;
@@ -15,47 +17,64 @@ import java.util.List;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private final GenreRepository repository;
+    private final GenreRepository genreRepository;
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
     private final DtoConverter<Genre, GenreDto> converter;
 
     @Autowired
-    public GenreServiceImpl(GenreRepository repository,
+    public GenreServiceImpl(GenreRepository genreRepository,
+                            AuthorRepository authorRepository,
+                            BookRepository bookRepository,
                             @Qualifier("genreConverter") DtoConverter converter) {
-        this.repository = repository;
+        this.genreRepository = genreRepository;
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
         this.converter = converter;
     }
 
 
     @Override
     public GenreDto getById(String id) {
-        return converter.convert(repository.findById(id).orElse(Genre.empty()));
+        return converter.convert(genreRepository.findById(id).orElse(Genre.empty()));
     }
 
     @Override
     public String add(GenreDto dto) {
-        Genre genre = repository.save(converter.fill(dto));
+        Genre genre = genreRepository.save(converter.fill(dto));
         return genre.getId();
     }
 
     @Override
     public void delete(String id) {
-        repository.deleteById(id);
+        if (!checkForDelete(id)) {
+            throw new DeleteReferenceRecordException(id);
+        }
+        genreRepository.deleteById(id);
     }
 
     @Override
     public void delete(GenreDto dto) {
-        repository.delete(converter.fill(dto));
+        if (!checkForDelete(dto.getId())) {
+            throw new DeleteReferenceRecordException(dto.getId());
+        }
+        genreRepository.delete(converter.fill(dto));
     }
-
 
     @Override
     public List<GenreDto> getList() {
-        return converter.convertList(repository.findAll());
+        return converter.convertList(genreRepository.findAll());
     }
 
     @Override
     public List<GenreDto> getListByName(String mask) {
-        List<Genre> genreList = repository.findByNameLike(mask);
+        List<Genre> genreList = genreRepository.findByNameLike(mask);
         return converter.convertList(genreList);
     }
+
+    private boolean checkForDelete(String genreId) {
+        return bookRepository.findByGenreId(genreId).size() == 0
+                && authorRepository.findByGenreId(genreId).size() == 0;
+    }
+
 }

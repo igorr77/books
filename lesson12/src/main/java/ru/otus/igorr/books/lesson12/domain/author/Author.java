@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 
 import java.util.Arrays;
@@ -28,14 +27,14 @@ public class Author {
     @Field("name")
     private AuthorName name;
 
-    private static Author instance;
+    private static Author emptyInstance;
 
     public static Author empty() {
-        if (instance == null) {
-            instance = new Author();
-            instance.setId(NOT_FOUND_DOCUMENT_ID);
+        if (emptyInstance == null) {
+            emptyInstance = new Author();
+            emptyInstance.setId(NOT_FOUND_DOCUMENT_ID);
         }
-        return instance;
+        return emptyInstance;
     }
 
 
@@ -45,23 +44,7 @@ public class Author {
         this.genres = Arrays.asList(genres);
     }
 
-    /*
-    @ManyToMany(targetEntity = Book.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "book_author",
-            joinColumns = @JoinColumn(name = "AUTHOR_ID"),
-            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
-    )
-    private Set<Book> books = new HashSet<>();
-    */
-    //@DBRef
-    //private List<Book> books;
-
-    /*
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Genre> genre;
-    */
     @DBRef
     private List<Genre> genres;
-
 
 }

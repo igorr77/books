@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson12.dto.GenreDto;
+import ru.otus.igorr.books.lesson12.execptions.DeleteReferenceRecordException;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ class GenreServiceImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "2", "3"})
-    @DisplayName("getById")
+    @DisplayName("get")
     void getByIdTest(String param) {
         GenreDto genre = service.getById(param);
         assertAll(
@@ -31,7 +32,8 @@ class GenreServiceImplTest {
     }
 
     @Test
-    void addTest() {
+    void deleteRefGenreExceptionTest() {
+        assertThrows(DeleteReferenceRecordException.class, ()-> service.delete("1"));
     }
 
     @ParameterizedTest

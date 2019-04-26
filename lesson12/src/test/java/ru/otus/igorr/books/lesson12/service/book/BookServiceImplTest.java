@@ -20,7 +20,7 @@ class BookServiceImplTest {
 
     @Test
     void getByIdTest() {
-        BookDto dto = bookService.getById("1L");
+        BookDto dto = bookService.get("1L");
     }
 
     @Test
@@ -45,7 +45,7 @@ class BookServiceImplTest {
 
         String id = bookService.add(book);
 
-        BookDto saveBook = bookService.getById(id);
+        BookDto saveBook = bookService.get(id);
 
         int breakPoint = 0;
     }

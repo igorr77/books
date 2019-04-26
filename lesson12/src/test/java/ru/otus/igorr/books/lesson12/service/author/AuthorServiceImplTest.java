@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson12.dto.AuthorDto;
 import ru.otus.igorr.books.lesson12.dto.BookDto;
 import ru.otus.igorr.books.lesson12.dto.GenreDto;
+import ru.otus.igorr.books.lesson12.execptions.DeleteReferenceRecordException;
 import ru.otus.igorr.books.lesson12.service.genre.GenreService;
 
 import java.util.List;
@@ -30,13 +31,11 @@ class AuthorServiceImplTest {
     void addTest() {
         AuthorDto authorForSave = prepareAuthor();
 
-        //authorForSave.getGenreList().forEach( genre -> genreService.add(genre));
-
         String saveId = authorService.add(authorForSave);
 
         AuthorDto author = authorService.getById(saveId);
 
-        int breakPoint = 0;
+        assertEquals(authorForSave.getId(), author.getId());
     }
 
     @ParameterizedTest
@@ -53,6 +52,15 @@ class AuthorServiceImplTest {
         assertEquals(NOT_FOUND_DOCUMENT_ID, dto.getId());
     }
 
+    @Test
+    void deleteTest(){
+        authorService.delete("A999");
+    }
+
+    @Test
+    void deleteExceptionTest(){
+        assertThrows(DeleteReferenceRecordException.class, () -> authorService.delete("A888"));
+    }
 
     private AuthorDto prepareAuthor() {
         AuthorDto authorDto = new AuthorDto();
