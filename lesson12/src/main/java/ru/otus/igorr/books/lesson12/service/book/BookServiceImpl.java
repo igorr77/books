@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.domain.book.Note;
-import ru.otus.igorr.books.lesson12.dto.BookDto;
-import ru.otus.igorr.books.lesson12.dto.BookDtoConverter;
-import ru.otus.igorr.books.lesson12.dto.DtoConverter;
-import ru.otus.igorr.books.lesson12.dto.NoteDto;
+import ru.otus.igorr.books.lesson12.domain.genre.Genre;
+import ru.otus.igorr.books.lesson12.dto.*;
+import ru.otus.igorr.books.lesson12.execptions.GenreMismatchException;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
 
@@ -45,6 +44,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String add(BookDto dto) {
+
+        // проверяем на соответствие жанра книги и жанров авторов
+        final String excludeGenreId = dto.getGenre().getId();
+        List<AuthorDto> authors =
+                dto.getAuthorList()
+                        .stream()
+                        .filter(author -> !author.getGenreList()
+                                .stream()
+                                .filter(genre -> genre.getId().equals(excludeGenreId))
+                                .findFirst()
+                                .isPresent())
+                        .collect(Collectors.toList());
+        if (authors.size() != 0) {
+            throw new GenreMismatchException(authors.get(0).getId());
+        }
+
         Book book = bookConverter.fill(dto);
         Book saveBook = bookRepository.save(book);
         return saveBook.getId();
@@ -89,7 +104,6 @@ public class BookServiceImpl implements BookService {
     public void deleteNote(String noteId) {
         noteRepository.deleteById(noteId);
     }
-
 
 
 }
