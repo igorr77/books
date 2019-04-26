@@ -27,6 +27,9 @@ public class Author {
     @Field("name")
     private AuthorName name;
 
+    @DBRef
+    private List<Genre> genres;
+
     private static Author emptyInstance;
 
     public static Author empty() {
@@ -43,8 +46,5 @@ public class Author {
         this.name = name;
         this.genres = Arrays.asList(genres);
     }
-
-    @DBRef
-    private List<Genre> genres;
 
 }
