@@ -3,9 +3,6 @@ package ru.otus.igorr.books.lesson12.dto;
 import org.junit.jupiter.api.Test;
 import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.domain.book.Note;
-import ru.otus.igorr.books.lesson12.dto.DtoConverter;
-import ru.otus.igorr.books.lesson12.dto.NoteDto;
-import ru.otus.igorr.books.lesson12.dto.NoteDtoConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +15,6 @@ class NoteDtoConverterTest {
     private static final String OWNER_ID = "111L";
     private static final String NOTE_ID = "222L";
 
-    //@Autowired
     private DtoConverter<Note, NoteDto> converter = new NoteDtoConverter();
 
     @Test

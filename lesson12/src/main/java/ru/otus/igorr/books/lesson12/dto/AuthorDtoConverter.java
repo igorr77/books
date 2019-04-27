@@ -27,8 +27,8 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
     public AuthorDtoConverter(DtoConverter<Genre, GenreDto> genreConverter,
                               DtoConverter<Book, BookDto> bookConverter
     ) {
-        this.genreConverter = (GenreDtoConverter) genreConverter;
-        this.bookConverter = (BookDtoConverter) bookConverter;
+        this.genreConverter = genreConverter;
+        this.bookConverter = bookConverter;
     }
 
     @Override
@@ -66,14 +66,6 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
             dto.setSurName(author.getName().getSurName());
             dto.setGenreList(genreConverter.convertList(author.getGenres()));
             List<Book> bookList = new ArrayList<>();
-            // TODO: 19.04.2019
-//            if (author.getBooks() != null) {
-//                try {
-//                    bookList.addAll(author.getBooks());
-//                } catch (LazyInitializationException e) {
-//                    bookList.addAll(Collections.emptySet());
-//                }
-//            }
             dto.setBookList(bookConverter.convertList(bookList));
         } catch (NullPointerException npe) {
             LOG.warn("!!!", npe);
@@ -94,8 +86,6 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
         author.setId(dto.getId());
         author.setName(authorName);
         author.setGenres(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
-
-        //author.setBooks(bookConverter.fillList(Optional.ofNullable(dto.getBookList()).orElse(Collections.emptyList())));
 
         return author;
     }

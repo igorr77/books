@@ -1,29 +1,19 @@
 package ru.otus.igorr.books.lesson12.dto;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
 import ru.otus.igorr.books.lesson12.domain.author.AuthorName;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
-import ru.otus.igorr.books.lesson12.dto.AuthorDto;
-import ru.otus.igorr.books.lesson12.dto.DtoConverter;
-import ru.otus.igorr.books.lesson12.dto.GenreDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@SpringBootTest
-@ExtendWith(SpringExtension.class)
-@EnableAutoConfiguration
-//@ContextConfiguration(classes = {AuthorDtoConverter.class})
-@ComponentScan(basePackages = {"ru.otus.igorr.books.lesson10"})
+@SpringBootTest
 class AuthorDtoConverterTest {
 
     private final String ENTITY_2_DTO_OBJECT_ID = "1L";
@@ -33,14 +23,14 @@ class AuthorDtoConverterTest {
 
     @Autowired
     @Qualifier("authorConverter")
-    private DtoConverter converter;
+    private DtoConverter<Author, AuthorDto> converter;
 
     @Test
     void convertTest() {
 
         Author author = prepareAuthor();
 
-        AuthorDto dto = (AuthorDto) converter.convert(author);
+        AuthorDto dto = converter.convert(author);
 
         assertAll(
                 () -> assertEquals(ENTITY_2_DTO_OBJECT_ID, dto.getId()),
@@ -53,7 +43,7 @@ class AuthorDtoConverterTest {
     @Test
     void fillTest() {
         AuthorDto dto = prepareDto();
-        Author author = (Author) converter.fill(dto);
+        Author author = converter.fill(dto);
 
         assertAll(
                 () -> assertEquals(DTO_2_ENTITY_OBJECT_ID, author.getId()),

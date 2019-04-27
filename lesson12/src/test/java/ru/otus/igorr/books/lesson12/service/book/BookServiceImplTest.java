@@ -12,6 +12,8 @@ import ru.otus.igorr.books.lesson12.utils.PrepareDataHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class BookServiceImplTest {
 
@@ -20,7 +22,8 @@ class BookServiceImplTest {
 
     @Test
     void getByIdTest() {
-        BookDto dto = bookService.get("1L");
+        BookDto dto = bookService.get("BID001");
+        assertEquals("BID001", dto.getId());
     }
 
     @Test
@@ -30,12 +33,13 @@ class BookServiceImplTest {
         List<GenreDto> genreList = new ArrayList<>();
         GenreDto genre = new GenreDto();
         genreList.add(genre);
-        genre.setId("1L");
+        genre.setId("1");
 
         List<AuthorDto> authorList = new ArrayList<>();
         AuthorDto author = new AuthorDto();
         authorList.add(author);
-        author.setId("1L");
+        author.setId("A1");
+        author.setGenreList(genreList);
 
 
         book.setTitle("Book.Title: test service add");
@@ -47,7 +51,11 @@ class BookServiceImplTest {
 
         BookDto saveBook = bookService.get(id);
 
-        int breakPoint = 0;
+        assertAll(
+                () -> assertNotNull(saveBook),
+                () -> assertEquals(id, saveBook.getId())
+        );
+
     }
 
     @Test

@@ -53,7 +53,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void delete(String id) {
-        if(bookRepository.findByAuthorId(id).size() != 0){
+        if (bookRepository.existsAuthor(id)) {
             throw new DeleteReferenceRecordException(id);
         }
         authorRepository.deleteById(id);

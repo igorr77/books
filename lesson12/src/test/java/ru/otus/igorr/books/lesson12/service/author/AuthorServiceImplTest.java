@@ -35,7 +35,11 @@ class AuthorServiceImplTest {
 
         AuthorDto author = authorService.getById(saveId);
 
-        assertEquals(authorForSave.getId(), author.getId());
+        assertAll(
+                () -> assertNotNull(author),
+                () -> assertTrue(author.getId().length() > 16),
+                () -> assertEquals(authorForSave.getFirstName(), author.getFirstName())
+        );
     }
 
     @ParameterizedTest
@@ -53,12 +57,12 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void deleteTest(){
+    void deleteTest() {
         authorService.delete("A999");
     }
 
     @Test
-    void deleteExceptionTest(){
+    void deleteExceptionTest() {
         assertThrows(DeleteReferenceRecordException.class, () -> authorService.delete("A888"));
     }
 

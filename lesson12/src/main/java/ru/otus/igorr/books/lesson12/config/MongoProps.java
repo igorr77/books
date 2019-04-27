@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @ConfigurationProperties("spring.data.mongodb")
-//@ConfigurationProperties(prefix = "mongodb", ignoreInvalidFields = true)
 public class MongoProps {
     private int port;
     private String database;
