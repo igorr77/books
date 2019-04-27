@@ -8,11 +8,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_DOCUMENT_ID;
 
 @Document(collection = "Author")
 @Getter
@@ -26,27 +27,24 @@ public class Author {
     @Field("name")
     private AuthorName name;
 
-    public Author(AuthorName name, Genre... genres) {
+    @DBRef
+    private List<Genre> genres;
+
+    private static Author emptyInstance;
+
+    public static Author empty() {
+        if (emptyInstance == null) {
+            emptyInstance = new Author();
+            emptyInstance.setId(NOT_FOUND_DOCUMENT_ID);
+        }
+        return emptyInstance;
+    }
+
+
+    public Author(String id, AuthorName name, Genre... genres) {
+        this.id = id;
         this.name = name;
         this.genres = Arrays.asList(genres);
     }
-
-    /*
-    @ManyToMany(targetEntity = Book.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "book_author",
-            joinColumns = @JoinColumn(name = "AUTHOR_ID"),
-            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
-    )
-    private Set<Book> books = new HashSet<>();
-    */
-    @DBRef
-    private List<Book> books;
-
-    /*
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Genre> genre;
-    */
-    @DBRef
-    private List<Genre> genres;
 
 }

@@ -18,6 +18,10 @@ public class GenreDto {
     private String description;
 
 
+    public GenreDto(String id){
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "GenreDto{" +

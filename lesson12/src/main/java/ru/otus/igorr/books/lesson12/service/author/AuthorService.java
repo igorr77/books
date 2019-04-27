@@ -7,10 +7,12 @@ import ru.otus.igorr.books.lesson12.dto.BookDto;
 import java.util.List;
 
 public interface AuthorService {
-    Author add(AuthorDto dto);
     AuthorDto getById(String id);
-    List<AuthorDto> getByBook(BookDto book);
+    String add(AuthorDto dto);
 
-    List<AuthorDto> getListWithoutBooks();
-    List<AuthorDto> getListWithBooks();
+    List<AuthorDto> getListAll();
+
+    List<AuthorDto> getListByName(String mask);
+
+    void delete(String id);
 }

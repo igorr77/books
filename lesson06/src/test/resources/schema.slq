@@ -1,0 +1,84 @@
+DROP TABLE IF EXISTS test.books_data;
+DROP TABLE IF EXISTS test.genre_data;
+DROP TABLE IF EXISTS test.author_data;
+--
+DROP SEQUENCE IF EXISTS test.genre_data_id_seq;
+DROP SEQUENCE IF EXISTS test.author_data_id_seq;
+DROP SEQUENCE IF EXISTS test.books_data_id_seq;
+
+-- SEQUENCE: test.genre_data_id_seq
+CREATE SEQUENCE test.genre_data_id_seq;
+ALTER SEQUENCE test.genre_data_id_seq OWNER TO postgres;
+
+-- SEQUENCE: test.author_data_id_seq
+CREATE SEQUENCE test.author_data_id_seq;
+ALTER SEQUENCE test.author_data_id_seq OWNER TO postgres;
+
+-- SEQUENCE: test.books_data_id_seq
+CREATE SEQUENCE test.books_data_id_seq;
+ALTER SEQUENCE test.books_data_id_seq OWNER TO postgres;
+
+-- Table: test.genre_data
+CREATE TABLE test.genre_data
+(
+       id integer NOT NULL DEFAULT nextval('test.genre_data_id_seq'::regclass),
+       genreName character(30) COLLATE pg_catalog."default" NOT NULL,
+       description character(255) COLLATE pg_catalog."default",
+       CONSTRAINT genre_pkey PRIMARY KEY (id)
+              USING INDEX TABLESPACE index
+)
+       WITH (
+              OIDS = FALSE
+       )
+       TABLESPACE users;
+
+ALTER TABLE test.genre_data OWNER to postgres;
+
+-- Table: test.author_data
+CREATE TABLE test.author_data
+(
+       id integer NOT NULL DEFAULT nextval('test.author_data_id_seq'::regclass),
+       firstname character(30) COLLATE pg_catalog."default" NOT NULL,
+       surname character(30) COLLATE pg_catalog."default",
+       lastname character(30) COLLATE pg_catalog."default" NOT NULL,
+       country character(3) COLLATE pg_catalog."default",
+       CONSTRAINT author_data_pkey PRIMARY KEY (id),
+       CONSTRAINT author_data_country_check CHECK (length(country) <> 3)
+)
+       WITH (
+              OIDS = FALSE
+       )
+       TABLESPACE users;
+
+ALTER TABLE test.author_data
+       OWNER to postgres;
+
+-- Table: test.books_data
+CREATE TABLE test.books_data
+(
+       id integer NOT NULL DEFAULT nextval('test.books_data_id_seq'::regclass),
+       author_id integer NOT NULL,
+       genre_id integer NOT NULL,
+       title character(30) COLLATE pg_catalog."default" NOT NULL,
+       isbn character(13) COLLATE pg_catalog."default",
+       pages integer,
+       description character(255) COLLATE pg_catalog."default",
+       CONSTRAINT books_data_pk PRIMARY KEY (id)
+              USING INDEX TABLESPACE users,
+       CONSTRAINT books_data_author_id_fk FOREIGN KEY (author_id)
+              REFERENCES test.author_data (id) MATCH SIMPLE
+              ON UPDATE NO ACTION
+              ON DELETE NO ACTION,
+       CONSTRAINT books_data_genre_id_fk FOREIGN KEY (genre_id)
+              REFERENCES test.genre_data (id) MATCH SIMPLE
+              ON UPDATE NO ACTION
+              ON DELETE NO ACTION,
+       CONSTRAINT books_data_isbn_check CHECK (length(isbn) = 9 OR length(isbn) = 13) NOT VALID
+)
+       WITH (
+              OIDS = FALSE
+       )
+       TABLESPACE users;
+
+ALTER TABLE test.books_data
+       OWNER to postgres;

@@ -4,17 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.author.Author;
-import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.dto.AuthorDto;
-import ru.otus.igorr.books.lesson12.dto.AuthorDtoConverter;
-import ru.otus.igorr.books.lesson12.dto.BookDto;
 import ru.otus.igorr.books.lesson12.dto.DtoConverter;
+import ru.otus.igorr.books.lesson12.execptions.DeleteReferenceRecordException;
 import ru.otus.igorr.books.lesson12.repository.author.AuthorRepository;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -23,7 +19,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-    private final DtoConverter converter;
+    private final DtoConverter<Author, AuthorDto> converter;
 
     @Autowired
     public AuthorServiceImpl(AuthorRepository authorRepository,
@@ -35,39 +31,31 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author add(AuthorDto dto) {
-        return authorRepository.save(((AuthorDtoConverter) converter).fill(dto));
-    }
-
-    @Override
     public AuthorDto getById(String id) {
-        return null;
+        return converter.convert(authorRepository.findById(id).orElse(Author.empty()));
     }
 
     @Override
-    public List<AuthorDto> getByBook(BookDto book) {
-        return null;
+    public String add(AuthorDto dto) {
+        return authorRepository.save(converter.fill(dto)).getId();
     }
 
     @Override
-    public List<AuthorDto> getListWithoutBooks() {
+    public List<AuthorDto> getListAll() {
         return converter.convertList(authorRepository.findAll());
     }
 
     @Override
-    public List<AuthorDto> getListWithBooks() {
+    public List<AuthorDto> getListByName(String mask) {
+        List<Author> genreList = authorRepository.findByNameLike(mask);
+        return converter.convertList(genreList);
+    }
 
-        List<Author> authorList = authorRepository.findAll();
-        /*
-
-        authorList.forEach(author -> {
-            Set<Book> books = new HashSet<>();
-            books.addAll(bookRepository.findByAuthorNative(author.getId()));
-            author.setBooks(books);
-
-        });
-        */
-        return converter.convertList(authorList);
-
+    @Override
+    public void delete(String id) {
+        if(bookRepository.findByAuthorId(id).size() != 0){
+            throw new DeleteReferenceRecordException(id);
+        }
+        authorRepository.deleteById(id);
     }
 }

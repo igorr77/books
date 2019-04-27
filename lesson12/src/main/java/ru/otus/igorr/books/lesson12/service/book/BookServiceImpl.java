@@ -5,16 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson12.domain.book.Book;
 import ru.otus.igorr.books.lesson12.domain.book.Note;
-import ru.otus.igorr.books.lesson12.dto.BookDto;
-import ru.otus.igorr.books.lesson12.dto.BookDtoConverter;
-import ru.otus.igorr.books.lesson12.dto.DtoConverter;
-import ru.otus.igorr.books.lesson12.dto.NoteDto;
+import ru.otus.igorr.books.lesson12.domain.genre.Genre;
+import ru.otus.igorr.books.lesson12.dto.*;
+import ru.otus.igorr.books.lesson12.execptions.GenreMismatchException;
 import ru.otus.igorr.books.lesson12.repository.book.BookRepository;
 import ru.otus.igorr.books.lesson12.repository.book.NoteRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,17 +38,28 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public BookDto getById(String id) {
-        Book book = bookRepository.findById(id).orElse(new Book());
-        List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
-        List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
-                .collect(Collectors.toList());
-        book.setNotes(notes);
-        return bookConverter.convert(book);
+    public BookDto get(String id) {
+        return bookConverter.convert(bookRepository.findById(id).orElse(Book.empty()));
     }
 
     @Override
     public String add(BookDto dto) {
+
+        // проверяем на соответствие жанра книги и жанров авторов
+        final String excludeGenreId = dto.getGenre().getId();
+        List<AuthorDto> authors =
+                dto.getAuthorList()
+                        .stream()
+                        .filter(author -> !author.getGenreList()
+                                .stream()
+                                .filter(genre -> genre.getId().equals(excludeGenreId))
+                                .findFirst()
+                                .isPresent())
+                        .collect(Collectors.toList());
+        if (authors.size() != 0) {
+            throw new GenreMismatchException(authors.get(0).getId());
+        }
+
         Book book = bookConverter.fill(dto);
         Book saveBook = bookRepository.save(book);
         return saveBook.getId();
@@ -62,19 +70,28 @@ public class BookServiceImpl implements BookService {
 
         List<Book> bookList = bookRepository.findAll();
 
-        bookList.forEach(book -> {
-
-            List<String> noteIds = book.getNotes().stream().map(n -> n.getId()).collect(Collectors.toList());
-            List<Note> notes = StreamSupport.stream(noteRepository.findAllById(noteIds).spliterator(), false)
-                    .collect(Collectors.toList());
-
-            book.setNotes(notes);
-        });
-
         List<BookDto> dtoList = new ArrayList<>();
-        bookList.forEach(e -> dtoList.add(((BookDtoConverter) bookConverter).convert(e)));
+        bookList.forEach(e -> dtoList.add(bookConverter.convert(e)));
 
         return dtoList;
+    }
+
+    @Override
+    public void delete(String id) {
+        List<Note> noteList = noteRepository.findByBookId(id);
+        bookRepository.deleteById(id);
+    }
+
+    /* Note */
+
+    @Override
+    public NoteDto getNote(String noteId) {
+        return noteConverter.convert(noteRepository.findById(noteId).orElse(Note.empty()));
+    }
+
+    @Override
+    public List<NoteDto> getNoteList(String bookId) {
+        return noteConverter.convertList(noteRepository.findByBookId(bookId));
     }
 
     @Override
@@ -82,4 +99,11 @@ public class BookServiceImpl implements BookService {
         Note note = noteRepository.save(noteConverter.fill(dto));
         return noteConverter.convert(note);
     }
+
+    @Override
+    public void deleteNote(String noteId) {
+        noteRepository.deleteById(noteId);
+    }
+
+
 }

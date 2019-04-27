@@ -24,7 +24,6 @@ class GenreRepositoryTest extends AbstractRepositoryTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "2", "3"})
-    //@DisplayName("ttttttttttttttttttttttttttt")
     void findByIdTest(String param) {
         Genre genre = repository.findById(param).orElse(Genre.empty());
         assertEquals(param, genre.getId());

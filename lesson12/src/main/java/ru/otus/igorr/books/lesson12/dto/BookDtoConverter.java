@@ -10,6 +10,7 @@ import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 import ru.otus.igorr.books.lesson12.utils.Constant;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("bookConverter")
 public class BookDtoConverter implements DtoConverter<Book, BookDto> {
@@ -40,14 +41,22 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
 
     @Override
     public List<BookDto> convertList(List<Book> list) {
+        /*
         List<BookDto> dtoList = new ArrayList<>();
         list.forEach(book -> dtoList.add(entity2dto(book)));
         return dtoList;
+
+         */
+        return list.stream()
+                .map(book -> entity2dto(book))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Book> fillList(List<BookDto> list) {
-        return null;
+        return list.stream()
+                .map(dto -> dto2entity(dto))
+                .collect(Collectors.toList());
     }
 
     BookDto entity2dto(Book book) {
@@ -77,7 +86,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
             dto.setId(book.getId());
             dto.setTitle(book.getTitle());
             dto.setAuthorList(authorDtoList);
-            dto.setGenreDto(genreConverter.convert(genre));
+            dto.setGenre(genreConverter.convert(genre));
             dto.setDescription(book.getDescription());
             dto.setNoteList(noteDtoList);
         } else {
@@ -90,12 +99,13 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
         Book book = new Book();
 
         book.setTitle(dto.getTitle());
-        List<Author> authors = new ArrayList<>();
-        dto.getAuthorList().forEach(authorDto ->
-                authors.add(authorConverter.fill(authorDto))
-        );
+        List<Author> authors =
+        Optional.ofNullable(dto.getAuthorList()).orElse(Collections.emptyList()).stream()
+                .map(authorDto -> authorConverter.fill(authorDto))
+                .collect(Collectors.toList());
+
         book.setAuthors(authors);
-        book.setGenre(genreConverter.fill(dto.getGenreDto()));
+        book.setGenre(genreConverter.fill(dto.getGenre()));
 
         book.setDescription(dto.getDescription());
 

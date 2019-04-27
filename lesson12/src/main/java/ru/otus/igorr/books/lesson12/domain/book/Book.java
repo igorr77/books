@@ -1,6 +1,8 @@
 package ru.otus.igorr.books.lesson12.domain.book;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -11,9 +13,13 @@ import ru.otus.igorr.books.lesson12.domain.genre.Genre;
 
 import java.util.List;
 
+import static ru.otus.igorr.books.lesson12.utils.Constant.NOT_FOUND_DOCUMENT_ID;
+
 @Document(collection = "Book")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     private String id;
@@ -21,32 +27,25 @@ public class Book {
     @Field("title")
     private String title;
 
-    // У книги много авторов, у автора много книг,
-    // но не настолько много, чтобы использовать LAZY
-    /*
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Author.class)
-    @JoinTable(name = "book_author",
-            joinColumns = @JoinColumn(name = "BOOK_ID", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID")
-    )
-    */
     @DBRef
     private List<Author> authors;
 
-
-    //@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @DBRef
     private Genre genre;
 
-    //@Column(name = "Description")
     @Field("description")
     private String description;
 
-    // Одна книга - много комментов,
-    // а раз много, то LAZY
-    //@OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
-    @DBRef
-    private List<Note> notes;
+
+    private static Book emptyInstance;
+
+    public static Book empty(){
+        if(emptyInstance == null){
+            emptyInstance = new Book();
+            emptyInstance.setId(NOT_FOUND_DOCUMENT_ID);
+        }
+        return emptyInstance;
+    }
 
     @Override
     public boolean equals(Object obj) {
