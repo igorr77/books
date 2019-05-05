@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+
+<h1>Genre list</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+    </tr>
+    </thead>
+    <tbody th:remove="all-but-first">
+    <tr th:each="genre : ${genres}">
+        <td th:text="${genre.name}">Исторический роман</td>
+        <td th:text="${genre.description}">Роман, построенный на историческом сюжете, который воспроизводит в
+            художественной форме какую-либо эпоху, определённый период истории.
+        </td>
+    </tr>
+    <tr>
+        <td>Детектив</td>
+        <td>Детектив</td>
+    </tr>
+    <tr>
+        <td>Научная фантастика</td>
+        <td>Научная фантастика</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    <a href="add.html"> add</a>
+</p>
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+
+</html>
+
