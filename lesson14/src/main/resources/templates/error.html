@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css"
+          th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+<h1>Упс.... что-то пошло не так</h1>
+<table>
+    <tr>
+        <td>Date</td>
+        <td th:text="${timestamp}"/>
+    </tr>
+    <tr>
+        <td>Path</td>
+        <td th:text="${path}"/>
+    </tr>
+    <tr>
+        <td>Error</td>
+        <td th:text="${error}"/>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td th:text="${status}"/>
+    </tr>
+    <tr>
+        <td>Message</td>
+        <td th:text="${message}"/>
+    </tr>
+    <tr>
+        <td>Exception</td>
+        <td th:text="${exception}"/>
+    </tr>
+    <tr>
+        <td>Trace</td>
+        <td>
+            <pre th:text="${trace}"/>
+        </td>
+    </tr>
+</table>
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+</body>
+</html>

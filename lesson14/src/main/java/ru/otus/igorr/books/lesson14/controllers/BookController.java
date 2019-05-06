@@ -62,6 +62,7 @@ public class BookController {
     String addPage(@RequestParam String title,
                    @RequestParam String author,
                    @RequestParam String genre,
+                   @RequestParam String description,
                    Model model) {
 
         BookDto book = new BookDto
@@ -69,6 +70,7 @@ public class BookController {
                 .title(title)
                 .authorList(Arrays.asList(authorService.getById(author)))
                 .genre(genreService.getById(genre))
+                .description(description)
                 .build();
 
         bookService.add(book);
