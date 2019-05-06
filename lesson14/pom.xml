@@ -178,7 +178,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.otus.igorr.books.lesson10.Lesson12Application</mainClass>
+                    <mainClass>ru.otus.igorr.books.lesson14.Lesson14Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>
