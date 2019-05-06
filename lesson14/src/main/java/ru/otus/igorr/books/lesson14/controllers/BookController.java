@@ -7,9 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.otus.igorr.books.lesson14.dto.AuthorDto;
 import ru.otus.igorr.books.lesson14.dto.BookDto;
-import ru.otus.igorr.books.lesson14.dto.GenreDto;
 import ru.otus.igorr.books.lesson14.service.author.AuthorService;
 import ru.otus.igorr.books.lesson14.service.book.BookService;
 import ru.otus.igorr.books.lesson14.service.genre.GenreService;
@@ -76,11 +74,32 @@ public class BookController {
         bookService.add(book);
 
         model.addAttribute("books", getBookList());
-        return "author/list";
+        return "book/list";
     }
 
-    @GetMapping("/book/edit")
-    String viewPage(Model model){
+    @GetMapping("/book/view")
+    String viewPage(@RequestParam String id, Model model) {
+
+        model.addAttribute("book", bookService.get(id));
+
+        model.addAttribute("readOnly", true);
+        return "book/edit";
+    }
+
+    @PostMapping("/book/edit")
+    String editPage(@RequestParam String id, Model model) {
+
+        model.addAttribute("book", bookService.get(id));
+
+        model.addAttribute("readOnly", false);
+        return "book/edit";
+    }
+
+    @PostMapping("/book/save")
+    String savePage(@RequestParam String id, Model model) {
+
+        model.addAttribute("book", bookService.get(id));
+
         model.addAttribute("readOnly", true);
         return "book/edit";
     }

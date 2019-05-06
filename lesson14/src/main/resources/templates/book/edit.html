@@ -11,24 +11,30 @@
 <body>
 <h1 th:text="${readOnly} ? 'View book' : 'Edit book'">View book</h1>
 <div>
-    <form id="add-book-form" action="add.html" th:action="add" method="post">
-        <p>Title:<input type="text" name="title"></p>
-        <p>
+    <form id="add-book-form" action="edit.html" th:action="${readOnly} ? edit : save" method="post">
+        <p>Title:<input type="text" name="title" value="Война и мир" th:value="${book.title}"></p>
+        <p> Authors:
             <select name="author">
-                <option th:each="a : ${authors}" th:value="${a.id}" value="c1" th:text="${a.lastName+a.firstName}">Толстой Лев Николаевич</option>
+                <option th:each="a : ${book.authorList}" th:value="${a.id}" value="c1"
+                        th:text="${a.lastName+a.firstName}">Толстой Лев Николаевич
+                </option>
             </select>
         </p>
-        <p>
-            <select name="genre">
-                <option th:each="g : ${genres}" th:value="${g.id}" value="c1" th:text="${g.name}">Фэнтази</option>
-            </select>
+
+        <p>Genre:<input type="text" name="genretext" value="Роман" th:value="${book.genre.name}"></p>
+        <p>Description:<input type="text" name="description" value="Целых четыре тома" th:value="${book.description}">
         </p>
-        <p>Description:<input type="text" name="description"></p>
 
+        <input type="text" name="id" value="" hidden th:value="${book.id}">
+        <input type="text" name="genre" value="" hidden th:value="${book.genre.id}">
 
-        <p><input type="submit" th:value="${readOnly} ? 'View' : 'Edit'" value="Edit"></p>
+        <p><input type="submit" th:value="${readOnly} ? 'Edit' : 'Save'" value="Edit"></p>
     </form>
 </div>
+
+<p>
+    <a href="list.html" th:href="@{/book/list}">Return to book list</a>
+</p>
 
 </body>
 </html>
