@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.igorr.books.lesson14.dto.GenreDto;
 import ru.otus.igorr.books.lesson14.service.genre.GenreService;
 
@@ -21,12 +23,29 @@ public class GenreController {
     }
 
     @GetMapping("/genre/list")
-    String genreListPage(Model model) {
+    String listPage(Model model) {
 
-        List<GenreDto> genres = genreService.getList();
-
-        model.addAttribute("genres", genres);
+        model.addAttribute("genres", getGenreList());
         return "genre/list";
+    }
+
+    @GetMapping("/genre/add")
+    String addPage(){
+        return "genre/add";
+    }
+
+    @PostMapping("/genre/add")
+    String addPage(@RequestParam String name, @RequestParam String description, Model model){
+
+
+        genreService.add(new GenreDto(name, description));
+
+        model.addAttribute("genres", getGenreList());
+        return "genre/list";
+    }
+
+    private List<GenreDto> getGenreList(){
+        return genreService.getList();
     }
 
 }

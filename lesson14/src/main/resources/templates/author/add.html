@@ -9,17 +9,12 @@
 </head>
 
 <body>
-<h1>Input new book</h1>
+<h1>Input new author</h1>
 <div>
-    <form id="add-book-form" action="add.html" th:action="add" method="post">
-        <p>Title:<input type="text" name="title"></p>
-        <p>
-            <select name="author">
-                <option th:each="a : ${authors}" th:value="${a.id}" value="c1"
-                        th:text="${a.lastname + ' '+a.firstname}">Толстой Лев Николаевич
-                </option>
-            </select>
-        </p>
+    <form id="add-author-form" action="add.html" th:action="add" method="post">
+        <p>Lastname:<input type="text" name="lastname"></p>
+        <p>Firstname:<input type="text" name="firstname"></p>
+        <p>Surname:<input type="text" name="surname"></p>
         <p>
             <select name="genre">
                 <option th:each="g : ${genres}" th:value="${g.id}" value="c1" th:text="${g.name}">Фэнтази</option>

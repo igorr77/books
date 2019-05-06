@@ -35,20 +35,20 @@ public class InitMongoDBDataChangeLog {
 
     @ChangeSet(order = "001", id = "initGenres", author = "other", runAlways = true)
     public void initGenres(MongoTemplate template) {
-        genre1 = template.save(new Genre("1", "Get.Genre.Name.1", "Init.Genre.Description.1"));
-        genre2 = template.save(new Genre("2", "Get.Genre.Name.2", "Init.Genre.Description.2"));
-        genre3 = template.save(new Genre("3", "Get.Genre.Name.3", "Init.Genre.Description.3"));
-        template.save(new Genre("888L", "Del.Genre.Name.888L", "Init.Genre.Description.888L"));
-        genreForDelete = template.save(new Genre("999L", "Del.Genre.Name.999L", "Init.Genre.Description.999L"));
-        template.save(new Genre(null, "Init.Genre.Name.*", "Init.Genre.Description.*"));
+        genre1 = template.save(new Genre("1", "Детектив", "Детектив - ..."));
+        genre2 = template.save(new Genre("2", "Фантастика", "Фантастика - ..."));
+        genre3 = template.save(new Genre("3", "Исторический роман", "Исторический роман - ..."));
+        template.save(new Genre("888L", "Приключения", "Приключения - ..."));
+        genreForDelete = template.save(new Genre("999L", "Военный роман", "Военный роман - ..."));
+        template.save(new Genre(null, "Мистика", "Мистика - ..."));
     }
 
     @ChangeSet(order = "002", id = "initAuthors", author = "other", runAlways = true)
     public void initAuthors(MongoTemplate template) {
-        val authorName = new AuthorName("Init:Firstname", "Surname", "Lastname");
-        author1 = template.save(new Author("A1", authorName, genre1, genre2, genre3));
-        author2 = template.save(new Author("A2", authorName, genre1, genre2));
-        authorNoDel = template.save(new Author("A888", authorName, genre1, genre2, genre3));
+        val authorName = new AuthorName("Firstname", "Surname", "Lastname");
+        author1 = template.save(new Author("A1", new AuthorName("Михаил","","Шолохов"), genre1, genre2, genre3));
+        author2 = template.save(new Author("A2", new AuthorName("Алексей","","Толстой"), genre1, genre2));
+        authorNoDel = template.save(new Author("A888", new AuthorName("Лев","Николаевич","Толстой"), genre1, genre2, genre3));
         authorForDel = template.save(new Author("A999", authorName, genre1, genre2, genre3));
     }
 
