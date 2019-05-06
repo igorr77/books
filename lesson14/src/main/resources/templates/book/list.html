@@ -40,6 +40,9 @@
                th:href="@{/book/comments(bookId=${book.id})}"
                th:unless="${#lists.isEmpty(book.noteList)}">view</a>
         </td>
+        <td>
+            <a href="edit.html" th:href="@{/book/edit(bookId=${book.id})}">view</a>
+        </td>
     </tr>
     </tbody>
 </table>

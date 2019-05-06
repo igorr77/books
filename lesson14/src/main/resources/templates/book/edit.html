@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1>Input new book</h1>
+<h1 th:text="${readOnly} ? 'View book' : 'Edit book'">View book</h1>
 <div>
     <form id="add-book-form" action="add.html" th:action="add" method="post">
         <p>Title:<input type="text" name="title"></p>
@@ -26,7 +26,7 @@
         <p>Description:<input type="text" name="description"></p>
 
 
-        <p><input type="submit" value="Save"></p>
+        <p><input type="submit" th:value="${readOnly} ? 'View' : 'Edit'" value="Edit"></p>
     </form>
 </div>
 

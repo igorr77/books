@@ -79,6 +79,12 @@ public class BookController {
         return "author/list";
     }
 
+    @GetMapping("/book/edit")
+    String viewPage(Model model){
+        model.addAttribute("readOnly", true);
+        return "book/edit";
+    }
+
     private List<BookDto> getBookList() {
         return bookService.getList();
     }
