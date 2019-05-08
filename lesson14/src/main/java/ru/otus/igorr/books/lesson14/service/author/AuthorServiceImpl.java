@@ -31,7 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getById(String id) {
+    public AuthorDto get(String id) {
         return converter.convert(authorRepository.findById(id).orElse(Author.empty()));
     }
 
@@ -41,7 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDto> getListAll() {
+    public List<AuthorDto> getList() {
         return converter.convertList(authorRepository.findAll());
     }
 

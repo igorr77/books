@@ -35,7 +35,7 @@ public class GenreServiceImpl implements GenreService {
 
 
     @Override
-    public GenreDto getById(String id) {
+    public GenreDto get(String id) {
         return converter.convert(genreRepository.findById(id).orElse(Genre.empty()));
     }
 

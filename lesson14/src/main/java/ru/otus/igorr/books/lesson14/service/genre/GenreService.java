@@ -5,7 +5,7 @@ import ru.otus.igorr.books.lesson14.dto.GenreDto;
 import java.util.List;
 
 public interface GenreService {
-    GenreDto getById(String id);
+    GenreDto get(String id);
 
     String add(GenreDto genre);
 

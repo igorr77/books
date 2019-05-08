@@ -24,7 +24,7 @@ class GenreServiceImplTest {
     @ValueSource(strings = {"1", "2", "3"})
     @DisplayName("get")
     void getByIdTest(String param) {
-        GenreDto genre = service.getById(param);
+        GenreDto genre = service.get(param);
         assertAll(
                 () -> assertNotNull(genre),
                 () -> assertNotEquals(NOT_FOUND_DOCUMENT_ID, genre.getId())
@@ -39,9 +39,9 @@ class GenreServiceImplTest {
     @ParameterizedTest
     @ValueSource(strings = "999L")
     void deleteByIdTest(String param) {
-        GenreDto genreBeforDel = service.getById(param);
+        GenreDto genreBeforDel = service.get(param);
         service.delete(param);
-        GenreDto delGenreAfterDel = service.getById(param);
+        GenreDto delGenreAfterDel = service.get(param);
         assertAll(
                 () -> assertEquals(param, genreBeforDel.getId()),
                 () -> assertEquals(NOT_FOUND_DOCUMENT_ID, delGenreAfterDel.getId())
@@ -52,10 +52,10 @@ class GenreServiceImplTest {
     @ParameterizedTest
     @ValueSource(strings = "888L")
     void deleteTest(String param) {
-        GenreDto genreBeforDel = service.getById(param);
+        GenreDto genreBeforDel = service.get(param);
         GenreDto genreForDel = new GenreDto(param, "Test", "Test");
         service.delete(genreForDel);
-        GenreDto delGenreAfterDel = service.getById(param);
+        GenreDto delGenreAfterDel = service.get(param);
         assertAll(
                 () -> assertEquals(param, genreBeforDel.getId()),
                 () -> assertEquals(NOT_FOUND_DOCUMENT_ID, delGenreAfterDel.getId())

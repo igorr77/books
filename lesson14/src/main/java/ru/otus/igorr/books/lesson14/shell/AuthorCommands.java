@@ -28,7 +28,7 @@ public class AuthorCommands {
     @ShellMethod(key = "authorList", value = "Show author list")
     public String authorList() {
 
-        List<AuthorDto> list = authorService.getListAll();
+        List<AuthorDto> list = authorService.getList();
 
         System.out.println();
         return OFFSET + list.stream().map(a -> a.toString()).collect(Collectors.joining("\n"));
@@ -73,7 +73,7 @@ public class AuthorCommands {
         authorService.delete(id);
 
 
-        List<AuthorDto> list = authorService.getListAll();
+        List<AuthorDto> list = authorService.getList();
 
         System.out.println();
         return OFFSET + list.stream().map(a -> a.toString()).collect(Collectors.joining("\n"));

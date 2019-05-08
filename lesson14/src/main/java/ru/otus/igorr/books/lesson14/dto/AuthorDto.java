@@ -24,6 +24,13 @@ public class AuthorDto {
         this.id = id;
     }
 
+    public AuthorDto(String firstName, String lastName, String surName, List<GenreDto> genreList) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.surName = surName;
+        this.genreList = genreList;
+    }
+
     @Override
     public String toString() {
         return "AuthorDto{" +
