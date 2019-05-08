@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+
+<h1>Author list</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>LASTNAME</th>
+        <th>FIRSTNAME</th>
+        <th>SURNAME</th>
+        <th>VIEW/EDIT</th>
+    </tr>
+    </thead>
+    <tbody th:remove="all-but-first">
+
+    <tr th:each="a : ${authors}">
+        <td th:text="${a.lastName}">Толстой</td>
+        <td th:text="${a.firstName}">Лев</td>
+        <td th:text="${a.surName}">Николаевич</td>
+        <td>
+            <a href="author.html" th:href="@{/author/author(id=${a.id})}">view</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<p>
+    <a href="add.html" th:href="@{/author/add}">Author add</a>
+</p>
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+
+</html>
+
