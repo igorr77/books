@@ -33,7 +33,7 @@ class AuthorServiceImplTest {
 
         String saveId = authorService.add(authorForSave);
 
-        AuthorDto author = authorService.getById(saveId);
+        AuthorDto author = authorService.get(saveId);
 
         assertAll(
                 () -> assertNotNull(author),
@@ -45,14 +45,14 @@ class AuthorServiceImplTest {
     @ParameterizedTest
     @ValueSource(strings = {"A1", "A2"})
     void getByIdTest(String param) {
-        AuthorDto dto = authorService.getById(param);
+        AuthorDto dto = authorService.get(param);
         assertEquals(param, dto.getId());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"A3"})
     void getByIdNotFoundTest(String param) {
-        AuthorDto dto = authorService.getById(param);
+        AuthorDto dto = authorService.get(param);
         assertEquals(NOT_FOUND_DOCUMENT_ID, dto.getId());
     }
 

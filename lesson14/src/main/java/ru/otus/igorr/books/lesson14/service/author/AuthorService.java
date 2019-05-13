@@ -5,11 +5,11 @@ import ru.otus.igorr.books.lesson14.dto.AuthorDto;
 import java.util.List;
 
 public interface AuthorService {
-    AuthorDto getById(String id);
+    AuthorDto get(String id);
 
     String add(AuthorDto dto);
 
-    List<AuthorDto> getListAll();
+    List<AuthorDto> getList();
 
     List<AuthorDto> getListByName(String mask);
 
