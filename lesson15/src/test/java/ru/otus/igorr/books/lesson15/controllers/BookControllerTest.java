@@ -19,10 +19,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(BookController.class)
@@ -39,28 +40,18 @@ class BookControllerTest {
 
         List<BookDto> books = new ArrayList();
         books.add(prepareBook(1));
+        books.add(prepareBook(2));
 
         when(services.getBookList()).thenReturn(books);
 
-        List<BookDto> list = (ArrayList<BookDto>)
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/book/list")
-                .accept(MediaType.ALL))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andReturn()
-                .getModelAndView()
-                .getModel()
-                .get("books");
-
-        assertAll(
-                () -> assertNotNull(list),
-                () -> assertTrue(list.get(0).getTitle().contains("BookTitle")),
-                () -> assertEquals(1, list.get(0).getAuthorList().size())
-        );
-
-
-        int breakPoint = 0;
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].title", is("BookTitle_1")))
+                .andExpect(jsonPath("$[1].title", is("BookTitle_2")));
 
     }
 
@@ -74,4 +65,6 @@ class BookControllerTest {
                 .noteList(Collections.emptyList())
                 .build();
     }
+
+
 }

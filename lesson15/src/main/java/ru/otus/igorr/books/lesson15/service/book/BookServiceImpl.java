@@ -3,6 +3,7 @@ package ru.otus.igorr.books.lesson15.service.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.otus.igorr.books.lesson15.domain.author.Author;
 import ru.otus.igorr.books.lesson15.domain.book.Book;
 import ru.otus.igorr.books.lesson15.domain.book.Note;
 import ru.otus.igorr.books.lesson15.dto.AuthorDto;
@@ -10,6 +11,7 @@ import ru.otus.igorr.books.lesson15.dto.BookDto;
 import ru.otus.igorr.books.lesson15.dto.DtoConverter;
 import ru.otus.igorr.books.lesson15.dto.NoteDto;
 import ru.otus.igorr.books.lesson15.execptions.GenreMismatchException;
+import ru.otus.igorr.books.lesson15.repository.author.AuthorRepository;
 import ru.otus.igorr.books.lesson15.repository.book.BookRepository;
 import ru.otus.igorr.books.lesson15.repository.book.NoteRepository;
 
@@ -23,19 +25,25 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final NoteRepository noteRepository;
+    private final AuthorRepository authorRepository;
     private final DtoConverter<Book, BookDto> bookConverter;
     private final DtoConverter<Note, NoteDto> noteConverter;
+    private final DtoConverter<Author, AuthorDto> authorConverter;
 
     @Autowired
     public BookServiceImpl(BookRepository bookRepository,
                            NoteRepository noteRepository,
+                           AuthorRepository authorRepository,
                            @Qualifier("bookConverter") DtoConverter bookConverter,
-                           @Qualifier("noteConverter") DtoConverter noteConverter
+                           @Qualifier("noteConverter") DtoConverter noteConverter,
+                           @Qualifier("authorConverter") DtoConverter authorConverter
     ) {
         this.bookRepository = bookRepository;
         this.noteRepository = noteRepository;
+        this.authorRepository = authorRepository;
         this.bookConverter = bookConverter;
         this.noteConverter = noteConverter;
+        this.authorConverter = authorConverter;
     }
 
 
@@ -52,7 +60,8 @@ public class BookServiceImpl implements BookService {
         List<AuthorDto> authors =
                 dto.getAuthorList()
                         .stream()
-                        .filter(author -> !author.getGenreList()
+                        .filter(author -> !authorConverter.convert(authorRepository.findById(author.getId()).orElse(Author.empty()))
+                                .getGenreList()
                                 .stream()
                                 .filter(genre -> genre.getId().equals(excludeGenreId))
                                 .findFirst()
