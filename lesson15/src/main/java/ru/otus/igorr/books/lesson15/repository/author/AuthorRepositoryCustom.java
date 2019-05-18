@@ -8,4 +8,5 @@ public interface AuthorRepositoryCustom {
     List<Author> findByNameLike(String regex);
 
     List<Author> findByGenreId(String genreId);
+
 }

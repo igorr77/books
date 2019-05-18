@@ -22,16 +22,20 @@ public class AuthorController {
     @CrossOrigin
     @GetMapping("/author/list")
     List<AuthorDto> listPage() {
-        return getAuthorList();
-    }
-
-    @PostMapping("/author/add")
-    String addPage(@RequestBody AuthorDto author) {
-        return services.addAuthor(author);
-    }
-
-    private List<AuthorDto> getAuthorList() {
         return services.getAuthorList();
+    }
+
+    @CrossOrigin
+    @GetMapping("/author/{id}")
+    AuthorDto viewPage(@PathVariable String id){
+        return services.getAuthor(id);
+    }
+
+
+    @CrossOrigin
+    @PostMapping("/author/add")
+    ResponseId addPage(@RequestBody AuthorDto author) {
+        return new ResponseId(services.addAuthor(author));
     }
 
 }

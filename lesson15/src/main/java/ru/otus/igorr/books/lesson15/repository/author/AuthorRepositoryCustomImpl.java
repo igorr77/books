@@ -26,4 +26,5 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
         query.addCriteria(Criteria.where("genre.$id").is(genreId));
         return mongoTemplate.find(query, Author.class);
     }
+
 }

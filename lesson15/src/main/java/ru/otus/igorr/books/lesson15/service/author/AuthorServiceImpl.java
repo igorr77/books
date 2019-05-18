@@ -7,6 +7,7 @@ import ru.otus.igorr.books.lesson15.domain.author.Author;
 import ru.otus.igorr.books.lesson15.dto.AuthorDto;
 import ru.otus.igorr.books.lesson15.dto.DtoConverter;
 import ru.otus.igorr.books.lesson15.execptions.DeleteReferenceRecordException;
+import ru.otus.igorr.books.lesson15.execptions.IncorrectDataException;
 import ru.otus.igorr.books.lesson15.repository.author.AuthorRepository;
 import ru.otus.igorr.books.lesson15.repository.book.BookRepository;
 
@@ -37,6 +38,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public String add(AuthorDto dto) {
+
+        if(dto.getGenreList().stream()
+                .filter(genreDto -> genreDto.getId() == null)
+                .count() != 0) {
+            throw new IncorrectDataException();
+        }
+
         return authorRepository.save(converter.fill(dto)).getId();
     }
 

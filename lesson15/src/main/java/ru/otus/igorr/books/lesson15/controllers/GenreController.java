@@ -21,22 +21,18 @@ public class GenreController {
     @CrossOrigin
     @GetMapping("/genre/list")
     List<GenreDto> listPage() {
-        return getGenreList();
-    }
+        return services.getGenreList();  }
 
-    @GetMapping("/genre/add")
-    String addPage(){
-        return "genre/add";
+    @CrossOrigin
+    @GetMapping("/genre/{id}")
+    GenreDto viewPage(@PathVariable String id){
+        return services.getGenre(id);
     }
 
     @CrossOrigin
     @PostMapping("/genre/add")
-    String addPage(@RequestBody GenreDto genre){
-        return services.addGenre(genre);
-    }
-
-    private List<GenreDto> getGenreList(){
-        return services.getGenreList();
+    ResponseId addPage(@RequestBody GenreDto genre){
+        return new ResponseId(services.addGenre(genre));
     }
 
 }

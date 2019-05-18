@@ -26,54 +26,19 @@ public class BookController {
     }
 
     @CrossOrigin
-    @GetMapping("/book/authors")
-    BookDto authorPage(@RequestParam String id) {
+    @GetMapping("/book/{id}")
+    BookDto viewPage(@PathVariable String id) {
         return services.getBook(id);
     }
 
 
-    @GetMapping("/book/add")
-    String addPage(Model model) {
-        model.addAttribute("authors", services.getAuthorList());
-        model.addAttribute("genres", services.getGenreList());
-        return "book/add";
-    }
 
+    @CrossOrigin
     @PostMapping("/book/add")
-    String addPage(@RequestBody BookDto book) {
-        return services.addBook(book);
+    ResponseId addPage(@RequestBody BookDto book) {
+        return new ResponseId(services.addBook(book));
     }
 
-    @GetMapping("/book/view")
-    String viewPage(@RequestParam String id, Model model) {
-
-        model.addAttribute("book", services.getBook(id));
-
-        model.addAttribute("readOnly", true);
-        return "book/edit";
-    }
-
-    @PostMapping("/book/edit")
-    String editPage(@RequestParam String id, Model model) {
-
-        model.addAttribute("book", services.getBook(id));
-
-        model.addAttribute("readOnly", false);
-        return "book/edit";
-    }
-
-    @PostMapping("/book/save")
-    String savePage(@RequestParam String id, Model model) {
-
-        model.addAttribute("book", services.getBook(id));
-
-        model.addAttribute("readOnly", true);
-        return "book/edit";
-    }
-
-    private List<BookDto> getBookList() {
-        return services.getBookList();
-    }
 
 
 }

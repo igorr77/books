@@ -27,4 +27,20 @@ Content-Type: application/json
   "genreList": [{"id": "888L"}]
 }
 
+### Book
+GET localhost:8080/book/list
+Accept: application/json
+
 ###
+POST localhost:8080/book/add
+Content-Type: application/json
+
+{
+  "title": "BookTitle.TestRest",
+  "authorList": [{"id": "A1"}, {"id": "A2"}],
+  "genre": {"id": "2"},
+  "description": "BookDescriooption.TestRest"
+}
+
+###
+
