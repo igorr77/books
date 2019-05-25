@@ -29,7 +29,7 @@ class BookRepositoryTest extends AbstractRepositoryTest {
         assertAll(
                 () -> assertEquals("BID001", book.getId()),
                 () -> assertEquals(2, book.getAuthors().size()),
-                () -> assertEquals("Get.Genre.Name.1", book.getGenre().getName())
+                () -> assertEquals("Детектив", book.getGenre().getName())
         );
 
     }

@@ -18,18 +18,18 @@ public class GenreController {
         this.services = services;
     }
 
-    @CrossOrigin
+    //@CrossOrigin
     @GetMapping("/genre/list")
     List<GenreDto> listPage() {
         return services.getGenreList();  }
 
-    @CrossOrigin
+    //@CrossOrigin
     @GetMapping("/genre/{id}")
     GenreDto viewPage(@PathVariable String id){
         return services.getGenre(id);
     }
 
-    @CrossOrigin
+    //@CrossOrigin
     @PostMapping("/genre/add")
     ResponseId addPage(@RequestBody GenreDto genre){
         return new ResponseId(services.addGenre(genre));

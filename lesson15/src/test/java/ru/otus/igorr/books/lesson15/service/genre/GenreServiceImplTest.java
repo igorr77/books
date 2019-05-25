@@ -76,11 +76,11 @@ class GenreServiceImplTest {
 
     @Test
     void getListByNameTest() {
-        String mask = "Get\\..*";
+        String mask = "Д.*";
         List<GenreDto> dtoList = service.getListByName(mask);
         assertAll(
                 () -> assertNotNull(dtoList),
-                () -> assertTrue(dtoList.size() == 3)
+                () -> assertTrue(dtoList.size() == 1)
         );
     }
 }
