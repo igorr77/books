@@ -1,0 +1,19 @@
+spring:
+  main:
+    banner-mode: "off"
+  messages:
+    basename: messages/app_messages
+  shell:
+    interactive:
+      enabled: false
+  #
+  data:
+    mongodb:
+      database: testdb
+
+  batch:
+    initialize-schema: always
+
+logging:
+  level:
+    org.springframework.web: TRACE

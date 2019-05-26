@@ -1,0 +1,46 @@
+### genre list
+GET localhost:8080/genre/list
+Accept: application/json
+
+### genre add
+POST localhost:8080/genre/add
+Content-Type: application/json
+
+{
+    "name":"GenreName.TestRest",
+    "description":"GenreDescription.TestRest"
+}
+
+### author list
+GET localhost:8080/author/list
+Accept: application/json
+
+
+#### author add
+POST localhost:8080/author/add
+Content-Type: application/json
+
+{
+  "firstName": "Firstname.TestRest",
+  "lastName": "Lastname.TestRest",
+  "surName": "Surname.TestRest",
+  "genreList": [{"id": "888L"}]
+}
+
+### Book
+GET localhost:8080/book/list
+Accept: application/json
+
+###
+POST localhost:8080/book/add
+Content-Type: application/json
+
+{
+  "title": "BookTitle.TestRest",
+  "authorList": [{"id": "A1"}, {"id": "A2"}],
+  "genre": {"id": "2"},
+  "description": "BookDescriooption.TestRest"
+}
+
+###
+

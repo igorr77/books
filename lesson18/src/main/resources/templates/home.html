@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Otus Springframework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body>
+
+<p th:utext="#{home.welcome(${msession.user.name})}">Welcome to books app, UserName!</p>
+
+<p>
+    Today is: <span th:with="df=#{date.format}" th:text="${#calendars.format(today,df)}">5 Мая 2019</span>
+</p>
+
+<p>Please select an option</p>
+<ol>
+    <li><a href="book/list.html" th:href="@{/book/list}">Book List</a></li>
+    <li><a href="author/list.html" th:href="@{/author/list}">Author List</a></li>
+    <li><a href="genre/list.html" th:href="@{/genre/list}">Genre List</a></li>
+</ol>
+
+<p>Now you are looking at a <span th:text="'working web application'">template file</span>.</p>
+
+<div th:insert="~{fragments/footer::copy}">&copy; 2019 The Static Templates</div>
+
+
+</body>
+</html>
