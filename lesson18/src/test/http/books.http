@@ -11,6 +11,23 @@ Content-Type: application/json
     "description":"GenreDescription.TestRest"
 }
 
+### flux genre list
+GET localhost:8080/flux/genre
+Accept: application/json
+
+### flux genre id
+GET localhost:8080/flux/genre/1
+Accept: application/json
+
+### flux genre add
+POST localhost:8080/flux/genre/add
+Content-Type: application/json
+
+{
+  "name":"GenreName.TestFluxRest",
+  "description":"GenreDescription.TestFluxRest"
+}
+
 ### author list
 GET localhost:8080/author/list
 Accept: application/json
