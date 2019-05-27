@@ -7,7 +7,7 @@ import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class AppConfig {
 
     private static final String CHANGELOGS_PACKAGE = "ru.otus.igorr.books.lesson18.changelogs";
