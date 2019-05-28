@@ -7,7 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @DataMongoTest
 @EnableConfigurationProperties
-@ComponentScan({"ru.otus.igorr.books.lesson15.config", "ru.otus.igorr.books.lesson15.repository"})
+@ComponentScan({"ru.otus.igorr.books.lesson18.config", "ru.otus.igorr.books.lesson18.repository"})
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 public abstract class AbstractRepositoryTest {
 
