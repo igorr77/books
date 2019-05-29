@@ -8,7 +8,15 @@ public interface GenreReactiveService {
 
     Flux<GenreDto> list();
 
+    Flux<GenreDto> getListByName(String mask);
+
     Mono<GenreDto> get(String id);
 
     Mono<GenreDto> add(GenreDto genreDto);
+
+    void delete(String id);
+
+    void delete(GenreDto genreDto);
+
+
 }

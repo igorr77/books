@@ -10,13 +10,11 @@ import ru.otus.igorr.books.lesson18.repository.abstracts.AbstractRepositoryTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
     private GenreReactiveRepository repository;
-
 
     @Test
     public void saveTest() {
@@ -27,7 +25,6 @@ public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
                 .assertNext(genre -> assertNotNull(genre.getId()))
                 .expectComplete()
                 .verify();
-
     }
 
     @Test
@@ -35,7 +32,6 @@ public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
         Flux<Genre> genreFlux = repository.findAll();
 
         assertEquals(Long.valueOf(6), genreFlux.count().block());
-
     }
 
     @Test

@@ -31,6 +31,12 @@ public class GenreReactiveServiceImpl implements GenreReactiveService {
     }
 
     @Override
+    public Flux<GenreDto> getListByName(String mask) {
+        // TODO: 29.05.2019
+        return null;
+    }
+
+    @Override
     public Mono<GenreDto> get(String id) {
         return genreRepository.findById(id)
                 .map(genre -> converter.convert(genre));
@@ -40,6 +46,16 @@ public class GenreReactiveServiceImpl implements GenreReactiveService {
     public Mono<GenreDto> add(GenreDto genreDto) {
         return genreRepository.save(converter.fill(genreDto))
                 .map(genre -> converter.convert(genre));
+    }
+
+    @Override
+    public void delete(String id) {
+        genreRepository.deleteById(id);
+    }
+
+    @Override
+    public void delete(GenreDto genreDto) {
+        genreRepository.delete(converter.fill(genreDto));
     }
 
 
