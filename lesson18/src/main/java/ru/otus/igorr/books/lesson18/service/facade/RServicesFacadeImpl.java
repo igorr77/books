@@ -12,16 +12,16 @@ import ru.otus.igorr.books.lesson18.service.genre.GenreReactiveService;
 
 
 @Service
-public class ReactiveFacadeImpl implements ReactiveFacade {
+public class RServicesFacadeImpl implements RServicesFacade {
 
     private final GenreReactiveService genreService;
     private final AuthorReactiveService authorService;
     private final BookReactiveService bookService;
 
     @Autowired
-    public ReactiveFacadeImpl(GenreReactiveService genreService,
-                              AuthorReactiveService authorService,
-                              BookReactiveService bookService) {
+    public RServicesFacadeImpl(GenreReactiveService genreService,
+                               AuthorReactiveService authorService,
+                               BookReactiveService bookService) {
         this.genreService = genreService;
         this.authorService = authorService;
         this.bookService = bookService;

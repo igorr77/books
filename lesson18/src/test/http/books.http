@@ -1,9 +1,9 @@
 ### genre list
-GET localhost:8080/genre/list
+GET localhost:8080/genre
 Accept: application/json
 
 ### genre add
-POST localhost:8080/genre/add
+POST localhost:8080/genre
 Content-Type: application/json
 
 {
@@ -11,16 +11,20 @@ Content-Type: application/json
     "description":"GenreDescription.TestRest"
 }
 
-### flux genre list
+### flux genre list - error
 GET localhost:8080/flux/genre
 Accept: application/json
+
+### flux genre list - ok
+GET localhost:8080/flux/genre
+Accept: text/event-stream
 
 ### flux genre id
 GET localhost:8080/flux/genre/1
 Accept: application/json
 
 ### flux genre add
-POST localhost:8080/flux/genre/add
+POST localhost:8080/flux/genre
 Content-Type: application/json
 
 {
@@ -29,12 +33,12 @@ Content-Type: application/json
 }
 
 ### author list
-GET localhost:8080/author/list
+GET localhost:8080/author
 Accept: application/json
 
 
 #### author add
-POST localhost:8080/author/add
+POST localhost:8080/author
 Content-Type: application/json
 
 {
@@ -45,11 +49,11 @@ Content-Type: application/json
 }
 
 ### Book
-GET localhost:8080/book/list
+GET localhost:8080/book
 Accept: application/json
 
 ###
-POST localhost:8080/book/add
+POST localhost:8080/book
 Content-Type: application/json
 
 {

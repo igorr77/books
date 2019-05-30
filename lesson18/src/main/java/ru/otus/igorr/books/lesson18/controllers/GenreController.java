@@ -2,11 +2,12 @@ package ru.otus.igorr.books.lesson18.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
-import ru.otus.igorr.books.lesson18.service.facade.ReactiveFacade;
+import ru.otus.igorr.books.lesson18.service.facade.RServicesFacade;
 import ru.otus.igorr.books.lesson18.service.facade.ServicesFacade;
 
 import java.util.List;
@@ -15,18 +16,20 @@ import java.util.List;
 public class GenreController {
 
     private final ServicesFacade services;
-    private final ReactiveFacade rServices;
+    private final RServicesFacade rServices;
 
     @Autowired
     public GenreController(ServicesFacade services,
-                           ReactiveFacade rServices) {
+                           RServicesFacade rServices) {
         this.services = services;
         this.rServices = rServices;
     }
 
 
+    // TODO: 30.05.2019 Решить вопрос с @CrossOrigin
+
     @CrossOrigin
-    @GetMapping("/genre/list")
+    @GetMapping("/genre")
     List<GenreDto> listPage() {
         return services.getGenreList();
     }
@@ -38,24 +41,24 @@ public class GenreController {
     }
 
     @CrossOrigin
-    @PostMapping("/genre/add")
+    @PostMapping("/genre")
     ResponseId addPage(@RequestBody GenreDto genre) {
         return new ResponseId(services.addGenre(genre));
     }
 
     // Reactive
-    @GetMapping("/flux/genre")
-    Flux<GenreDto> fluxListPage() {
+    @GetMapping(value = "/flux/genre", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<GenreDto> listPageFlux() {
         return rServices.getGenreList();
     }
 
     @GetMapping("/flux/genre/{id}")
-    Mono<GenreDto> fluxViewPage(@PathVariable String id) {
+    public Mono<GenreDto> viewPageFlux(@PathVariable String id) {
         return rServices.getGenre(id);
     }
 
-    @PostMapping("/flux/genre/add")
-    Mono<GenreDto> fluxAddPage(@RequestBody GenreDto genre) {
+    @PostMapping("/flux/genre")
+    public Mono<GenreDto> addPageFlux(@RequestBody GenreDto genre) {
         return rServices.addGenre(genre);
     }
 

@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
 
-public interface ReactiveFacade {
+public interface RServicesFacade {
 
     // Genre
     Flux<GenreDto> getGenreList();

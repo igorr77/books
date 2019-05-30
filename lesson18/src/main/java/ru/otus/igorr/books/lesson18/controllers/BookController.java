@@ -1,8 +1,7 @@
 package ru.otus.igorr.books.lesson18.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.service.facade.ServicesFacade;
@@ -10,17 +9,15 @@ import ru.otus.igorr.books.lesson18.service.facade.ServicesFacade;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class BookController {
 
     private final ServicesFacade services;
 
-    @Autowired
-    public BookController(ServicesFacade services) {
-        this.services = services;
-    }
+    // TODO: 30.05.2019 Убрать @CrossOrigin
 
     @CrossOrigin
-    @GetMapping("/book/list")
+    @GetMapping("/book")
     List<BookDto> listPage() {
         return services.getBookList();
     }
@@ -31,10 +28,8 @@ public class BookController {
         return services.getBook(id);
     }
 
-
-
     @CrossOrigin
-    @PostMapping("/book/add")
+    @PostMapping("/book")
     ResponseId addPage(@RequestBody BookDto book) {
         return new ResponseId(services.addBook(book));
     }

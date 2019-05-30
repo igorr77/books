@@ -10,6 +10,7 @@ import ru.otus.igorr.books.lesson18.repository.abstracts.AbstractRepositoryTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
 
@@ -18,8 +19,7 @@ public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void saveTest() {
-        Mono<Genre> genreMono = repository.save(new Genre(null, "Name", "Description"));
-
+        Mono<Genre> genreMono = repository.save(new Genre(null, "Genre.Name.Flux", "Description.Flux"));
         StepVerifier
                 .create(genreMono)
                 .assertNext(genre -> assertNotNull(genre.getId()))
@@ -31,7 +31,21 @@ public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
     public void findAllTest() {
         Flux<Genre> genreFlux = repository.findAll();
 
-        assertEquals(Long.valueOf(6), genreFlux.count().block());
+        Long error = genreFlux
+                .map(genre -> genre.getId() != null)
+                .filter(p -> !p)
+                .count()
+                .block();
+
+        Long done = genreFlux
+                .map(genre -> genre.getId() != null)
+                .filter(p -> p)
+                .count()
+                .block();
+
+
+        assertEquals(Long.valueOf(0),error);
+        assertNotEquals(Long.valueOf(0),done);
     }
 
     @Test
