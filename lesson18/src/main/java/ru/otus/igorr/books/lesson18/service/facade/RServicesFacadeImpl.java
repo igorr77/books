@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
+import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
+import ru.otus.igorr.books.lesson18.dto.NoteDto;
 import ru.otus.igorr.books.lesson18.service.author.AuthorReactiveService;
 import ru.otus.igorr.books.lesson18.service.book.BookReactiveService;
 import ru.otus.igorr.books.lesson18.service.genre.GenreReactiveService;
@@ -49,13 +51,13 @@ public class RServicesFacadeImpl implements RServicesFacade {
     }
 
     @Override
-    public void deleteGenre(String id) {
-        genreService.delete(id);
+    public Mono<Void> deleteGenre(String id) {
+        return genreService.delete(id);
     }
 
     @Override
-    public void deleteGenre(GenreDto genreDto) {
-        genreService.delete(genreDto);
+    public Mono<Void> deleteGenre(GenreDto genreDto) {
+        return genreService.delete(genreDto);
     }
 
     // Author
@@ -80,9 +82,38 @@ public class RServicesFacadeImpl implements RServicesFacade {
     }
 
     @Override
-    public void deleteAuthor(String id) {
-
+    public Mono<Void> deleteAuthor(String id) {
+        return authorService.delete(id);
     }
 
+    // Book
+    @Override
+    public Flux<BookDto> getBookList() {
+        return bookService.getList();
+    }
 
+    @Override
+    public Mono<BookDto> getBook(String id) {
+        return bookService.get(id);
+    }
+
+    @Override
+    public Mono<BookDto> addBook(BookDto bookDto) {
+        return bookService.add(bookDto);
+    }
+
+    @Override
+    public Mono<Void> deleteBook(String id) {
+        return bookService.delete(id);
+    }
+
+    @Override
+    public Mono<NoteDto> addNote(NoteDto noteDto) {
+        return bookService.addNote(noteDto);
+    }
+
+    @Override
+    public Mono<Void> deleteNote(String noteId) {
+        return bookService.deleteNote(noteId);
+    }
 }

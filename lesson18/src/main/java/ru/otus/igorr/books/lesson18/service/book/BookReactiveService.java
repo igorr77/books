@@ -13,7 +13,7 @@ public interface BookReactiveService {
 
     Mono<BookDto> add(BookDto dto);
 
-    void delete(String id);
+    Mono<Void> delete(String id);
 
     /* Note */
     Mono<NoteDto> getNote(String noteId);
@@ -22,6 +22,6 @@ public interface BookReactiveService {
 
     Mono<NoteDto> addNote(NoteDto dto);
 
-    void deleteNote(String noteId);
+    Mono<Void> deleteNote(String noteId);
 
 }

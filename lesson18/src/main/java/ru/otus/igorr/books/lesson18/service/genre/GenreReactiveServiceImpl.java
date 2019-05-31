@@ -49,13 +49,13 @@ public class GenreReactiveServiceImpl implements GenreReactiveService {
     }
 
     @Override
-    public void delete(String id) {
-        genreRepository.deleteById(id);
+    public Mono<Void> delete(String id) {
+        return genreRepository.deleteById(id);
     }
 
     @Override
-    public void delete(GenreDto genreDto) {
-        genreRepository.delete(converter.fill(genreDto));
+    public Mono<Void> delete(GenreDto genreDto) {
+        return genreRepository.delete(converter.fill(genreDto));
     }
 
 

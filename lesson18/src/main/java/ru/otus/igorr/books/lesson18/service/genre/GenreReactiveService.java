@@ -14,9 +14,9 @@ public interface GenreReactiveService {
 
     Mono<GenreDto> add(GenreDto genreDto);
 
-    void delete(String id);
+    Mono<Void> delete(String id);
 
-    void delete(GenreDto genreDto);
+    Mono<Void> delete(GenreDto genreDto);
 
 
 }

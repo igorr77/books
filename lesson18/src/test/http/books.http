@@ -17,9 +17,12 @@ Accept: application/json, text/event-stream
   "description":"GenreDescription.TestFluxRest"
 }
 
-###############################################################
-### author list
+### flux genre id
+DELETE localhost:8080/flux/genre/5cf0f3f0a4f082173c488b63
+Accept: application/json
 
+
+###############################################################
 ### flux author list
 GET localhost:8080/flux/author
 Accept: text/event-stream
@@ -38,6 +41,10 @@ Accept: application/json, text/event-stream
   "surName": "Surname.TestRest",
   "genreList": [{"id": "888L"}]
 }
+
+### delete genre
+DELETE localhost:8080/flux/author/5cf0f479a4f082173c488b68
+Accept: application/json
 
 ######################################################################
 ### Book

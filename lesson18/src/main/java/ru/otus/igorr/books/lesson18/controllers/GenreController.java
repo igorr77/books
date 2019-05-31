@@ -60,5 +60,10 @@ public class GenreController {
         return rServices.addGenre(genre);
     }
 
+    @DeleteMapping("/flux/genre/{id}")
+    public Mono<Void> deletePageFlux(@PathVariable String id) {
+        return rServices.deleteGenre(id);
+    }
+
 
 }

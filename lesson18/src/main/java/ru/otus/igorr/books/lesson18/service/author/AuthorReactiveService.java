@@ -13,5 +13,5 @@ public interface AuthorReactiveService {
 
     Flux<AuthorDto> getListByName(String mask);
 
-    void delete(String id);
+    Mono<Void> delete(String id);
 }

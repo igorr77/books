@@ -49,13 +49,18 @@ public class AuthorController {
     }
 
     @GetMapping(value = "/flux/author/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Mono<AuthorDto> viewPageFlux(@PathVariable String id){
+    public Mono<AuthorDto> viewPageFlux(@PathVariable String id) {
         return rServices.getAuthor(id);
     }
 
     @PostMapping(value = "/flux/author", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Mono<AuthorDto> addPageFlux(@RequestBody AuthorDto author) {
         return rServices.addAuthor(author);
+    }
+
+    @DeleteMapping("/flux/author/{id}")
+    public Mono<Void> deletePage(@PathVariable String id) {
+        return rServices.deleteAuthor(id);
     }
 
 }

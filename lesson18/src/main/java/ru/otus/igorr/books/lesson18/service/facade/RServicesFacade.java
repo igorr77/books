@@ -3,7 +3,9 @@ package ru.otus.igorr.books.lesson18.service.facade;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
+import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
+import ru.otus.igorr.books.lesson18.dto.NoteDto;
 
 public interface RServicesFacade {
 
@@ -16,21 +18,35 @@ public interface RServicesFacade {
 
     Flux<GenreDto> getGenreListByName(String mask);
 
-    void deleteGenre(String id);
+    Mono<Void> deleteGenre(String id);
 
-    void deleteGenre(GenreDto dto);
+    Mono<Void> deleteGenre(GenreDto genreDto);
 
 
-    // AuthorService
+    // Author services
     Mono<AuthorDto> getAuthor(String id);
 
     Flux<AuthorDto> getAuthorList();
 
     Flux<AuthorDto> getAuthorListByName(String mask);
 
-    Mono<AuthorDto> addAuthor(AuthorDto dto);
+    Mono<AuthorDto> addAuthor(AuthorDto authorDto);
 
-    void deleteAuthor(String id);
+    Mono<Void> deleteAuthor(String id);
 
-    //
+
+    // Book services
+    Flux<BookDto> getBookList();
+
+    Mono<BookDto> getBook(String id);
+
+    Mono<BookDto> addBook(BookDto bookDto);
+
+    Mono<Void> deleteBook(String id);
+
+    Mono<NoteDto> addNote(NoteDto noteDto);
+
+    Mono<Void> deleteNote(String noteId);
+
+
 }
