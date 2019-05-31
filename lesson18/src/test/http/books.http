@@ -1,23 +1,6 @@
-### genre list
-GET localhost:8080/genre
-Accept: application/json
-
-### genre add
-POST localhost:8080/genre
-Content-Type: application/json
-
-{
-    "name":"GenreName.TestRest",
-    "description":"GenreDescription.TestRest"
-}
-
-### flux genre list - error
+### flux genre list
 GET localhost:8080/flux/genre
-Accept: application/json
-
-### flux genre list - ok
-GET localhost:8080/flux/genre
-Accept: text/event-stream
+Accept: application/json, text/event-stream
 
 ### flux genre id
 GET localhost:8080/flux/genre/1
@@ -25,21 +8,29 @@ Accept: application/json
 
 ### flux genre add
 POST localhost:8080/flux/genre
-Content-Type: application/json
+#Content-Type: application/json
+Accept: application/json, text/event-stream
+#Accept: application/json
 
 {
   "name":"GenreName.TestFluxRest",
   "description":"GenreDescription.TestFluxRest"
 }
 
+###############################################################
 ### author list
-GET localhost:8080/author
-Accept: application/json
 
+### flux author list
+GET localhost:8080/flux/author
+Accept: text/event-stream
 
-#### author add
-POST localhost:8080/author
-Content-Type: application/json
+### flux author get
+GET localhost:8080/flux/author/A1
+Accept: text/event-stream
+
+### flux author add
+POST localhost:8080/flux/author
+Accept: application/json, text/event-stream
 
 {
   "firstName": "Firstname.TestRest",
@@ -48,9 +39,11 @@ Content-Type: application/json
   "genreList": [{"id": "888L"}]
 }
 
+######################################################################
 ### Book
-GET localhost:8080/book
+GET localhost:8080/flux/book
 Accept: application/json
+#Accept: text/event-stream
 
 ###
 POST localhost:8080/book

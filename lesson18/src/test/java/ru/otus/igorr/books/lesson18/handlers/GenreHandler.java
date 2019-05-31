@@ -15,7 +15,6 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 
 public class GenreHandler {
 
-    //private final GenreReactiveRepository repository;
     private final GenreController controller;
 
     public GenreHandler(GenreController controller) {
@@ -25,11 +24,13 @@ public class GenreHandler {
     public Mono<ServerResponse> listPage(ServerRequest request) {
         Flux<GenreDto> flux = controller.listPageFlux();
         return ok().contentType(APPLICATION_JSON).body(flux, GenreDto.class);
+        //return null;
     }
 
     public Mono<ServerResponse> viewPage(ServerRequest request) {
         Mono<GenreDto> mono = controller.viewPageFlux(request.pathVariable("id"));
         return ok().contentType(APPLICATION_JSON).body(mono, GenreDto.class);
+        //return null;
     }
 
     public Mono<ServerResponse> addPage(ServerRequest request) {

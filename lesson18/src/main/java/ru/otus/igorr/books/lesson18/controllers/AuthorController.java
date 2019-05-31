@@ -10,8 +10,6 @@ import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 import ru.otus.igorr.books.lesson18.service.facade.RServicesFacade;
 import ru.otus.igorr.books.lesson18.service.facade.ServicesFacade;
 
-import java.util.List;
-
 @RestController
 public class AuthorController {
 
@@ -25,24 +23,24 @@ public class AuthorController {
         this.rServices = rServices;
     }
 
-    @CrossOrigin
-    @GetMapping("/author")
-    public List<AuthorDto> listPage() {
-        return services.getAuthorList();
-    }
-
-    @CrossOrigin
-    @GetMapping("/author/{id}")
-    public AuthorDto viewPage(@PathVariable String id){
-        return services.getAuthor(id);
-    }
-
-
-    @CrossOrigin
-    @PostMapping("/author")
-    public ResponseId addPage(@RequestBody AuthorDto author) {
-        return new ResponseId(services.addAuthor(author));
-    }
+//    @CrossOrigin
+//    @GetMapping("/author")
+//    public List<AuthorDto> listPage() {
+//        return services.getAuthorList();
+//    }
+//
+//    @CrossOrigin
+//    @GetMapping("/author/{id}")
+//    public AuthorDto viewPage(@PathVariable String id){
+//        return services.getAuthor(id);
+//    }
+//
+//
+//    @CrossOrigin
+//    @PostMapping("/author")
+//    public ResponseId addPage(@RequestBody AuthorDto author) {
+//        return new ResponseId(services.addAuthor(author));
+//    }
 
     // flux
     @GetMapping(value = "/flux/author", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -50,16 +48,14 @@ public class AuthorController {
         return rServices.getAuthorList();
     }
 
-    @GetMapping("/flux/author/{id}")
+    @GetMapping(value = "/flux/author/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Mono<AuthorDto> viewPageFlux(@PathVariable String id){
         return rServices.getAuthor(id);
     }
 
-
-    @PostMapping("/flux/author")
+    @PostMapping(value = "/flux/author", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Mono<AuthorDto> addPageFlux(@RequestBody AuthorDto author) {
         return rServices.addAuthor(author);
     }
-
 
 }

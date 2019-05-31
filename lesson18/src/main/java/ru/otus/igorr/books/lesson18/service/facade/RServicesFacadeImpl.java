@@ -61,22 +61,22 @@ public class RServicesFacadeImpl implements RServicesFacade {
     // Author
     @Override
     public Mono<AuthorDto> getAuthor(String id) {
-        return null;
+        return authorService.get(id);
     }
 
     @Override
     public Flux<AuthorDto> getAuthorList() {
-        return null;
+        return authorService.getList();
     }
 
     @Override
     public Flux<AuthorDto> getAuthorListByName(String mask) {
-        return null;
+        return authorService.getListByName(mask);
     }
 
     @Override
     public Mono<AuthorDto> addAuthor(AuthorDto dto) {
-        return null;
+        return authorService.add(dto);
     }
 
     @Override

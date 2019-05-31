@@ -10,8 +10,6 @@ import ru.otus.igorr.books.lesson18.dto.GenreDto;
 import ru.otus.igorr.books.lesson18.service.facade.RServicesFacade;
 import ru.otus.igorr.books.lesson18.service.facade.ServicesFacade;
 
-import java.util.List;
-
 @RestController
 public class GenreController {
 
@@ -28,23 +26,23 @@ public class GenreController {
 
     // TODO: 30.05.2019 Решить вопрос с @CrossOrigin
 
-    @CrossOrigin
-    @GetMapping("/genre")
-    List<GenreDto> listPage() {
-        return services.getGenreList();
-    }
-
-    @CrossOrigin
-    @GetMapping("/genre/{id}")
-    GenreDto viewPage(@PathVariable String id) {
-        return services.getGenre(id);
-    }
-
-    @CrossOrigin
-    @PostMapping("/genre")
-    ResponseId addPage(@RequestBody GenreDto genre) {
-        return new ResponseId(services.addGenre(genre));
-    }
+//    @CrossOrigin
+//    @GetMapping("/genre")
+//    List<GenreDto> listPage() {
+//        return services.getGenreList();
+//    }
+//
+//    @CrossOrigin
+//    @GetMapping("/genre/{id}")
+//    GenreDto viewPage(@PathVariable String id) {
+//        return services.getGenre(id);
+//    }
+//
+//    @CrossOrigin
+//    @PostMapping("/genre")
+//    ResponseId addPage(@RequestBody GenreDto genre) {
+//        return new ResponseId(services.addGenre(genre));
+//    }
 
     // Reactive
     @GetMapping(value = "/flux/genre", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -57,7 +55,7 @@ public class GenreController {
         return rServices.getGenre(id);
     }
 
-    @PostMapping("/flux/genre")
+    @PostMapping(value = "/flux/genre", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Mono<GenreDto> addPageFlux(@RequestBody GenreDto genre) {
         return rServices.addGenre(genre);
     }
