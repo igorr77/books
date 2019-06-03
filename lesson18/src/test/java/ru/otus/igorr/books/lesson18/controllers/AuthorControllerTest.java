@@ -10,40 +10,39 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
-import ru.otus.igorr.books.lesson18.handlers.GenreHandler;
+import ru.otus.igorr.books.lesson18.handlers.AuthorHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-/**
- * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-client-testing
- * ref https://www.callicoder.com/spring-5-reactive-webclient-webtestclient-examples/
- *
- */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class GenreControllerTest {
-
+public class AuthorControllerTest {
 
     @Autowired
-    private GenreController controller;
-    private GenreHandler handler;
+    private AuthorController controller;
+    private AuthorHandler handler;
     private RouterFunction<ServerResponse> route;
     private RouterFunction<ServerResponse> otherRoute;
     private WebTestClient client;
 
 
+
     @BeforeEach
     void startUp() {
 
-        handler = new GenreHandler(controller);
+        handler = new AuthorHandler(controller);
 
         route = route()
-                .GET("/genre", accept(APPLICATION_JSON), handler::listPage)
-                .GET("/genre/{id}", accept(APPLICATION_JSON), handler::viewPage)
-                .POST("/genre", handler::addPage)
+                .GET("/author", accept(APPLICATION_JSON), handler::listPage)
+                .GET("/author/{id}", accept(APPLICATION_JSON), handler::viewPage)
+                .POST("/author", handler::addPage)
                 //.add(otherRoute)
                 .build();
 
@@ -56,7 +55,7 @@ class GenreControllerTest {
     void listPageFluxTest() {
 
         client.get()
-                .uri("/genre")
+                .uri("/author")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -66,7 +65,7 @@ class GenreControllerTest {
     void viewPageFluxTest() {
 
         client.get()
-                .uri("/genre/1")
+                .uri("/author/1")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -74,12 +73,19 @@ class GenreControllerTest {
 
     @Test
     void addPageFluxTest() {
-        GenreDto dto = new GenreDto();
-        dto.setName("Genre.Name.Flux");
-        dto.setDescription("Test reactive controller");
+        List<GenreDto> genres = new ArrayList<>();
+        GenreDto genre = new GenreDto();
+        genres.add(genre);
+        genre.setId("1");
+
+        AuthorDto dto = new AuthorDto();
+        dto.setFirstName("Test.Firstname");
+        dto.setSurName("Test.Surname");
+        dto.setLastName("Test.Lastname");
+        dto.setGenreList(genres);
         client.post()
-                .uri("/genre")
-                .body(Mono.just(dto), GenreDto.class)
+                .uri("/author")
+                .body(Mono.just(dto), AuthorDto.class)
                 .exchange()
                 .expectStatus()
                 .isOk();

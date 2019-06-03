@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("authorConverter")
 public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
@@ -64,9 +65,14 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
             dto.setFirstName(author.getName().getFirstName());
             dto.setLastName(author.getName().getLastName());
             dto.setSurName(author.getName().getSurName());
-            dto.setGenreList(genreConverter.convertList(author.getGenres()));
+            dto.setGenreList(author.getGenres().stream()
+                    .map(genre -> genreConverter.convert(genre))
+                    .collect(Collectors.toList()));
             List<Book> bookList = new ArrayList<>();
-            dto.setBookList(bookConverter.convertList(bookList));
+            dto.setBookList(bookList.stream()
+                    .map(book -> bookConverter.convert(book))
+                    .collect(Collectors.toList())
+            );
         } catch (NullPointerException npe) {
             LOG.warn("!!!", npe);
             dto.setId(Constant.NOT_FOUND_DOCUMENT_ID);
@@ -85,7 +91,13 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
         author.setId(dto.getId());
         author.setName(authorName);
-        author.setGenres(genreConverter.fillList(Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())));
+        author.setGenres(
+                Optional.ofNullable(dto.getGenreList()).orElse(Collections.emptyList())
+                        .stream()
+                        .map(genreDto -> genreConverter.fill(genreDto))
+                        .collect(Collectors.toList())
+
+        );
 
         return author;
     }

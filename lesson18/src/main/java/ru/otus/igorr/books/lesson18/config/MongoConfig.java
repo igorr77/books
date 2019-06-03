@@ -1,7 +1,9 @@
 package ru.otus.igorr.books.lesson18.config;
 
 import com.mongodb.MongoClient;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+
 
 public class MongoConfig extends AbstractMongoConfiguration {
 
@@ -13,7 +15,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        String host = "localhost:27017";
+        String host = props.getHost()+":"+props.getPort();
         return new MongoClient(host);
     }
 

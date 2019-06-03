@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("spring.data.mongodb")
 public class MongoProps {
+    private String host;
     private int port;
     private String database;
     private String uri;

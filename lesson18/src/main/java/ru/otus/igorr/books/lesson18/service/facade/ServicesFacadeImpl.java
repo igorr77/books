@@ -2,6 +2,8 @@ package ru.otus.igorr.books.lesson18.service.facade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
@@ -10,7 +12,6 @@ import ru.otus.igorr.books.lesson18.service.author.AuthorService;
 import ru.otus.igorr.books.lesson18.service.book.BookService;
 import ru.otus.igorr.books.lesson18.service.genre.GenreService;
 
-import java.util.List;
 
 @Service
 public class ServicesFacadeImpl implements ServicesFacade {
@@ -19,109 +20,100 @@ public class ServicesFacadeImpl implements ServicesFacade {
     private final AuthorService authorService;
     private final BookService bookService;
 
-
     @Autowired
-    public ServicesFacadeImpl(GenreService genreService, AuthorService authorService, BookService bookService) {
+    public ServicesFacadeImpl(GenreService genreService,
+                              AuthorService authorService,
+                              BookService bookService) {
         this.genreService = genreService;
         this.authorService = authorService;
         this.bookService = bookService;
     }
 
-    @Override
-    public BookDto getBook(String id) {
-        return bookService.get(id);
-    }
-
-    @Override
-    public List<BookDto> getBookList() {
-        return bookService.getList();
-    }
-
-    @Override
-    public String addBook(BookDto dto) {
-        return bookService.add(dto);
-    }
-
-    @Override
-    public void deleteBook(String id) {
-        bookService.delete(id);
-    }
-
-    @Override
-    public NoteDto getBookNote(String noteId) {
-        return bookService.getNote(noteId);
-    }
-
-    @Override
-    public List<NoteDto> getBookNoteList(String bookId) {
-        return bookService.getNoteList(bookId);
-    }
-
-    @Override
-    public NoteDto addBookNote(NoteDto dto) {
-        return bookService.addNote(dto);
-    }
-
-    @Override
-    public void deleteBookNote(String noteId) {
-        bookService.deleteNote(noteId);
-    }
-
     // Genre
     @Override
-    public GenreDto getGenre(String id) {
+    public Flux<GenreDto> getGenreList() {
+        return genreService.list();
+    }
+
+    @Override
+    public Mono<GenreDto> getGenre(String id) {
         return genreService.get(id);
     }
 
     @Override
-    public List<GenreDto> getGenreList() {
-        return genreService.getList();
-    }
-
-    @Override
-    public List<GenreDto> getGenreListByName(String mask) {
-        return genreService.getListByName(mask);
-    }
-
-    @Override
-    public String addGenre(GenreDto genre) {
+    public Mono<GenreDto> addGenre(GenreDto genre) {
         return genreService.add(genre);
     }
 
     @Override
-    public void deleteGenre(String id) {
-        genreService.delete(id);
+    public Flux<GenreDto> getGenreListByName(String mask) {
+        return null;
     }
 
     @Override
-    public void deleteGenre(GenreDto dto) {
-        genreService.delete(dto);
+    public Mono<Void> deleteGenre(String id) {
+        return genreService.delete(id);
+    }
+
+    @Override
+    public Mono<Void> deleteGenre(GenreDto genreDto) {
+        return genreService.delete(genreDto);
     }
 
     // Author
-
     @Override
-    public AuthorDto getAuthor(String id) {
+    public Mono<AuthorDto> getAuthor(String id) {
         return authorService.get(id);
     }
 
     @Override
-    public List<AuthorDto> getAuthorList() {
+    public Flux<AuthorDto> getAuthorList() {
         return authorService.getList();
     }
 
     @Override
-    public List<AuthorDto> getAuthorListByName(String mask) {
+    public Flux<AuthorDto> getAuthorListByName(String mask) {
         return authorService.getListByName(mask);
     }
 
     @Override
-    public String addAuthor(AuthorDto dto) {
+    public Mono<AuthorDto> addAuthor(AuthorDto dto) {
         return authorService.add(dto);
     }
 
     @Override
-    public void deleteAuthor(String id) {
-        authorService.delete(id);
+    public Mono<Void> deleteAuthor(String id) {
+        return authorService.delete(id);
+    }
+
+    // Book
+    @Override
+    public Flux<BookDto> getBookList() {
+        return bookService.getList();
+    }
+
+    @Override
+    public Mono<BookDto> getBook(String id) {
+        return bookService.get(id);
+    }
+
+    @Override
+    public Mono<BookDto> addBook(BookDto bookDto) {
+        return bookService.add(bookDto);
+    }
+
+    @Override
+    public Mono<Void> deleteBook(String id) {
+        return bookService.delete(id);
+    }
+
+    @Override
+    public Mono<NoteDto> addNote(NoteDto noteDto) {
+        return bookService.addNote(noteDto);
+    }
+
+    @Override
+    public Mono<Void> deleteNote(String noteId) {
+        return bookService.deleteNote(noteId);
     }
 }

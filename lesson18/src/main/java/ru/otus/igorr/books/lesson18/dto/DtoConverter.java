@@ -7,7 +7,9 @@ public interface DtoConverter<T, M> {
 
     T fill(M dto);
 
+    @Deprecated
     List<M> convertList(List<T> list);
 
+    @Deprecated
     List<T> fillList(List<M> list);
 }

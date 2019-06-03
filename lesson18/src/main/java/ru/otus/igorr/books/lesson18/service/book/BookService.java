@@ -1,27 +1,27 @@
 package ru.otus.igorr.books.lesson18.service.book;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.dto.NoteDto;
 
-import java.util.List;
-
 public interface BookService {
     /* Book */
-    BookDto get(String id);
+    Mono<BookDto> get(String id);
 
-    List<BookDto> getList();
+    Flux<BookDto> getList();
 
-    String add(BookDto dto);
+    Mono<BookDto> add(BookDto dto);
 
-    void delete(String id);
+    Mono<Void> delete(String id);
 
     /* Note */
-    NoteDto getNote(String noteId);
+    Mono<NoteDto> getNote(String noteId);
 
-    List<NoteDto> getNoteList(String bookId);
+    Flux<NoteDto> getNoteList(String bookId);
 
-    NoteDto addNote(NoteDto dto);
+    Mono<NoteDto> addNote(NoteDto dto);
 
-    void deleteNote(String noteId);
+    Mono<Void> deleteNote(String noteId);
 
 }

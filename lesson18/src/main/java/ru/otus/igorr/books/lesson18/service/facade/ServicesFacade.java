@@ -1,56 +1,52 @@
 package ru.otus.igorr.books.lesson18.service.facade;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 import ru.otus.igorr.books.lesson18.dto.BookDto;
 import ru.otus.igorr.books.lesson18.dto.GenreDto;
 import ru.otus.igorr.books.lesson18.dto.NoteDto;
 
-import java.util.List;
-
 public interface ServicesFacade {
 
-    // BookService
-    BookDto getBook(String id);
+    // Genre
+    Flux<GenreDto> getGenreList();
 
-    List<BookDto> getBookList();
+    Mono<GenreDto> getGenre(String id);
 
-    String addBook(BookDto dto);
+    Mono<GenreDto> addGenre(GenreDto genre);
 
-    void deleteBook(String id);
+    Flux<GenreDto> getGenreListByName(String mask);
 
-    /* Note */
-    NoteDto getBookNote(String noteId);
+    Mono<Void> deleteGenre(String id);
 
-    List<NoteDto> getBookNoteList(String bookId);
-
-    NoteDto addBookNote(NoteDto dto);
-
-    void deleteBookNote(String noteId);
-
-    // GenreService
-    GenreDto getGenre(String id);
-
-    List<GenreDto> getGenreList();
-
-    List<GenreDto> getGenreListByName(String mask);
-
-    String addGenre(GenreDto genre);
-
-    void deleteGenre(String id);
-
-    void deleteGenre(GenreDto dto);
+    Mono<Void> deleteGenre(GenreDto genreDto);
 
 
-    // AuthorService
+    // Author services
+    Mono<AuthorDto> getAuthor(String id);
 
-    AuthorDto getAuthor(String id);
+    Flux<AuthorDto> getAuthorList();
 
-    List<AuthorDto> getAuthorList();
+    Flux<AuthorDto> getAuthorListByName(String mask);
 
-    List<AuthorDto> getAuthorListByName(String mask);
+    Mono<AuthorDto> addAuthor(AuthorDto authorDto);
 
-    String addAuthor(AuthorDto dto);
+    Mono<Void> deleteAuthor(String id);
 
-    void deleteAuthor(String id);
+
+    // Book services
+    Flux<BookDto> getBookList();
+
+    Mono<BookDto> getBook(String id);
+
+    Mono<BookDto> addBook(BookDto bookDto);
+
+    Mono<Void> deleteBook(String id);
+
+    Mono<NoteDto> addNote(NoteDto noteDto);
+
+    Mono<Void> deleteNote(String noteId);
+
 
 }

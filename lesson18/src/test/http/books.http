@@ -1,13 +1,13 @@
 ### flux genre list
-GET localhost:8080/flux/genre
+GET localhost:8080/genre
 Accept: application/json, text/event-stream
 
 ### flux genre id
-GET localhost:8080/flux/genre/1
+GET localhost:8080/genre/1
 Accept: application/json
 
 ### flux genre add
-POST localhost:8080/flux/genre
+POST localhost:8080/genre
 #Content-Type: application/json
 Accept: application/json, text/event-stream
 #Accept: application/json
@@ -18,21 +18,21 @@ Accept: application/json, text/event-stream
 }
 
 ### flux genre id
-DELETE localhost:8080/flux/genre/5cf0f3f0a4f082173c488b63
+DELETE localhost:8080/genre/5cf0f3f0a4f082173c488b63
 Accept: application/json
 
 
 ###############################################################
 ### flux author list
-GET localhost:8080/flux/author
+GET localhost:8080/author
 Accept: text/event-stream
 
 ### flux author get
-GET localhost:8080/flux/author/A1
+GET localhost:8080/author/A1
 Accept: text/event-stream
 
 ### flux author add
-POST localhost:8080/flux/author
+POST localhost:8080/author
 Accept: application/json, text/event-stream
 
 {
@@ -43,12 +43,12 @@ Accept: application/json, text/event-stream
 }
 
 ### delete genre
-DELETE localhost:8080/flux/author/5cf0f479a4f082173c488b68
+DELETE localhost:8080/author/5cf0f479a4f082173c488b68
 Accept: application/json
 
 ######################################################################
 ### Book
-GET localhost:8080/flux/book
+GET localhost:8080/book
 Accept: application/json
 #Accept: text/event-stream
 

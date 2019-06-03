@@ -1,17 +1,17 @@
 package ru.otus.igorr.books.lesson18.service.author;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson18.dto.AuthorDto;
 
-import java.util.List;
-
 public interface AuthorService {
-    AuthorDto get(String id);
+    Mono<AuthorDto> get(String id);
 
-    String add(AuthorDto dto);
+    Mono<AuthorDto> add(AuthorDto dto);
 
-    List<AuthorDto> getList();
+    Flux<AuthorDto> getList();
 
-    List<AuthorDto> getListByName(String mask);
+    Flux<AuthorDto> getListByName(String mask);
 
-    void delete(String id);
+    Mono<Void> delete(String id);
 }

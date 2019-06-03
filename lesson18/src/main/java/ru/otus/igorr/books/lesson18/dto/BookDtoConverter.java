@@ -69,7 +69,10 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
 
             List<Author> authorList = new ArrayList<>();
             authorList.addAll(Optional.of(book.getAuthors()).orElse(Collections.emptyList()));
-            List<AuthorDto> authorDtoList = authorConverter.convertList(authorList);
+            List<AuthorDto> authorDtoList = authorList
+                    .stream()
+                    .map(author -> authorConverter.convert(author))
+                    .collect(Collectors.toList());
 
             Genre genre = Optional.ofNullable(book.getGenre()).orElse(Genre.empty());
 
@@ -82,9 +85,10 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
                 noteList.addAll(Collections.emptySet());
             }
             */
-
-
-            List<NoteDto> noteDtoList = noteConverter.convertList(noteList);
+            List<NoteDto> noteDtoList = noteList
+                    .stream()
+                    .map(note -> noteConverter.convert(note))
+                    .collect(Collectors.toList());
 
             dto.setId(book.getId());
             dto.setTitle(book.getTitle());
