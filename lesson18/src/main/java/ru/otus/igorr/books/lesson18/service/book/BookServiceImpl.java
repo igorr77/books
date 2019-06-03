@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService {
 
     public BookServiceImpl(BookReactiveRepository bookRepository,
                            NoteReactiveRepository noteRepository,
-                           @Qualifier("bookConverter") DtoConverter bookConverter,
-                           @Qualifier("noteConverter") DtoConverter noteConverter) {
+                           DtoConverter<Book, BookDto> bookConverter,
+                           DtoConverter<Note, NoteDto> noteConverter) {
         this.bookRepository = bookRepository;
         this.noteRepository = noteRepository;
         this.bookConverter = bookConverter;

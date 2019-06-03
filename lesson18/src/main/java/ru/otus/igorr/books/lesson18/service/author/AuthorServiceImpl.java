@@ -18,7 +18,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Autowired
     public AuthorServiceImpl(AuthorReactiveRepository repository,
-                             @Qualifier("authorConverter") DtoConverter converter) {
+                             DtoConverter<Author, AuthorDto> converter) {
         this.repository = repository;
         this.converter = converter;
     }
