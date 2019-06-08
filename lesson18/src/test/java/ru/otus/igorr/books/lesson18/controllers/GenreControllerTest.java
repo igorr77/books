@@ -53,7 +53,7 @@ class GenreControllerTest {
     }
 
     @Test
-    void listPageFluxTest() {
+    void getGenreListTest() {
 
         client.get()
                 .uri("/genre")
@@ -63,7 +63,7 @@ class GenreControllerTest {
     }
 
     @Test
-    void viewPageFluxTest() {
+    void getGenreTest() {
 
         client.get()
                 .uri("/genre/1")
@@ -73,7 +73,7 @@ class GenreControllerTest {
     }
 
     @Test
-    void addPageFluxTest() {
+    void addGenreTest() {
         GenreDto dto = new GenreDto();
         dto.setName("Genre.Name.Flux");
         dto.setDescription("Test reactive controller");

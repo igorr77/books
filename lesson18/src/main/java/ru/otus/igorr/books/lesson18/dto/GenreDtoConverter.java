@@ -19,20 +19,6 @@ public class GenreDtoConverter implements DtoConverter<Genre, GenreDto> {
         return dto2entity(dto);
     }
 
-    @Override
-    public List<GenreDto> convertList(final List<Genre> list) {
-        final List<GenreDto> genreDtoList = new ArrayList<>();
-        list.forEach(genre -> genreDtoList.add(entity2dto(genre)));
-        return genreDtoList;
-    }
-
-    @Override
-    public List<Genre> fillList(final List<GenreDto> list) {
-        final List<Genre> genreList = new ArrayList<>();
-        list.forEach(dto -> genreList.add(dto2entity(dto)));
-        return genreList;
-    }
-
     private GenreDto entity2dto(Genre genre) {
         GenreDto dto = new GenreDto();
         dto.setId(genre.getId());

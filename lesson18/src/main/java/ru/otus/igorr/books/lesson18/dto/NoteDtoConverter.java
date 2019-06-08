@@ -20,20 +20,6 @@ public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {
         return dto2entity(dto);
     }
 
-    @Override
-    public List<NoteDto> convertList(final List<Note> entityList) {
-        final List<NoteDto> dtoList = new ArrayList<>();
-        entityList.forEach(note -> dtoList.add(entity2dto(note)));
-        return dtoList;
-    }
-
-    @Override
-    public List<Note> fillList(final List<NoteDto> dtoList) {
-        final List<Note> noteList = new ArrayList<>();
-        dtoList.forEach(dto -> noteList.add(dto2entity(dto)));
-        return noteList;
-    }
-
     private NoteDto entity2dto(Note note) {
         final NoteDto dto = new NoteDto();
         dto.setId(note.getId());

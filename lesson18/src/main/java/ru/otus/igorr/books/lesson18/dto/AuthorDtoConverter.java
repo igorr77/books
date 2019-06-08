@@ -1,5 +1,6 @@
 package ru.otus.igorr.books.lesson18.dto;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service("authorConverter")
+@RequiredArgsConstructor
 public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
     private final static Logger LOG = LoggerFactory.getLogger(AuthorDtoConverter.class);
 
     private final DtoConverter<Genre, GenreDto> genreConverter;
     private final DtoConverter<Book, BookDto> bookConverter;
-
-    @Autowired
-    public AuthorDtoConverter(DtoConverter<Genre, GenreDto> genreConverter,
-                              DtoConverter<Book, BookDto> bookConverter
-    ) {
-        this.genreConverter = genreConverter;
-        this.bookConverter = bookConverter;
-    }
 
     @Override
     public AuthorDto convert(Author author) {
@@ -41,21 +35,6 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
     public Author fill(AuthorDto dto) {
         return dto2entity(dto);
     }
-
-    @Override
-    public List<AuthorDto> convertList(List<Author> entityList) {
-        List<AuthorDto> dtoList = new ArrayList<>();
-        entityList.forEach(e -> dtoList.add(entity2dto(e)));
-        return dtoList;
-    }
-
-    @Override
-    public List<Author> fillList(List<AuthorDto> dtoList) {
-        List<Author> entityList = new ArrayList<>();
-        dtoList.forEach(dto -> entityList.add(dto2entity(dto)));
-        return entityList;
-    }
-
 
     private AuthorDto entity2dto(Author author) {
         AuthorDto dto = new AuthorDto();

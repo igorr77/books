@@ -42,26 +42,6 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
         return dto2entity(dto);
     }
 
-    @Override
-    public List<BookDto> convertList(List<Book> list) {
-        /*
-        List<BookDto> dtoList = new ArrayList<>();
-        list.forEach(book -> dtoList.add(entity2dto(book)));
-        return dtoList;
-
-         */
-        return list.stream()
-                .map(book -> entity2dto(book))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Book> fillList(List<BookDto> list) {
-        return list.stream()
-                .map(dto -> dto2entity(dto))
-                .collect(Collectors.toList());
-    }
-
     BookDto entity2dto(Book book) {
         BookDto dto = new BookDto();
 

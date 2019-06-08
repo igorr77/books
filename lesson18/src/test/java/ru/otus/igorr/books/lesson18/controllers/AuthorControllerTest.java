@@ -52,7 +52,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    void listPageFluxTest() {
+    void getAuthorListTest() {
 
         client.get()
                 .uri("/author")
@@ -62,7 +62,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    void viewPageFluxTest() {
+    void getAuthorTest() {
 
         client.get()
                 .uri("/author/1")
@@ -72,7 +72,7 @@ public class AuthorControllerTest {
     }
 
     @Test
-    void addPageFluxTest() {
+    void addAuthorTest() {
         List<GenreDto> genres = new ArrayList<>();
         GenreDto genre = new GenreDto();
         genres.add(genre);
