@@ -15,22 +15,22 @@ public class BookController {
     private final ServicesFacade services;
 
     @GetMapping("/book")
-    Flux<BookDto> listPage() {
+    Flux<BookDto> getBookList() {
         return services.getBookList();
     }
 
     @GetMapping("/book/{id}")
-    Mono<BookDto> viewPage(@PathVariable String id) {
+    Mono<BookDto> getBook(@PathVariable String id) {
         return services.getBook(id);
     }
 
     @PostMapping("/book")
-    Mono<BookDto> addPage(@RequestBody BookDto book) {
+    Mono<BookDto> addBook(@RequestBody BookDto book) {
         return services.addBook(book);
     }
 
     @DeleteMapping("/book/{id}")
-    Mono<Void> deletePage(@PathVariable String id) {
+    Mono<Void> deleteBook(@PathVariable String id) {
         return services.deleteBook(id);
     }
 

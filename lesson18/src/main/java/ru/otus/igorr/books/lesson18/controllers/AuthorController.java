@@ -17,22 +17,22 @@ public class AuthorController {
     private final ServicesFacade services;
 
     @GetMapping("/author")
-    public Flux<AuthorDto> listPageFlux() {
+    public Flux<AuthorDto> getAuthorList() {
         return services.getAuthorList();
     }
 
     @GetMapping("/author/{id}")
-    public Mono<AuthorDto> viewPageFlux(@PathVariable String id) {
+    public Mono<AuthorDto> getAuthor(@PathVariable String id) {
         return services.getAuthor(id);
     }
 
     @PostMapping("/author")
-    public Mono<AuthorDto> addPageFlux(@RequestBody AuthorDto author) {
+    public Mono<AuthorDto> addAuthor(@RequestBody AuthorDto author) {
         return services.addAuthor(author);
     }
 
     @DeleteMapping("/author/{id}")
-    public Mono<Void> deletePage(@PathVariable String id) {
+    public Mono<Void> deleteAuthor(@PathVariable String id) {
         return services.deleteAuthor(id);
     }
 

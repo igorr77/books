@@ -15,22 +15,22 @@ public class GenreController {
     private final ServicesFacade services;
 
     @GetMapping("/genre")
-    public Flux<GenreDto> listPageFlux() {
+    public Flux<GenreDto> getGenreList() {
         return services.getGenreList();
     }
 
     @GetMapping("/genre/{id}")
-    public Mono<GenreDto> viewPageFlux(@PathVariable String id) {
+    public Mono<GenreDto> getGenre(@PathVariable String id) {
         return services.getGenre(id);
     }
 
     @PostMapping("/genre")
-    public Mono<GenreDto> addPageFlux(@RequestBody GenreDto genre) {
+    public Mono<GenreDto> addGenre(@RequestBody GenreDto genre) {
         return services.addGenre(genre);
     }
 
     @DeleteMapping("/genre/{id}")
-    public Mono<Void> deletePageFlux(@PathVariable String id) {
+    public Mono<Void> deleteGenre(@PathVariable String id) {
         return services.deleteGenre(id);
     }
 
