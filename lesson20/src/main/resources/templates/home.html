@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<p th:utext="#{home.welcome(${msession.user.name})}">Welcome to books app, UserName!</p>
+<p th:utext="#{home.welcome(${username})}">Welcome to books app, UserName!</p>
 
 <p>
     Today is: <span th:with="df=#{date.format}" th:text="${#calendars.format(today,df)}">5 Мая 2019</span>
