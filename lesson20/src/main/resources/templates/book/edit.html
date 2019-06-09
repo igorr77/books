@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css"
+          th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+<h1 th:text="${readOnly} ? 'View book' : 'Edit book'">View book</h1>
+<div>
+    <form id="add-book-form" action="edit.html" th:action="${readOnly} ? edit : save" method="post">
+        <p>Title:<input type="text" name="title" value="Война и мир" th:value="${book.title}"></p>
+        <p> Authors:
+            <select name="author">
+                <option th:each="a : ${book.authorList}" th:value="${a.id}" value="c1"
+                        th:text="${a.lastName+a.firstName}">Толстой Лев Николаевич
+                </option>
+            </select>
+        </p>
+
+        <p>Genre:<input type="text" name="genretext" value="Роман" th:value="${book.genre.name}"></p>
+        <p>Description:<input type="text" name="description" value="Целых четыре тома" th:value="${book.description}">
+        </p>
+
+        <input type="text" name="id" value="" hidden th:value="${book.id}">
+        <input type="text" name="genre" value="" hidden th:value="${book.genre.id}">
+
+        <p><input type="submit" th:value="${readOnly} ? 'Edit' : 'Save'" value="Edit"></p>
+    </form>
+</div>
+
+<p>
+    <a href="list.html" th:href="@{/book/list}">Return to book list</a>
+</p>
+
+</body>
+</html>

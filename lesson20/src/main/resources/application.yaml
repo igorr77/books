@@ -1,0 +1,27 @@
+spring:
+  main:
+    banner-mode: "off"
+  messages:
+    basename: messages/app_messages
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: false
+  shell:
+    interactive:
+      enabled: false
+  #
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: testdb
+
+  batch:
+    initialize-schema: always
+
+logging:
+  level:
+    org.springframework.web: TRACE
+
+
