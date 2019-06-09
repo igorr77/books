@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+
+<h1>Book list</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>TITLE</th>
+        <th>AUTHOR</th>
+        <th>GENRE</th>
+        <th>DESCRIPTION</th>
+        <th>COMMENTS</th>
+        <th>VIEW/EDIT</th>
+    </tr>
+    </thead>
+    <tbody th:remove="all-but-first">
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}">Как закалялась сталь</td>
+        <td>
+            <span th:text="${#lists.size(book.authorList)}">2</span> author/s
+            <a href="authors.html"
+               th:href="@{/book/authors(id=${book.id})}"
+               th:unless="${#lists.isEmpty(book.authorList)}">view</a>
+        </td>
+        <td th:text="${book.genre.name}">Исторический роман</td>
+        <td th:text="${book.description}">Офигительно</td>
+        <td>
+            <span th:text="${#lists.size(book.noteList)}">2</span> comment/s
+            <a href="/comments.html"
+               th:href="@{/book/comments(bookId=${book.id})}"
+               th:unless="${#lists.isEmpty(book.noteList)}">view</a>
+        </td>
+        <td>
+            <a href="edit.html" th:href="@{/book/view(id=${book.id})}">view</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<p>
+    <a href="add.html" th:href="@{/book/add}">Book add</a>
+</p>
+
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css"
+          th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+<h1>Input new author</h1>
+<div>
+    <form id="add-author-form" action="add.html" th:action="add" method="post">
+        <p>Lastname:<input type="text" name="lastname"></p>
+        <p>Firstname:<input type="text" name="firstname"></p>
+        <p>Surname:<input type="text" name="surname"></p>
+        <p>
+            <select name="genre">
+                <option th:each="g : ${genres}" th:value="${g.id}" value="c1" th:text="${g.name}">Фэнтази</option>
+            </select>
+        </p>
+
+
+        <p><input type="submit" value="Save"></p>
+    </form>
+</div>
+
+</body>
+</html>

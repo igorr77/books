@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body id="body">
+
+<h1>Authors of book: <span th:text="${book.title}">Как закалялась сталь</span></h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>LASTNAME</th>
+        <th>FIRSTNAME</th>
+    </tr>
+    </thead>
+    <tbody th:remove="all-but-first">
+
+    <tr th:each="a : ${book.authorList}">
+        <td th:text="${a.lastName}">Островский</td>
+        <td th:text="${a.firstName}">Николай</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>
+    <a href="list.html" th:href="@{/book/list}">Return to book list</a>
+</p>
+
+</body>
+
+</html>
+
