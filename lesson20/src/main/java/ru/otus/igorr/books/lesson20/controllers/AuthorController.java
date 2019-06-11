@@ -2,6 +2,7 @@ package ru.otus.igorr.books.lesson20.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import ru.otus.igorr.books.lesson20.dto.AuthorDto;
 import ru.otus.igorr.books.lesson20.dto.GenreDto;
 import ru.otus.igorr.books.lesson20.service.facade.ServicesFacade;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,12 +49,15 @@ public class AuthorController {
                    @RequestParam String genre,
                    Model model) {
 
+        val genres = new ArrayList<GenreDto>();
+
+        services.getGenre(genre).map(g -> genres.add(g));
 
         AuthorDto author = new AuthorDto(null,
                 firstname,
                 lastname,
                 surname,
-                Arrays.asList(services.getGenre(genre).block()),
+                genres,
                 null);
 
         AuthorDto newAuthor = services.addAuthor(author).block();
