@@ -10,6 +10,7 @@ import ru.otus.igorr.books.lesson20.domain.author.AuthorName;
 import ru.otus.igorr.books.lesson20.domain.book.Book;
 import ru.otus.igorr.books.lesson20.domain.book.Note;
 import ru.otus.igorr.books.lesson20.domain.genre.Genre;
+import ru.otus.igorr.books.lesson20.domain.security.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +73,15 @@ public class InitMongoDBDataChangeLog {
         template.save(new Note("B1N1", "Book1.Note.1", book1));
         template.save(new Note("B2N1", "Book2.Note.1", book2));
         template.save(new Note("B2N2", "Book2.Note.2", book2));
+
+    }
+
+    @ChangeSet(order = "005", id = "initUsers", author = "other", runAlways = true)
+    public void initUsers(MongoTemplate template) {
+
+        template.save(new User(null, "admin", "ADMIN", "q123"));
+        template.save(new User(null, "view", "VIEW", "q123"));
+        template.save(new User(null, "edit", "EDIT", "q123"));
 
     }
 
