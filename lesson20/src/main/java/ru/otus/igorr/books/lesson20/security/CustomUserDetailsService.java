@@ -14,7 +14,6 @@ import ru.otus.igorr.books.lesson20.service.security.UserService;
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
-
     private final UserService service;
 
     @Autowired
@@ -22,7 +21,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         super();
         this.service = service;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

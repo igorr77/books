@@ -2,11 +2,12 @@ package ru.otus.igorr.books.lesson20.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.igorr.books.lesson20.dto.AuthorDto;
 import ru.otus.igorr.books.lesson20.dto.BookDto;
 import ru.otus.igorr.books.lesson20.dto.GenreDto;
@@ -24,7 +25,7 @@ public class BookController {
     @GetMapping("/book/list")
     String listPage(Model model) {
 
-        List<BookDto> books = getBookList();
+        val books = getBookList();
 
         model.addAttribute("books", books);
         return "book/list";
@@ -33,8 +34,7 @@ public class BookController {
     @GetMapping("/book/authors")
     String authorPage(@RequestParam String id, Model model) {
 
-
-        BookDto book = getBook(id);
+        val book = getBook(id);
 
         model.addAttribute("book", book);
         return "book/authors";
@@ -55,7 +55,7 @@ public class BookController {
                    @RequestParam String description,
                    Model model) {
 
-        BookDto book = new BookDto
+        val book = new BookDto
                 .Builder()
                 .title(title)
                 .authorList(Arrays.asList(getAuthor(author)))
@@ -73,7 +73,6 @@ public class BookController {
     String viewPage(@RequestParam String id, Model model) {
 
         model.addAttribute("book", getBook(id));
-
         model.addAttribute("readOnly", true);
         return "book/edit";
     }
@@ -82,7 +81,6 @@ public class BookController {
     String editPage(@RequestParam String id, Model model) {
 
         model.addAttribute("book", getBook(id));
-
         model.addAttribute("readOnly", false);
         return "book/edit";
     }
@@ -91,12 +89,11 @@ public class BookController {
     String savePage(@RequestParam String id, Model model) {
 
         model.addAttribute("book", getBook(id));
-
         model.addAttribute("readOnly", true);
         return "book/edit";
     }
 
-    private BookDto getBook(String id){
+    private BookDto getBook(String id) {
         return services.getBook(id).block();
     }
 
@@ -108,11 +105,11 @@ public class BookController {
         return services.getGenre(genreId).block();
     }
 
-    private List<GenreDto> getGenreList(){
+    private List<GenreDto> getGenreList() {
         return services.getGenreList().collectList().block();
     }
 
-    private List<AuthorDto> getAuthorList(){
+    private List<AuthorDto> getAuthorList() {
         return services.getAuthorList().collectList().block();
     }
 
