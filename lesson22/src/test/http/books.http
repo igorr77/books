@@ -1,0 +1,67 @@
+### flux genre list
+GET localhost:8080/genre
+Accept: application/json, text/event-stream
+
+### flux genre id
+GET localhost:8080/genre/1
+Accept: application/json
+
+### flux genre add
+POST localhost:8080/genre
+#Content-Type: application/json
+Accept: application/json, text/event-stream
+#Accept: application/json
+
+{
+  "name":"GenreName.TestFluxRest",
+  "description":"GenreDescription.TestFluxRest"
+}
+
+### flux genre id
+DELETE localhost:8080/genre/5cf0f3f0a4f082173c488b63
+Accept: application/json
+
+
+###############################################################
+### flux author list
+GET localhost:8080/author
+Accept: text/event-stream
+
+### flux author get
+GET localhost:8080/author/A1
+Accept: text/event-stream
+
+### flux author add
+POST localhost:8080/author
+Accept: application/json, text/event-stream
+
+{
+  "firstName": "Firstname.TestRest",
+  "lastName": "Lastname.TestRest",
+  "surName": "Surname.TestRest",
+  "genreList": [{"id": "888L"}]
+}
+
+### delete genre
+DELETE localhost:8080/author/5cf0f479a4f082173c488b68
+Accept: application/json
+
+######################################################################
+### Book
+GET localhost:8080/book
+Accept: application/json
+#Accept: text/event-stream
+
+###
+POST localhost:8080/book
+Content-Type: application/json
+
+{
+  "title": "BookTitle.TestRest",
+  "authorList": [{"id": "A1"}, {"id": "A2"}],
+  "genre": {"id": "2"},
+  "description": "BookDescriooption.TestRest"
+}
+
+###
+
