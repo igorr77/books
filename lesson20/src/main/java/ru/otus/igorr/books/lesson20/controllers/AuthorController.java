@@ -19,9 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthorController {
 
-
     private final ServicesFacade services;
-
 
     @GetMapping("/author/list")
     String listPage(Model model) {
@@ -30,9 +28,8 @@ public class AuthorController {
         return "author/list";
     }
 
-
     @GetMapping("/author/{id}")
-    String pageView(@RequestParam String id, Model model){
+    String pageView(@RequestParam String id, Model model) {
         return "author/list";
     }
 
@@ -67,12 +64,14 @@ public class AuthorController {
     }
 
     private List<AuthorDto> getAuthorList() {
-        return services.getAuthorList().collectList().block();
+        val authorList = new ArrayList<AuthorDto>();
+        services.getAuthorList().map(author -> authorList.add(author));
+        return authorList;
     }
 
     private List<GenreDto> getGenreList() {
-        return services.getGenreList().collectList().block();
+        val genreList = new ArrayList<GenreDto>();
+        services.getGenreList().map(genre -> genreList.add(genre));
+        return genreList;
     }
-
-
 }

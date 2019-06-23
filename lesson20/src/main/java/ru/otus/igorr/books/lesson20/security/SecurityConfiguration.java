@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import static ru.otus.igorr.books.lesson20.security.AppRoles.*;
+
+
 @Slf4j
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -31,15 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                //.antMatchers("/book/**").hasRole("ADMIN")
-                .antMatchers("/genre/list").hasAnyRole("ADMIN", "EDIT", "VIEW")
-                .antMatchers("/genre/add").hasRole("EDIT")
-                .antMatchers("/author/list").hasRole("VIEW")
-                .antMatchers("/author/add").hasRole("EDIT")
-                .antMatchers("/book/list").hasRole("VIEW")
-                .antMatchers("/book/authors").hasRole("VIEW")
-                .antMatchers("/book/add").hasRole("ADMIN")
-                .antMatchers("/book/edit").hasRole("ADMIN")
+                .antMatchers("/genre/list").hasAnyRole(ADMIN.getRole(), EDIT.getRole(), VIEW.getRole())
+                .antMatchers("/genre/add").hasRole(EDIT.getRole())
+                .antMatchers("/author/list").hasRole(VIEW.getRole())
+                .antMatchers("/author/add").hasRole(EDIT.getRole())
+                .antMatchers("/book/list").hasRole(VIEW.getRole())
+                .antMatchers("/book/authors").hasRole(VIEW.getRole())
+                .antMatchers("/book/add").hasRole(ADMIN.getRole())
+                .antMatchers("/book/edit").hasRole(ADMIN.getRole())
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/")
@@ -56,15 +58,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-        /**/
-//        auth.inMemoryAuthentication()
-//                .withUser("admin").password("q123").roles("ADMIN")
-//                .and()
-//                .withUser("view").password("q123").roles("VIEW")
-//                .and()
-//                .withUser("edit").password("q123").roles("EDIT");
-
-
     }
 
     @Bean
@@ -75,17 +68,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -114,6 +96,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
     }
-
 
 }
