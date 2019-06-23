@@ -41,7 +41,7 @@ public class GenreController {
         return "genre/list";
     }
 
-
+    // TODO: 23.06.2019 Реализовать полный реактивный стек 
     private List<GenreDto> getGenreList() {
         return services.getGenreList().collectList().block();
     }
