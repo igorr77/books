@@ -48,7 +48,7 @@ public class AuthorController {
 
         val genres = new ArrayList<GenreDto>();
 
-        services.getGenre(genre).map(g -> genres.add(g));
+        genres.add(services.getGenre(genre).block());
 
         AuthorDto author = new AuthorDto(null,
                 firstname,
@@ -63,15 +63,15 @@ public class AuthorController {
         return "author/list";
     }
 
+    // TODO: 23.06.2019 Задача на развитие:
+    //  перейти на полный реактивный стек
+
+
     private List<AuthorDto> getAuthorList() {
-        val authorList = new ArrayList<AuthorDto>();
-        services.getAuthorList().map(author -> authorList.add(author));
-        return authorList;
+        return services.getAuthorList().collectList().block();
     }
 
     private List<GenreDto> getGenreList() {
-        val genreList = new ArrayList<GenreDto>();
-        services.getGenreList().map(genre -> genreList.add(genre));
-        return genreList;
+        return services.getGenreList().collectList().block();
     }
 }

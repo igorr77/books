@@ -93,6 +93,9 @@ public class BookController {
         return "book/edit";
     }
 
+    // TODO: 23.06.2019 Задача на развитие:
+    //  Перейти на полный реактивный стек (убрать .block())
+
     private BookDto getBook(String id) {
         return services.getBook(id).block();
     }
