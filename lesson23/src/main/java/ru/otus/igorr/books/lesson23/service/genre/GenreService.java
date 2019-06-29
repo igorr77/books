@@ -1,22 +1,19 @@
 package ru.otus.igorr.books.lesson23.service.genre;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson23.dto.GenreDto;
 
+import java.util.List;
+
 public interface GenreService {
+    GenreDto get(String id);
 
-    Flux<GenreDto> list();
+    String add(GenreDto genre);
 
-    Flux<GenreDto> getListByName(String mask);
+    void delete(String id);
 
-    Mono<GenreDto> get(String id);
+    void delete(GenreDto dto);
 
-    Mono<GenreDto> add(GenreDto genreDto);
+    List<GenreDto> getList();
 
-    Mono<Void> delete(String id);
-
-    Mono<Void> delete(GenreDto genreDto);
-
-
+    List<GenreDto> getListByName(String mask);
 }

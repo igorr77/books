@@ -31,7 +31,7 @@ public class InitMongoDBDataChangeLog {
 
     @ChangeSet(order = "000", id = "dropDB", author = "other", runAlways = true)
     public void dropDB(MongoDatabase database) {
-        database.drop();
+        //database.drop();
     }
 
     @ChangeSet(order = "001", id = "initGenres", author = "other", runAlways = true)

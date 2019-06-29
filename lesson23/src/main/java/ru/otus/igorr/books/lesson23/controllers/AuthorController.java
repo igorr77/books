@@ -48,7 +48,7 @@ public class AuthorController {
 
         val genres = new ArrayList<GenreDto>();
 
-        genres.add(services.getGenre(genre).block());
+        genres.add(services.getGenre(genre));
 
         AuthorDto author = new AuthorDto(null,
                 firstname,
@@ -57,7 +57,7 @@ public class AuthorController {
                 genres,
                 null);
 
-        AuthorDto newAuthor = services.addAuthor(author).block();
+        services.addAuthor(author);
 
         model.addAttribute("authors", getAuthorList());
         return "author/list";
@@ -68,10 +68,10 @@ public class AuthorController {
 
 
     private List<AuthorDto> getAuthorList() {
-        return services.getAuthorList().collectList().block();
+        return services.getAuthorList();
     }
 
     private List<GenreDto> getGenreList() {
-        return services.getGenreList().collectList().block();
+        return services.getGenreList();
     }
 }

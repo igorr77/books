@@ -1,52 +1,76 @@
 package ru.otus.igorr.books.lesson23.service.author;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson23.domain.author.Author;
 import ru.otus.igorr.books.lesson23.dto.AuthorDto;
 import ru.otus.igorr.books.lesson23.dto.DtoConverter;
-import ru.otus.igorr.books.lesson23.repository.author.AuthorReactiveRepository;
+import ru.otus.igorr.books.lesson23.execptions.DeleteReferenceRecordException;
+import ru.otus.igorr.books.lesson23.execptions.IncorrectDataException;
+import ru.otus.igorr.books.lesson23.repository.author.AuthorRepository;
+import ru.otus.igorr.books.lesson23.repository.book.BookRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorReactiveRepository repository;
+
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
     private final DtoConverter<Author, AuthorDto> converter;
 
     @Autowired
-    public AuthorServiceImpl(AuthorReactiveRepository repository,
-                             DtoConverter<Author, AuthorDto> converter) {
-        this.repository = repository;
+    public AuthorServiceImpl(AuthorRepository authorRepository,
+                             BookRepository bookRepository,
+                             @Qualifier("authorConverter") DtoConverter converter) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
         this.converter = converter;
     }
 
     @Override
-    public Mono<AuthorDto> get(String id) {
-        return repository.findById(id).map(author -> converter.convert(author));
+    public AuthorDto get(String id) {
+        return converter.convert(authorRepository.findById(id).orElse(Author.empty()));
     }
 
     @Override
-    public Mono<AuthorDto> add(AuthorDto dto) {
-        return repository.save(converter.fill(dto))
-                .map(author -> converter.convert(author));
+    public String add(AuthorDto dto) {
+
+        if(dto.getGenreList().stream()
+                .filter(genreDto -> genreDto.getId() == null)
+                .count() != 0) {
+            throw new IncorrectDataException();
+        }
+
+        return authorRepository.save(converter.fill(dto)).getId();
     }
 
     @Override
-    public Flux<AuthorDto> getList() {
-        return repository.findAll()
-                .map(author -> converter.convert(author));
+    public List<AuthorDto> getList() {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -> converter.convert(author))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Flux<AuthorDto> getListByName(String mask) {
-        // TODO: 31.05.2019
-        return null;
+    public List<AuthorDto> getListByName(String mask) {
+        return authorRepository.findByNameLike(mask)
+                .stream()
+                .map(author -> converter.convert(author))
+                .collect(Collectors.toList());
+
     }
 
     @Override
-    public Mono<Void> delete(String id) {
-        return repository.deleteById(id);
+    public void delete(String id) {
+        if (bookRepository.existsAuthor(id)) {
+            throw new DeleteReferenceRecordException(id);
+        }
+        authorRepository.deleteById(id);
     }
 }

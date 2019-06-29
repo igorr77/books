@@ -1,5 +1,6 @@
 package ru.otus.igorr.books.lesson23.repository.genre;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Flux;
@@ -8,56 +9,42 @@ import reactor.test.StepVerifier;
 import ru.otus.igorr.books.lesson23.domain.genre.Genre;
 import ru.otus.igorr.books.lesson23.repository.abstracts.AbstractRepositoryTest;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static ru.otus.igorr.books.lesson23.utils.Constant.NOT_FOUND_DOCUMENT_ID;
 
 
 public class GenreReactiveRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private GenreReactiveRepository repository;
+    private GenreRepository repository;
 
     @Test
+    @DisplayName("saveTest")
     public void saveTest() {
-        Mono<Genre> genreMono = repository.save(new Genre(null, "Genre.Name.Flux", "Description.Flux"));
-        StepVerifier
-                .create(genreMono)
-                .assertNext(genre -> assertNotNull(genre.getId()))
-                .expectComplete()
-                .verify();
+        Genre genre = repository.save(new Genre(null, "Genre.Name", "Description"));
+
+        assertNotNull(genre.getId());
     }
 
     @Test
+    @DisplayName("findAllTest")
     public void findAllTest() {
-        Flux<Genre> genreFlux = repository.findAll();
+        List<Genre> genres = repository.findAll();
+        genres.stream()
+                .forEach(genre -> assertNotNull(genre.getId()));
 
-        Long error = genreFlux
-                .map(genre -> genre.getId() != null)
-                .filter(p -> !p)
-                .count()
-                .block();
-
-        Long done = genreFlux
-                .map(genre -> genre.getId() != null)
-                .filter(p -> p)
-                .count()
-                .block();
-
-
-        assertEquals(Long.valueOf(0),error);
-        assertNotEquals(Long.valueOf(0),done);
     }
 
     @Test
+    @DisplayName("findByIdTest")
     public void findByIdTest() {
-        Mono<Genre> genreMono = repository.findById("1");
+        Genre genre = repository.findById("1").orElse(Genre.empty());
 
-        StepVerifier
-                .create(genreMono)
-                .assertNext(genre -> assertNotNull(genre.getId()))
-                .expectComplete()
-                .verify();
+        assertNotEquals(genre.getId(), NOT_FOUND_DOCUMENT_ID);
 
     }
 }
