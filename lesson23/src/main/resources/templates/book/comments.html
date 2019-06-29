@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../../static/css/app.css"
+          th:href="@{/static/css/app.css}"/>
+</head>
+
+<body id="body">
+
+<h1>Comments for book: <span th:text="${book.title}">Как закалялась сталь</span></h1>
+
+<table>
+    <tr th:each="n : ${book.noteList}" th:class="${cStat.odd}? 'odd'">
+        <td th:text="${n.text}">!ура!ура!</td>
+    </tr>
+</table>
+
+<p>
+    <a href="list.html" th:href="@{/book/list}">Return to book list</a>
+</p>
+
+</body>
+
+</html>
+
