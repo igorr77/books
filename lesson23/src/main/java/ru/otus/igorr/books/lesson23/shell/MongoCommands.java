@@ -23,8 +23,6 @@ public class MongoCommands {
         List<Genre> list = repository.findAll();
         list.stream()
                 .forEach(System.out::println);
-
-
     }
 
 

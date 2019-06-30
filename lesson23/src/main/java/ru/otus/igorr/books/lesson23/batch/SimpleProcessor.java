@@ -8,6 +8,9 @@ import java.time.LocalTime;
 
 @Component
 public class SimpleProcessor implements ItemProcessor<Genre, Genre> {
+
+    private Long id = 0L;
+
     @Override
     public Genre process(Genre genre) throws Exception {
 
@@ -25,6 +28,7 @@ public class SimpleProcessor implements ItemProcessor<Genre, Genre> {
         }
         System.out.println();
 
+        genre.setId(String.valueOf(++id));
         return genre;
     }
 }

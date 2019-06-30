@@ -10,6 +10,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.configuration.support.MapJobRegistry;
 import org.springframework.batch.item.data.MongoItemReader;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.igorr.books.lesson23.domain.mongo.genre.Genre;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 
 @Slf4j
@@ -34,7 +37,10 @@ public class TestJobConfig {
     private StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     SimpleProcessor simpleProcessor;
@@ -55,7 +61,8 @@ public class TestJobConfig {
                 .<Genre, Genre>chunk(10)
                 .reader(reader())
                 .processor(simpleProcessor)
-                .writer(writer())
+                //.writer(writer())
+                .writer(genreWriter())
                 .build();
     }
 
@@ -66,7 +73,7 @@ public class TestJobConfig {
         MongoItemReader<Genre> reader = new MongoItemReader<>();
         reader.setTemplate(mongoTemplate);
         reader.setSort(new HashMap<String, Sort.Direction>() {{
-            put("_id", Sort.Direction.DESC);
+            put("_id", Sort.Direction.ASC);
         }});
         reader.setTargetType(Genre.class);
         reader.setQuery("{}");
@@ -82,11 +89,18 @@ public class TestJobConfig {
         DelimitedLineAggregator<Genre> aggregator = new DelimitedLineAggregator<>();
         aggregator.setDelimiter("|");
 
-        //BeanWrapperFieldExtractor extractor = new BeanWrapperFieldExtractor();
-        //extractor.setNames(new String[] { "id", "price", "name" });
-        //aggregator.setFieldExtractor(extractor);
-
         writer.setLineAggregator(aggregator);
+        return writer;
+    }
+
+    @Bean
+    public JdbcBatchItemWriter<Genre> genreWriter() {
+        LOG.debug("#############################################:genreWriter");
+
+        JdbcBatchItemWriter<Genre> writer = new JdbcBatchItemWriter<>();
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
+        writer.setSql("INSERT INTO genre (id, name, description) VALUES (:id, :name, :description)");
+        writer.setDataSource(dataSource);
         return writer;
     }
 

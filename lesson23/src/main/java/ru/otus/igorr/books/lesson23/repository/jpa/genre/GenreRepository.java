@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     @Override
-    Genre save(Genre s);
+    Genre save(Genre genre);
 
     @Override
     Optional<Genre> findById(Long id);

@@ -25,9 +25,5 @@ public class H2Commands {
         List<Genre> list = repository.findAll();
         list.stream()
                 .forEach(System.out::println);
-
-
     }
-
-
 }

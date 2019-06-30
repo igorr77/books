@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Entity;
+
 import static ru.otus.igorr.books.lesson23.utils.Constant.NOT_FOUND_DOCUMENT_ID;
 
 @Document(collection = "Genre")
