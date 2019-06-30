@@ -3,13 +3,13 @@ package ru.otus.igorr.books.lesson23.service.author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.author.Author;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.Author;
 import ru.otus.igorr.books.lesson23.dto.AuthorDto;
 import ru.otus.igorr.books.lesson23.dto.DtoConverter;
 import ru.otus.igorr.books.lesson23.execptions.DeleteReferenceRecordException;
 import ru.otus.igorr.books.lesson23.execptions.IncorrectDataException;
-import ru.otus.igorr.books.lesson23.repository.author.AuthorRepository;
-import ru.otus.igorr.books.lesson23.repository.book.BookRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.author.AuthorRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.book.BookRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

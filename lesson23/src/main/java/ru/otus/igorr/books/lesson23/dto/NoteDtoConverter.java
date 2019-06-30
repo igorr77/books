@@ -1,11 +1,8 @@
 package ru.otus.igorr.books.lesson23.dto;
 
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.book.Book;
-import ru.otus.igorr.books.lesson23.domain.book.Note;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Book;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Note;
 
 @Service("noteConverter")
 public class NoteDtoConverter implements DtoConverter<Note, NoteDto> {

@@ -4,9 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.igorr.books.lesson23.domain.genre.Genre;
-import ru.otus.igorr.books.lesson23.repository.genre.GenreH2Repository;
-import ru.otus.igorr.books.lesson23.repository.genre.GenreRepository;
+import ru.otus.igorr.books.lesson23.domain.mongo.genre.Genre;
+import ru.otus.igorr.books.lesson23.repository.mongo.genre.GenreRepository;
 
 import java.util.List;
 

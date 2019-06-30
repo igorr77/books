@@ -1,6 +1,7 @@
 spring:
   main:
     banner-mode: "off"
+    allow-bean-definition-overriding: true
   messages:
     basename: messages/app_messages
   webflux:
@@ -38,6 +39,8 @@ spring:
       
   batch:
     initialize-schema: always
+    job:
+      enabled: false
 
 logging:
   level:

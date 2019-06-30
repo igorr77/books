@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
-import ru.otus.igorr.books.lesson23.domain.author.Author;
-import ru.otus.igorr.books.lesson23.repository.genre.GenreRepository;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.Author;
+import ru.otus.igorr.books.lesson23.repository.mongo.genre.GenreRepository;
 
 import java.util.Objects;
 

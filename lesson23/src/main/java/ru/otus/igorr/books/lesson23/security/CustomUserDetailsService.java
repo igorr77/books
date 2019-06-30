@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.security.User;
+import ru.otus.igorr.books.lesson23.domain.mongo.security.User;
 import ru.otus.igorr.books.lesson23.service.security.UserService;
 
 @Service
