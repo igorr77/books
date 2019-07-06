@@ -2,6 +2,9 @@ package ru.otus.igorr.books.lesson25.service.book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import ru.otus.igorr.books.lesson25.domain.mongo.author.Author;
 import ru.otus.igorr.books.lesson25.domain.mongo.book.Book;
@@ -28,6 +31,7 @@ public class BookServiceImpl implements BookService {
     private final DtoConverter<Book, BookDto> bookConverter;
     private final DtoConverter<Note, NoteDto> noteConverter;
     private final DtoConverter<Author, AuthorDto> authorConverter;
+    private final DirectChannel filterNote;
 
     @Autowired
     public BookServiceImpl(BookRepository bookRepository,
@@ -35,7 +39,8 @@ public class BookServiceImpl implements BookService {
                            AuthorRepository authorRepository,
                            @Qualifier("bookConverter") DtoConverter bookConverter,
                            @Qualifier("noteConverter") DtoConverter noteConverter,
-                           @Qualifier("authorConverter") DtoConverter authorConverter
+                           @Qualifier("authorConverter") DtoConverter authorConverter,
+                           @Qualifier("moderator") DirectChannel  filterNote
     ) {
         this.bookRepository = bookRepository;
         this.noteRepository = noteRepository;
@@ -43,6 +48,7 @@ public class BookServiceImpl implements BookService {
         this.bookConverter = bookConverter;
         this.noteConverter = noteConverter;
         this.authorConverter = authorConverter;
+        this.filterNote = filterNote;
     }
 
 
@@ -116,6 +122,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public NoteDto addNote(NoteDto dto) {
         Note note = noteRepository.save(noteConverter.fill(dto));
+        Message<Note> message = MessageBuilder
+                .withPayload(note)
+                .build();
+        filterNote.send(message);
         return noteConverter.convert(note);
     }
 
