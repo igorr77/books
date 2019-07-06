@@ -14,19 +14,19 @@ import ru.otus.igorr.books.lesson25.repository.mongo.book.NoteRepository;
 @Slf4j
 public class NoteFilter {
     private final DirectChannel moderator;
-    private final DirectChannel cleaner;
+    private final DirectChannel admin;
     private final NoteRepository repository;
 
     @Autowired
     public NoteFilter(@Qualifier("moderator") DirectChannel moderator,
-                      @Qualifier("administrator") DirectChannel cleaner,
+                      @Qualifier("administrator") DirectChannel admin,
                       NoteRepository repository) {
         this.moderator = moderator;
-        this.cleaner = cleaner;
+        this.admin = admin;
         this.repository = repository;
 
         this.moderator.subscribe(this::noteFiltering);
-        this.cleaner.subscribe(this::noteDelete);
+        this.admin.subscribe(this::noteDelete);
     }
 
     private void noteFiltering(Message message) {
@@ -41,7 +41,7 @@ public class NoteFilter {
                             Message<Note> messageFail = MessageBuilder
                                     .fromMessage(message)
                                     .build();
-                            cleaner.send(messageFail);
+                            admin.send(messageFail);
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
