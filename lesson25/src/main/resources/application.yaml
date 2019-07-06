@@ -1,0 +1,50 @@
+spring:
+  main:
+    banner-mode: "off"
+    allow-bean-definition-overriding: true
+  messages:
+    basename: messages/app_messages
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: false
+  shell:
+    interactive:
+      enabled: true
+  #
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: testdb
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+
+      
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
+
+logging:
+  level:
+    org.springframework.web: TRACE
+    ru.otus.igorr: DEBUG
+
+

@@ -1,0 +1,21 @@
+spring:
+  main:
+    banner-mode: "off"
+  messages:
+    basename: messages/app_messages
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: false
+  shell:
+    interactive:
+      enabled: false
+  #
+  data:
+    mongodb:
+      database: testdb
+
+  batch:
+    initialize-schema: always
+
+

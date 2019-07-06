@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Otus SpringFramework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/css/app.css"
+          th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+<h1>Input new note</h1>
+
+<div>
+    <form id="add-note-form" action="addnote.html" th:action="addnote" method="post">
+        <input type="text" th:value="${book.id}" name="bookId">
+        <p>Text:<input type="text" name="text"></p>
+        <p><input type="submit" value="Save"></p>
+    </form>
+</div>
+
+</body>
+</html>
