@@ -13,7 +13,7 @@
 
 <div>
     <form id="add-note-form" action="addnote.html" th:action="addnote" method="post">
-        <input type="text" th:value="${book.id}" name="bookId">
+        <input type="text" th:value="${book.id}" name="bookId" hidden>
         <p>Text:<input type="text" name="text"></p>
         <p><input type="submit" value="Save"></p>
     </form>
