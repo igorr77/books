@@ -35,7 +35,7 @@ public class GenreController {
     String addPage(@RequestParam String name, @RequestParam String description, Model model) {
 
 
-        GenreDto newGenre = services.addGenre(new GenreDto(name, description)).block();
+        services.addGenre(new GenreDto(name, description));
 
         model.addAttribute("genres", getGenreList());
         return "genre/list";
@@ -43,7 +43,7 @@ public class GenreController {
 
     // TODO: 23.06.2019 Реализовать полный реактивный стек 
     private List<GenreDto> getGenreList() {
-        return services.getGenreList().collectList().block();
+        return services.getGenreList();
     }
 
 }

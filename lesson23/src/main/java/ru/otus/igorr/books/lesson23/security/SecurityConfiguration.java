@@ -26,13 +26,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/");
+        web.ignoring()
+                .antMatchers("/","/h2-console/**");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/genre/list").hasAnyRole(ADMIN.getRole(), EDIT.getRole(), VIEW.getRole())
                 .antMatchers("/genre/add").hasRole(EDIT.getRole())

@@ -1,10 +1,7 @@
 package ru.otus.igorr.books.lesson23.dto;
 
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.genre.Genre;
-
-import java.util.ArrayList;
-import java.util.List;
+import ru.otus.igorr.books.lesson23.domain.mongo.genre.Genre;
 
 @Service("genreConverter")
 public class GenreDtoConverter implements DtoConverter<Genre, GenreDto> {

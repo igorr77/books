@@ -3,7 +3,7 @@ package ru.otus.igorr.books.lesson23.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.otus.igorr.books.lesson23.domain.security.User;
+import ru.otus.igorr.books.lesson23.domain.mongo.security.User;
 
 import java.util.Collection;
 import java.util.HashSet;

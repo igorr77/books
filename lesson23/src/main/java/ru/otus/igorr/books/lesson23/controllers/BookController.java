@@ -97,27 +97,27 @@ public class BookController {
     //  Перейти на полный реактивный стек (убрать .block())
 
     private BookDto getBook(String id) {
-        return services.getBook(id).block();
+        return services.getBook(id);
     }
 
     private AuthorDto getAuthor(String authorId) {
-        return services.getAuthor(authorId).block();
+        return services.getAuthor(authorId);
     }
 
     private GenreDto getGenre(String genreId) {
-        return services.getGenre(genreId).block();
+        return services.getGenre(genreId);
     }
 
     private List<GenreDto> getGenreList() {
-        return services.getGenreList().collectList().block();
+        return services.getGenreList();
     }
 
     private List<AuthorDto> getAuthorList() {
-        return services.getAuthorList().collectList().block();
+        return services.getAuthorList();
     }
 
     private List<BookDto> getBookList() {
-        return services.getBookList().collectList().block();
+        return services.getBookList();
     }
 
 }

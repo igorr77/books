@@ -3,10 +3,10 @@ package ru.otus.igorr.books.lesson23.dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.author.Author;
-import ru.otus.igorr.books.lesson23.domain.book.Book;
-import ru.otus.igorr.books.lesson23.domain.book.Note;
-import ru.otus.igorr.books.lesson23.domain.genre.Genre;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.Author;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Book;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Note;
+import ru.otus.igorr.books.lesson23.domain.mongo.genre.Genre;
 import ru.otus.igorr.books.lesson23.utils.Constant;
 
 import java.util.ArrayList;

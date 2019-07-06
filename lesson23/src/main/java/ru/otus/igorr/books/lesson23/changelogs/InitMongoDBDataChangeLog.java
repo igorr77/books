@@ -3,18 +3,20 @@ package ru.otus.igorr.books.lesson23.changelogs;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import ru.otus.igorr.books.lesson23.domain.author.Author;
-import ru.otus.igorr.books.lesson23.domain.author.AuthorName;
-import ru.otus.igorr.books.lesson23.domain.book.Book;
-import ru.otus.igorr.books.lesson23.domain.book.Note;
-import ru.otus.igorr.books.lesson23.domain.genre.Genre;
-import ru.otus.igorr.books.lesson23.domain.security.User;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.Author;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.AuthorName;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Book;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Note;
+import ru.otus.igorr.books.lesson23.domain.mongo.genre.Genre;
+import ru.otus.igorr.books.lesson23.domain.mongo.security.User;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @ChangeLog(order = "001")
 public class InitMongoDBDataChangeLog {
 
@@ -31,7 +33,8 @@ public class InitMongoDBDataChangeLog {
 
     @ChangeSet(order = "000", id = "dropDB", author = "other", runAlways = true)
     public void dropDB(MongoDatabase database) {
-        database.drop();
+        LOG.debug("*******************: initDB");
+        //database.drop();
     }
 
     @ChangeSet(order = "001", id = "initGenres", author = "other", runAlways = true)

@@ -6,10 +6,10 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.AfterDeleteEvent;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
-import ru.otus.igorr.books.lesson23.domain.book.Book;
-import ru.otus.igorr.books.lesson23.repository.author.AuthorRepository;
-import ru.otus.igorr.books.lesson23.repository.book.NoteRepository;
-import ru.otus.igorr.books.lesson23.repository.genre.GenreRepository;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Book;
+import ru.otus.igorr.books.lesson23.repository.mongo.author.AuthorRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.book.NoteRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.genre.GenreRepository;
 
 import java.util.Objects;
 

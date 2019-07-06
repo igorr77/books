@@ -1,52 +1,56 @@
 package ru.otus.igorr.books.lesson23.service.facade;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import ru.otus.igorr.books.lesson23.dto.AuthorDto;
 import ru.otus.igorr.books.lesson23.dto.BookDto;
 import ru.otus.igorr.books.lesson23.dto.GenreDto;
 import ru.otus.igorr.books.lesson23.dto.NoteDto;
 
+import java.util.List;
+
 public interface ServicesFacade {
 
-    // Genre
-    Flux<GenreDto> getGenreList();
+    // BookService
+    BookDto getBook(String id);
 
-    Mono<GenreDto> getGenre(String id);
+    List<BookDto> getBookList();
 
-    Mono<GenreDto> addGenre(GenreDto genre);
+    String addBook(BookDto dto);
 
-    Flux<GenreDto> getGenreListByName(String mask);
+    void deleteBook(String id);
 
-    Mono<Void> deleteGenre(String id);
+    /* Note */
+    NoteDto getBookNote(String noteId);
 
-    Mono<Void> deleteGenre(GenreDto genreDto);
+    List<NoteDto> getBookNoteList(String bookId);
+
+    NoteDto addBookNote(NoteDto dto);
+
+    void deleteBookNote(String noteId);
+
+    // GenreService
+    GenreDto getGenre(String id);
+
+    List<GenreDto> getGenreList();
+
+    List<GenreDto> getGenreListByName(String mask);
+
+    String addGenre(GenreDto genre);
+
+    void deleteGenre(String id);
+
+    void deleteGenre(GenreDto dto);
 
 
-    // Author services
-    Mono<AuthorDto> getAuthor(String id);
+    // AuthorService
 
-    Flux<AuthorDto> getAuthorList();
+    AuthorDto getAuthor(String id);
 
-    Flux<AuthorDto> getAuthorListByName(String mask);
+    List<AuthorDto> getAuthorList();
 
-    Mono<AuthorDto> addAuthor(AuthorDto authorDto);
+    List<AuthorDto> getAuthorListByName(String mask);
 
-    Mono<Void> deleteAuthor(String id);
+    String addAuthor(AuthorDto dto);
 
-
-    // Book services
-    Flux<BookDto> getBookList();
-
-    Mono<BookDto> getBook(String id);
-
-    Mono<BookDto> addBook(BookDto bookDto);
-
-    Mono<Void> deleteBook(String id);
-
-    Mono<NoteDto> addNote(NoteDto noteDto);
-
-    Mono<Void> deleteNote(String noteId);
-
+    void deleteAuthor(String id);
 
 }

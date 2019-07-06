@@ -1,78 +1,123 @@
 package ru.otus.igorr.books.lesson23.service.book;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import ru.otus.igorr.books.lesson23.domain.book.Book;
-import ru.otus.igorr.books.lesson23.domain.book.Note;
+import ru.otus.igorr.books.lesson23.domain.mongo.author.Author;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Book;
+import ru.otus.igorr.books.lesson23.domain.mongo.book.Note;
+import ru.otus.igorr.books.lesson23.dto.AuthorDto;
 import ru.otus.igorr.books.lesson23.dto.BookDto;
 import ru.otus.igorr.books.lesson23.dto.DtoConverter;
 import ru.otus.igorr.books.lesson23.dto.NoteDto;
-import ru.otus.igorr.books.lesson23.repository.book.BookReactiveRepository;
-import ru.otus.igorr.books.lesson23.repository.book.NoteReactiveRepository;
+import ru.otus.igorr.books.lesson23.execptions.GenreMismatchException;
+import ru.otus.igorr.books.lesson23.repository.mongo.author.AuthorRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.book.BookRepository;
+import ru.otus.igorr.books.lesson23.repository.mongo.book.NoteRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class BookServiceImpl implements BookService {
 
-
-    private final BookReactiveRepository bookRepository;
-    private final NoteReactiveRepository noteRepository;
+    private final BookRepository bookRepository;
+    private final NoteRepository noteRepository;
+    private final AuthorRepository authorRepository;
     private final DtoConverter<Book, BookDto> bookConverter;
     private final DtoConverter<Note, NoteDto> noteConverter;
+    private final DtoConverter<Author, AuthorDto> authorConverter;
 
-    public BookServiceImpl(BookReactiveRepository bookRepository,
-                           NoteReactiveRepository noteRepository,
-                           DtoConverter<Book, BookDto> bookConverter,
-                           DtoConverter<Note, NoteDto> noteConverter) {
+    @Autowired
+    public BookServiceImpl(BookRepository bookRepository,
+                           NoteRepository noteRepository,
+                           AuthorRepository authorRepository,
+                           @Qualifier("bookConverter") DtoConverter bookConverter,
+                           @Qualifier("noteConverter") DtoConverter noteConverter,
+                           @Qualifier("authorConverter") DtoConverter authorConverter
+    ) {
         this.bookRepository = bookRepository;
         this.noteRepository = noteRepository;
+        this.authorRepository = authorRepository;
         this.bookConverter = bookConverter;
         this.noteConverter = noteConverter;
+        this.authorConverter = authorConverter;
+    }
+
+
+    @Override
+    public BookDto get(String id) {
+        return bookConverter.convert(bookRepository.findById(id).orElse(Book.empty()));
     }
 
     @Override
-    public Mono<BookDto> get(String id) {
-        return bookRepository.findById(id)
-                .map(book -> bookConverter.convert(book));
+    public String add(BookDto dto) {
+
+        // проверяем на соответствие жанра книги и жанров авторов
+        final String excludeGenreId = dto.getGenre().getId();
+        List<AuthorDto> authors =
+                dto.getAuthorList()
+                        .stream()
+                        .filter(author -> !authorConverter.convert(authorRepository.findById(author.getId()).orElse(Author.empty()))
+                                .getGenreList()
+                                .stream()
+                                .filter(genre -> genre.getId().equals(excludeGenreId))
+                                .findFirst()
+                                .isPresent())
+                        .collect(Collectors.toList());
+        if (authors.size() != 0) {
+            throw new GenreMismatchException(authors.get(0).getId());
+        }
+
+        Book book = bookConverter.fill(dto);
+        Book saveBook = bookRepository.save(book);
+        return saveBook.getId();
     }
 
     @Override
-    public Flux<BookDto> getList() {
-        return bookRepository.findAll()
-                .map(book -> bookConverter.convert(book));
+    public List<BookDto> getList() {
+
+        List<Book> bookList = bookRepository.findAll();
+
+        List<BookDto> dtoList = new ArrayList<>();
+        bookList.forEach(e -> dtoList.add(bookConverter.convert(e)));
+
+        return dtoList;
     }
 
     @Override
-    public Mono<BookDto> add(BookDto bookDto) {
-        return bookRepository.save(bookConverter.fill(bookDto))
-                .map(book -> bookConverter.convert(book));
+    public void delete(String id) {
+        List<Note> noteList = noteRepository.findByBookId(id);
+        bookRepository.deleteById(id);
+    }
+
+    /* Note */
+
+    @Override
+    public NoteDto getNote(String noteId) {
+        return noteConverter.convert(noteRepository.findById(noteId).orElse(Note.empty()));
     }
 
     @Override
-    public Mono<Void> delete(String id) {
-        return bookRepository.deleteById(id);
+    public List<NoteDto> getNoteList(String bookId) {
+        return noteRepository.findByBookId(bookId)
+                .stream()
+                .map(note -> noteConverter.convert(note))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Mono<NoteDto> getNote(String noteId) {
-        return noteRepository.findById(noteId)
-                .map(note -> noteConverter.convert(note));
+    public NoteDto addNote(NoteDto dto) {
+        Note note = noteRepository.save(noteConverter.fill(dto));
+        return noteConverter.convert(note);
     }
 
     @Override
-    public Flux<NoteDto> getNoteList(String bookId) {
-        return noteRepository.findAll()
-                .map(note -> noteConverter.convert(note));
+    public void deleteNote(String noteId) {
+        noteRepository.deleteById(noteId);
     }
 
-    @Override
-    public Mono<NoteDto> addNote(NoteDto noteDto) {
-        return noteRepository.save(noteConverter.fill(noteDto))
-                .map(note -> noteConverter.convert(note));
-    }
 
-    @Override
-    public Mono<Void> deleteNote(String noteId) {
-        return noteRepository.deleteById(noteId);
-    }
 }

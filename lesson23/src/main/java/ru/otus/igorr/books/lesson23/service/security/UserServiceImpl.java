@@ -3,8 +3,8 @@ package ru.otus.igorr.books.lesson23.service.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.otus.igorr.books.lesson23.domain.security.User;
-import ru.otus.igorr.books.lesson23.repository.security.UserRepository;
+import ru.otus.igorr.books.lesson23.domain.mongo.security.User;
+import ru.otus.igorr.books.lesson23.repository.mongo.security.UserRepository;
 
 @Service
 @RequiredArgsConstructor
