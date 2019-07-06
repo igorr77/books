@@ -1,11 +1,15 @@
 package ru.otus.igorr.books.lesson23.shell;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.igorr.books.lesson23.batch.JobService;
 
 @Slf4j
 @ShellComponent
@@ -13,14 +17,23 @@ public class BatchCommands {
 
 
     @Autowired
-    private JobService jobService;
+    private JobLauncher jobLauncher;
+    @Autowired
+    private JobRegistry jobRegistry;
+    private JobExecution jobExecution;
+
 
     @ShellMethod(key = "start", value = "Start Job")
-    public void start(@ShellOption("--name") String name) {
+    public void start(@ShellOption("--name") String jobName) {
 
-        LOG.debug("*** JobStart: " + name);
+        LOG.debug("*** JobStart: " + jobName);
 
-        jobService.start(name);
+        try {
+            Job job = jobRegistry.getJob(jobName);
+            jobExecution = jobLauncher.run(job, new JobParameters());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -29,7 +42,7 @@ public class BatchCommands {
 
         LOG.debug("*** Job's list: ");
 
-        jobService.list().stream()
+        jobRegistry.getJobNames().stream()
                 .forEach(System.out::println);
 
     }

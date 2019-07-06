@@ -28,7 +28,7 @@ import java.util.HashMap;
 @Slf4j
 @Configuration
 @EnableBatchProcessing(modular = true)
-public class TestJobConfig {
+public class MigrationJobConfig {
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -48,7 +48,7 @@ public class TestJobConfig {
     @Bean
     public Job testJob() throws Exception {
         LOG.debug("#############################################: testJob");
-        return jobBuilderFactory.get("testJob")
+        return jobBuilderFactory.get("migrationJob")
                 .flow(step1())
                 .end()
                 .build();

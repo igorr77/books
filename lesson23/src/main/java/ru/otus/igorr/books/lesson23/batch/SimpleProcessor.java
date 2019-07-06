@@ -17,17 +17,12 @@ public class SimpleProcessor implements ItemProcessor<Genre, Genre> {
         LocalTime today = LocalTime.now();
         genre.setDescription(genre.getDescription() + ": " + today);
 
-        int i = 10;
-        while (i-- > 0) {
-            System.out.print(".");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        System.out.print(".");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        System.out.println();
-
         genre.setId(String.valueOf(++id));
         return genre;
     }
