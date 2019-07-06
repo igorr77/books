@@ -9,15 +9,17 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.integration.annotation.IntegrationComponentScan;
 import ru.otus.igorr.books.lesson25.config.MessagesProps;
 
 import java.sql.SQLException;
 
 @SpringBootApplication
 @EnableConfigurationProperties({MessagesProps.class})
+@IntegrationComponentScan
 @EnableJpaRepositories("ru.otus.igorr.books.lesson25.repository.jpa")
 @EnableMongoRepositories("ru.otus.igorr.books.lesson25.repository.mongo")
-public class Lesson25Application {
+public class  Lesson25Application {
 
     private static final Logger LOG = LoggerFactory.getLogger(Lesson25Application.class);
 
